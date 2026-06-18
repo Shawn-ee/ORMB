@@ -9,6 +9,7 @@ The repository currently contains testnet-only contracts, deterministic worker c
 Run:
 
 ```bash
+npm ci
 npm run test:ci
 ```
 
