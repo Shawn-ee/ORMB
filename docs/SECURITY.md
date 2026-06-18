@@ -66,6 +66,7 @@ Current listener baseline:
 - Mint request flow requires manual approval before contract mint submission and skips duplicate mint submissions.
 - Redemption burn flow requires manual approval before burn verification, verifies burn chain/source/amount, and skips duplicate burn events.
 - Admin dashboard data is static demo data and does not trigger lifecycle mutations, contract calls, payouts, or database writes.
+- Company dashboard data is static demo data and does not trigger deposits, transfers, redemptions, contract calls, payouts, or database writes.
 
 ## Current Security Status
 
