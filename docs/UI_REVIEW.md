@@ -58,3 +58,7 @@ Production-mode screenshots were captured at:
 ## Verdict
 
 Browser UI review is acceptable for preparing `release/demo-v0`. The release branch must still provide final demo instructions, known limitations, release checklist, and human approval materials before any `dev` to `main` action.
+
+## Enterprise UI Follow-Up
+
+Enterprise Pilot Readiness UI review after the admin and company dashboard updates is documented in `docs/ENTERPRISE_UI_REVIEW.md`.
