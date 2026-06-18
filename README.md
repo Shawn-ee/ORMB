@@ -61,7 +61,7 @@ The current Next.js app shell includes placeholder routes:
 - `/demo`: Static end-to-end demo flow walkthrough.
 - `/admin`: Static admin operations dashboard.
 - `/company`: Static company settlement dashboard.
-- `/status`: System readiness placeholder.
+- `/status`: Static monitoring and security readiness dashboard.
 
 These routes intentionally do not include backend business logic, live dashboard data, contract calls, or real money movement.
 
@@ -102,6 +102,7 @@ Copy `.env.example` for local environment setup only when future branches need n
 - `docs/ADMIN_DASHBOARD.md`: Static admin operations dashboard scope and safety boundary.
 - `docs/COMPANY_DASHBOARD.md`: Static company settlement dashboard scope and safety boundary.
 - `docs/DEMO_FLOW_PAGE.md`: Static end-to-end demo flow page scope and safety boundary.
+- `docs/MONITORING_SECURITY.md`: Static monitoring and security readiness dashboard scope.
 - `docs/STRIPE_BRIDGE_ALIGNMENT.md`: Engineering alignment with Stripe/Bridge-style infrastructure.
 - `docs/RUNBOOK.md`: Setup and validation runbook.
 - `docs/decisions/`: Architecture decision records.
