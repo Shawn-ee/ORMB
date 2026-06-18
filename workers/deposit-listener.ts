@@ -61,6 +61,7 @@ export type ProcessTransferLogsInput = {
   mockUsdtAddress: `0x${string}`;
   logs: MockUsdtTransferLog[];
   repository: DepositListenerRepository;
+  scannedToBlock?: bigint;
 };
 
 export type ProcessTransferLogsResult = {
@@ -80,9 +81,14 @@ export async function processMockUsdtTransferLogs({
   mockUsdtAddress,
   logs,
   repository,
+  scannedToBlock,
 }: ProcessTransferLogsInput): Promise<ProcessTransferLogsResult> {
   assertAddress("treasuryAddress", treasuryAddress);
   assertAddress("mockUsdtAddress", mockUsdtAddress);
+
+  if (scannedToBlock !== undefined && scannedToBlock < 0n) {
+    throw new Error("scannedToBlock must be non-negative.");
+  }
 
   const treasury = normalizeAddress(treasuryAddress);
   const token = normalizeAddress(mockUsdtAddress);
@@ -153,6 +159,10 @@ export async function processMockUsdtTransferLogs({
     }
   }
 
+  if (scannedToBlock !== undefined) {
+    result.latestBlockNumber = maxBigInt(result.latestBlockNumber, scannedToBlock);
+  }
+
   if (result.latestBlockNumber !== undefined) {
     await repository.updateJobState(JOB_NAME, result.latestBlockNumber);
   }
@@ -168,4 +178,8 @@ function assertAddress(name: string, value: string) {
 
 function normalizeAddress(address: `0x${string}`): `0x${string}` {
   return getAddress(address);
+}
+
+function maxBigInt(left: bigint | undefined, right: bigint) {
+  return left === undefined || right > left ? right : left;
 }

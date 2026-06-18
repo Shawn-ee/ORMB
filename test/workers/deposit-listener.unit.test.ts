@@ -163,6 +163,55 @@ describe("processMockUsdtTransferLogs", () => {
     assert.equal(repository.auditLogs.length, 0);
     assert.equal(repository.latestBlockNumber, undefined);
   });
+
+  it("checkpoints an explicitly scanned range with no logs", async () => {
+    const result = await processMockUsdtTransferLogs({
+      chainId: CHAIN_ID,
+      treasuryAddress: TREASURY,
+      mockUsdtAddress: MOCK_USDT,
+      logs: [],
+      scannedToBlock: 150n,
+      repository,
+    });
+
+    assert.deepEqual(result, {
+      detected: 0,
+      rejectedUnknownWallet: 0,
+      duplicates: 0,
+      ignored: 0,
+      latestBlockNumber: 150n,
+    });
+    assert.equal(repository.latestBlockNumber, 150n);
+  });
+
+  it("checkpoints an explicitly scanned range even when all logs are ignored", async () => {
+    const result = await processMockUsdtTransferLogs({
+      chainId: CHAIN_ID,
+      treasuryAddress: TREASURY,
+      mockUsdtAddress: MOCK_USDT,
+      logs: [transferLog({ fromAddress: COMPANY_WALLET, toAddress: OTHER_TREASURY })],
+      scannedToBlock: 155n,
+      repository,
+    });
+
+    assert.equal(result.ignored, 1);
+    assert.equal(result.latestBlockNumber, 155n);
+    assert.equal(repository.deposits.length, 0);
+    assert.equal(repository.latestBlockNumber, 155n);
+  });
+
+  it("rejects invalid scanned checkpoint blocks", async () => {
+    await assert.rejects(
+      processMockUsdtTransferLogs({
+        chainId: CHAIN_ID,
+        treasuryAddress: TREASURY,
+        mockUsdtAddress: MOCK_USDT,
+        logs: [],
+        scannedToBlock: -1n,
+        repository,
+      }),
+    );
+  });
 });
 
 function transferLog(overrides: Partial<MockUsdtTransferLog>): MockUsdtTransferLog {
