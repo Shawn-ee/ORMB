@@ -52,7 +52,7 @@ Before a public hosted demo or enterprise pilot environment is approved:
 Every dependency hardening branch must run:
 
 ```bash
-npm install
+npm ci
 npm audit --json
 npm outdated
 npm run test:ci
