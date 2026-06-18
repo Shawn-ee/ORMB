@@ -36,6 +36,7 @@ Mutation endpoints must accept an `Idempotency-Key` header or derive a determini
 
 Required idempotency keys:
 
+- Manual simulated deposit confirmation: admin-provided `manualReference`
 - Deposit ingestion: `chainId:txHash:logIndex`
 - Confirmation update: `depositId:currentBlock:blockHash`
 - Mint request creation: `depositId`
@@ -99,6 +100,7 @@ These endpoints are future-only and must remain disabled in hosted-demo mode unl
 
 | Method | Path | Role | Idempotency | Purpose |
 | --- | --- | --- | --- | --- |
+| `POST` | `/api/staging/manual-deposits` | `admin_operator` | required `manualReference` | Create a simulated confirmed deposit and pending mint request in private staging. |
 | `POST` | `/api/admin/companies` | `admin_operator` | required header | Create a demo company record. |
 | `POST` | `/api/admin/wallets` | `admin_operator` | required header | Register or update a demo company wallet. |
 | `POST` | `/api/admin/wallets/:walletId/whitelist` | `admin_operator` | required header | Change demo whitelist state. |
@@ -119,6 +121,8 @@ Future APIs must enforce existing worker-core state transitions rather than dupl
 
 Required guards:
 
+- Manual deposits must be simulated-only staging records and must not describe or imply real USDT, RMB/CNH, customer deposits, custody, or payment receipt.
+- Manual deposit confirmation must be idempotent by `manualReference`.
 - Deposits must move only through valid detection and confirmation states.
 - A deposit can have at most one mint request.
 - A mint request can be submitted only after manual approval.

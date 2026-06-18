@@ -130,6 +130,10 @@ model Deposit {
   amount          Decimal       @db.Decimal(38, 6)
   confirmations   Int           @default(0)
   status          DepositStatus @default(DETECTED)
+  source          String        @default("CHAIN")
+  manualReference String?       @unique
+  manualConfirmedBy String?
+  manualConfirmedAt DateTime?
   detectedAt      DateTime      @default(now())
   confirmedAt     DateTime?
   createdAt       DateTime      @default(now())
