@@ -25,7 +25,7 @@ Use documented environment variables and local `.env` files only after tooling i
 
 ## Smart Contract Security Expectations
 
-Future contract work must include:
+Contract work must include:
 
 - Role-based access control.
 - Mint and burn event tests.
@@ -33,6 +33,14 @@ Future contract work must include:
 - Pause or emergency control analysis.
 - Upgradeability decision record if upgrades are considered.
 - Explicit deployment network checks.
+
+Current contract baseline:
+
+- ORMBToken uses `MINTER_ROLE`, `PAUSER_ROLE`, and `WHITELIST_ADMIN_ROLE`.
+- Minting is restricted to `MINTER_ROLE` and whitelisted recipients.
+- Normal transfers require both sender and recipient to be whitelisted.
+- Pausing blocks token movement.
+- MockUSDT is intentionally public-mint/faucet testnet demo code and must not be used as a real asset.
 
 ## Backend And Worker Security Expectations
 
