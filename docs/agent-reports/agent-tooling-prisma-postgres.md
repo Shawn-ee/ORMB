@@ -55,6 +55,7 @@ Add Prisma and PostgreSQL tooling foundation for future ORMB ledger and applicat
 - `npm run typecheck`
 - `npm run test:ci`
 - `git status --short --branch`
+- GitHub Actions CI for PR #4
 - `git diff origin/dev`
 
 ## Validation Results
@@ -64,6 +65,7 @@ Add Prisma and PostgreSQL tooling foundation for future ORMB ledger and applicat
 - `npm run prisma:validate` passed. The schema at `prisma/schema.prisma` is valid.
 - `npm run typecheck` passed with `tsc --noEmit`.
 - `npm run test:ci` passed. Placeholder lint, app tests, and build ran; Prisma validation, contract compile, contract tests, and TypeScript checks passed.
+- Initial GitHub Actions CI failed on the aggregate CI step. The branch was updated so `test:ci` runs `prisma:generate` before `typecheck`, matching a fresh CI install where the generated Prisma Client may not already exist.
 - `git diff origin/dev` showed only tooling, documentation, environment placeholder, and agent report changes.
 
 ## Self-Review Findings
@@ -77,6 +79,7 @@ Add Prisma and PostgreSQL tooling foundation for future ORMB ledger and applicat
 
 - Added README and architecture notes clarifying that this is a tooling baseline and business ledger models are deferred.
 - Included `src/**/*.ts` and `prisma.config.ts` in `tsconfig.json` so the Prisma helper is covered by typechecking.
+- Updated `test:ci` to generate Prisma Client before typechecking for fresh CI environments.
 
 ## Remaining Risks
 
