@@ -64,6 +64,7 @@ Current listener baseline:
 - Confirmation worker reruns avoid rewriting unchanged records.
 - Risk checks require approved KYB, known active wallets, whitelisted receiving wallets, confirmed deposits, duplicate prevention, and configured mint limits before mint request creation.
 - Mint request flow requires manual approval before contract mint submission and skips duplicate mint submissions.
+- Redemption burn flow requires manual approval before burn verification, verifies burn chain/source/amount, and skips duplicate burn events.
 
 ## Current Security Status
 

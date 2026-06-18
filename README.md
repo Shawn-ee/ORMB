@@ -97,6 +97,7 @@ Copy `.env.example` for local environment setup only when future branches need n
 - `docs/CONFIRMATION_WORKER.md`: Deposit confirmation worker behavior and safety boundary.
 - `docs/RISK_ENGINE.md`: Mint eligibility risk checks and safety boundary.
 - `docs/MINT_REQUEST_FLOW.md`: Risk-gated mint request lifecycle and safety boundary.
+- `docs/REDEMPTION_BURN_FLOW.md`: Redemption request, burn verification, and simulated payout safety boundary.
 - `docs/STRIPE_BRIDGE_ALIGNMENT.md`: Engineering alignment with Stripe/Bridge-style infrastructure.
 - `docs/RUNBOOK.md`: Setup and validation runbook.
 - `docs/decisions/`: Architecture decision records.
