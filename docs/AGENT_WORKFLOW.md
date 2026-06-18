@@ -4,7 +4,7 @@
 
 1. Start from the latest `dev` branch unless bootstrapping the repository.
 2. Create a focused branch named `agent/<goal>` or `audit/<goal>`.
-3. Read `AGENTS.md` and relevant docs before editing.
+3. Read `AGENTS.md` and relevant docs before editing, including `docs/MULTI_MACHINE_DEVELOPMENT.md` when working across multiple machines or private staging servers.
 4. Make the smallest coherent change for the branch goal.
 5. Update documentation for every behavior or assumption change.
 6. Run validation commands.
