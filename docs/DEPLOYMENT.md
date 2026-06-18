@@ -60,3 +60,5 @@ The future private staging runtime mint path uses a dedicated testnet minter key
 ## Validation Boundary
 
 Repository CI does not deploy contracts and does not require real RPC keys. Script validation is limited to compile, typecheck, and tests unless the human owner explicitly provides testnet credentials.
+
+For owner-only interactive staging deployment, use `docs/PRIVATE_STAGING_RUNBOOK.md`.
