@@ -25,7 +25,7 @@ Hardhat 3, TypeScript, viem, OpenZeppelin Contracts v5, dotenv support, and a Ba
 
 The API layer will model onboarding, mint requests, approvals, transfers, redemptions, and audit log queries. It must be idempotent, explicit about state transitions, and safe for repeated event delivery.
 
-No API implementation exists in the bootstrap milestone.
+No API implementation exists yet. Future API branches must follow the documented contract surface in `docs/API_CONTRACTS.md`, keep hosted-demo mode read-only by default, and reuse worker-core state transition helpers rather than duplicating lifecycle logic in route handlers.
 
 ### Workers
 

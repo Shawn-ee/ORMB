@@ -69,13 +69,12 @@ A safe hosted demo now has a read-only posture and checklist in `docs/HOSTED_DEM
 
 Recommended branch: `audit/280-hosted-demo-readiness`
 
-### High: API And Durable Worker Boundaries Are Not Specified
+### High: Durable Worker Boundaries Are Not Specified
 
-The repo intentionally has no live API routes, mutation handlers, RPC polling loops, or persistent worker runners. Enterprise pilot preparation needs API contract docs and durable worker adapter boundaries before any pilot-like integration discussion.
+The repo intentionally has no live mutation handlers, RPC polling loops, or persistent worker runners. API contract boundaries are now documented in `docs/API_CONTRACTS.md`, but durable worker adapter boundaries are still needed before any pilot-like integration discussion.
 
 Recommended branches:
 
-- `agent/300-api-contract-docs`
 - `agent/301-worker-adapter-boundary-docs`
 
 ### High: Database Migration Safety Is Not Documented
