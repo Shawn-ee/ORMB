@@ -53,6 +53,6 @@ Future backend and worker work must include:
 - Audit logs for admin actions.
 - Safe handling of failed or repeated events.
 
-## Bootstrap Status
+## Current Security Status
 
-No security-sensitive implementation exists yet. This document defines required constraints for later branches.
+Security-sensitive implementation now exists in the smart contract layer. Contract changes require focused tests, documentation updates, and audit follow-up before demo release.

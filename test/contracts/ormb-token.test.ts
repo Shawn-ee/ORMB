@@ -46,6 +46,25 @@ describe("ORMBToken", async function () {
     await assert.rejects(ormb.write.mint([companyA.account.address, parseUnits("100", 6)]));
   });
 
+  it("blocks non-whitelist-admins from changing whitelist state", async function () {
+    const outsiderOrmB = await viem.getContractAt("ORMBToken", ormb.address, {
+      client: { wallet: outsider },
+    });
+
+    await assert.rejects(
+      outsiderOrmB.write.setWhitelisted([companyA.account.address, true]),
+    );
+  });
+
+  it("emits whitelist update events", async function () {
+    await viem.assertions.emitWithArgs(
+      ormb.write.setWhitelisted([companyA.account.address, true]),
+      ormb,
+      "WalletWhitelistUpdated",
+      [companyA.account.address, true, admin.account.address],
+    );
+  });
+
   it("allows transfers between whitelisted wallets", async function () {
     await ormb.write.setWhitelisted([companyA.account.address, true]);
     await ormb.write.setWhitelisted([companyB.account.address, true]);
@@ -70,6 +89,29 @@ describe("ORMBToken", async function () {
     await assert.rejects(
       companyAOrmB.write.transfer([companyB.account.address, parseUnits("10", 6)]),
     );
+  });
+
+  it("blocks transfers after a wallet is removed from the whitelist", async function () {
+    await ormb.write.setWhitelisted([companyA.account.address, true]);
+    await ormb.write.setWhitelisted([companyB.account.address, true]);
+    await ormb.write.mint([companyA.account.address, parseUnits("100", 6)]);
+    await ormb.write.setWhitelisted([companyB.account.address, false]);
+
+    const companyAOrmB = await viem.getContractAt("ORMBToken", ormb.address, {
+      client: { wallet: companyA },
+    });
+
+    await assert.rejects(
+      companyAOrmB.write.transfer([companyB.account.address, parseUnits("10", 6)]),
+    );
+  });
+
+  it("blocks non-pausers from pausing", async function () {
+    const outsiderOrmB = await viem.getContractAt("ORMBToken", ormb.address, {
+      client: { wallet: outsider },
+    });
+
+    await assert.rejects(outsiderOrmB.write.pause());
   });
 
   it("blocks transfers while paused", async function () {
