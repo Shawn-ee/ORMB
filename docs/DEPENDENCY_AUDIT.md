@@ -240,3 +240,39 @@ Decision:
 - The vulnerability count remains unchanged.
 - The findings may be accepted only for a static/read-only hosted demo after human owner review of the exact URL, audience, duration, and environment posture.
 - The findings remain blockers for live mutations, production services, real funds, real USDT, real RMB/CNH, mainnet deployment, or customer data.
+
+## 2026-06-18 Batch A Dependency Posture Refresh
+
+Branch: `audit/311-dependency-posture-refresh`
+
+Commands:
+
+```bash
+npm audit --json
+npm outdated
+```
+
+Results:
+
+- `npm audit --json`: exit code 1.
+- Low: 8
+- Moderate: 9
+- High: 8
+- Critical: 0
+- Total: 25
+- `npm outdated`: exit code 0 with no outdated direct dependencies reported.
+
+Decision:
+
+- No package files were changed because `npm outdated` did not identify safe direct dependency upgrades.
+- No `npm audit fix --force` was run.
+- npm still reports forced remediation paths that are not acceptable for this branch, including a Prisma downgrade path and a Next.js downgrade path.
+- The remaining findings are accepted only for local/testnet portfolio-demo work under the project boundaries.
+- The findings remain blockers for production services, mainnet deployment, real funds, real USDT, real RMB/CNH, customer deposits, private keys, production credentials, or public financial-product claims.
+
+Residual exposure summary:
+
+- `@nomicfoundation/hardhat-toolbox-viem` and `viem` remain direct high-severity findings through transitive `ws` and Hardhat/Ignition tooling paths.
+- `next` remains a direct moderate finding through transitive `postcss`; current remediation suggested by npm is not a viable modern Next.js upgrade.
+- `prisma` remains a direct moderate finding through Prisma CLI/dev tooling; current remediation suggested by npm is not compatible with the current Prisma 7 setup.
+- Additional transitive findings remain in `@actions/http-client`, `undici`, `@ethersproject/*`, `ethers`, `elliptic`, `lodash-es`, and related Hardhat/Prisma tooling packages.
