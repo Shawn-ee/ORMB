@@ -40,9 +40,11 @@ Current behavior:
 
 ## Private Staging Boundary
 
-`private-staging` is an environment validation mode for future owner-only Base Sepolia staging. It does not add admin middleware, mutation APIs, custody, payment processing, live mint/burn routes, or production operation.
+`private-staging` is an environment validation mode for future owner-only Base Sepolia staging. It includes a Basic Auth proxy guard for `/admin`, `/api/admin/**`, and `/api/staging/**`. It does not add mutation APIs, custody, payment processing, live mint/burn routes, or production operation.
 
 Private staging secrets must live only in local or server environment configuration. They must never be committed to the repository or copied into agent reports. The minter and burner keys must be testnet-only keys with no mainnet or production use.
+
+Basic Auth is an access guard for private staging, not a substitute for production identity, authorization, compliance review, or network controls. A hidden URL is not access protection.
 
 ## Hosted Demo Boundary
 
