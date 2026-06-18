@@ -1,8 +1,8 @@
 # Runbook
 
-## Current Bootstrap Setup
+## Current Demo Setup
 
-The repository currently contains project structure, documentation, placeholder scripts, and minimal CI.
+The repository currently contains testnet-only contracts, deterministic worker cores, Prisma schema, static demo dashboards, browser smoke checks, documentation, and CI.
 
 ## Local Validation
 
@@ -14,13 +14,23 @@ npm run test:ci
 
 The current scripts should pass without external services. Next.js build, Prisma validation, and contract tooling checks run locally without real credentials.
 
+For browser release checks, install Chromium once and run Playwright:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+The browser suite builds and serves the production Next.js app locally before opening the reviewed routes.
+
 ## Future Setup Expectations
 
-Later branches will add:
+Later branches may add:
 
-- Business UI and API routes.
 - Worker execution commands.
-- Demo seed data.
+- Live Prisma adapters.
+- API routes.
+- Testnet RPC polling loops.
 
 ## Worker Cores
 
@@ -106,7 +116,7 @@ https://github.com/Shawn-ee/ORMB/compare/dev...agent/<goal>?expand=1
 
 Do not merge `dev` into `main` during normal agent work.
 
-## Release Checklist Placeholder
+## Release Checklist
 
 Before merging `dev` into `main`, confirm:
 
@@ -115,6 +125,10 @@ Before merging `dev` into `main`, confirm:
 - Demo walkthrough works.
 - Security review is complete.
 - Demo verification is complete.
+- Browser UI review is complete.
+- Dependency audit status is accepted or remediated.
 - Legal boundaries are current.
 - No secrets are committed.
 - No real money flow exists.
+
+Use `docs/RELEASE_CHECKLIST.md` as the release approval source of truth.

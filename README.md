@@ -20,26 +20,62 @@ The project is designed as a portfolio and technical demonstration of stablecoin
 - Not a production payment system.
 - Not authorized to process real customer funds, real USDT, real RMB, private keys, seed phrases, or mainnet assets.
 
-## Bootstrap Status
+## Demo-v0 Status
 
-This initial repository bootstrap intentionally does not implement:
+ORMB currently provides a local/testnet demo package:
 
-- Backend mint engine.
-- Worker logic.
-- UI/dashboard logic.
-- Real deposit monitoring.
-- Real money movement.
+- Testnet-only ORMBToken and MockUSDT contracts.
+- Deterministic worker cores for deposit detection, confirmations, risk checks, mint requests, and redemption burn verification.
+- Static admin, company, demo-flow, and monitoring dashboards.
+- Prisma schema for demo lifecycle and audit records.
+- Browser smoke checks and screenshot evidence for the static UI.
+- CI validation for typecheck, Prisma validation, unit tests, contract tests, and production build.
 
-The repository now includes a Hardhat, TypeScript, viem, OpenZeppelin, Prisma, PostgreSQL, Next.js, React, and dotenv tooling foundation for future contract, ledger, and dashboard work. It also includes testnet-only ORMBToken and MockUSDT contracts for the demo lifecycle.
+The demo intentionally does not include live API routes, persistent worker runners, live RPC polling loops, production payment rails, real custody, or real money movement.
 
-The repository currently provides project structure, documentation, agent workflow rules, placeholder scripts, and minimal CI.
+## Local Setup
 
-## Placeholder Commands
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the local app:
 
 ```bash
 npm run dev
+```
+
+Open:
+
+- `http://localhost:3000/`
+- `http://localhost:3000/demo`
+- `http://localhost:3000/admin`
+- `http://localhost:3000/company`
+- `http://localhost:3000/status`
+
+Run the full local CI validation:
+
+```bash
+npm run test:ci
+```
+
+Run production-mode browser smoke checks after installing Playwright Chromium:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+## Commands
+
+```bash
+npm run dev
+npm run start
 npm run build
 npm run test
+npm run test:e2e
 npm run test:contracts
 npm run compile:contracts
 npm run deploy:contracts
@@ -51,7 +87,7 @@ npm run demo:seed
 npm run test:ci
 ```
 
-Next.js dev/build, contract compile/test, and Prisma generate/validate commands are active for the placeholder tooling setup. App tests and lint remain placeholders until focused implementation branches replace them.
+Next.js dev/build, worker unit tests, contract compile/test, Prisma generate/validate, and Playwright browser checks are active. `lint` remains a placeholder script.
 
 ## App Shell
 
@@ -64,6 +100,18 @@ The current Next.js app shell includes static demo routes:
 - `/status`: Static monitoring and security readiness dashboard.
 
 These routes intentionally do not include backend business logic, live dashboard data, contract calls, or real money movement.
+
+## Demo Walkthrough
+
+Use `docs/DEMO_SCRIPT.md` for the recruiter-facing walkthrough. The expected story is:
+
+1. Establish the safety boundary: testnet-only, mock assets, no customer funds.
+2. Show the landing overview and target lifecycle.
+3. Walk through `/demo` for the full lifecycle.
+4. Show `/admin` for KYB, risk events, mint approvals, reconciliation, and audit logs.
+5. Show `/company` for deposit instructions, balances, transfers, and redemptions.
+6. Show `/status` for security posture, known watch items, and release gates.
+7. Close with known limitations and next engineering branches.
 
 ## Contracts
 
@@ -103,6 +151,11 @@ Copy `.env.example` for local environment setup only when future branches need n
 - `docs/COMPANY_DASHBOARD.md`: Static company settlement dashboard scope and safety boundary.
 - `docs/DEMO_FLOW_PAGE.md`: Static end-to-end demo flow page scope and safety boundary.
 - `docs/MONITORING_SECURITY.md`: Static monitoring and security readiness dashboard scope.
+- `docs/UI_REVIEW.md`: Browser verification notes and screenshot paths.
+- `docs/RELEASE_READINESS.md`: Current release readiness status.
+- `docs/DEMO_SCRIPT.md`: Demo-v0 walkthrough script.
+- `docs/KNOWN_LIMITATIONS.md`: Remaining limitations and deferred work.
+- `docs/RELEASE_CHECKLIST.md`: Human approval checklist for demo-v0.
 - `docs/STRIPE_BRIDGE_ALIGNMENT.md`: Engineering alignment with Stripe/Bridge-style infrastructure.
 - `docs/RUNBOOK.md`: Setup and validation runbook.
 - `docs/decisions/`: Architecture decision records.
