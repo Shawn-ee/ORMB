@@ -22,9 +22,9 @@ Later branches will add:
 - Worker execution commands.
 - Demo seed data.
 
-## Deposit Listener Core
+## Worker Cores
 
-The current deposit listener and confirmation worker implementations are testable cores only. They process supplied data and do not run live RPC polling loops.
+The current deposit listener, confirmation worker, and risk engine implementations are testable cores only. They process supplied data and do not run live RPC polling loops or create mint requests.
 
 Run unit tests:
 

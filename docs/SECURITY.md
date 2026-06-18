@@ -62,6 +62,7 @@ Current listener baseline:
 - Live RPC polling and private-key usage are not implemented.
 - Confirmation handling is threshold-based and must complete before later mint request creation.
 - Confirmation worker reruns avoid rewriting unchanged records.
+- Risk checks require approved KYB, known active wallets, whitelisted receiving wallets, confirmed deposits, duplicate prevention, and configured mint limits before mint request creation.
 
 ## Current Security Status
 
