@@ -31,7 +31,7 @@ This initial repository bootstrap intentionally does not implement:
 - Real deposit monitoring.
 - Real money movement.
 
-The repository now includes a Hardhat, TypeScript, viem, OpenZeppelin, and dotenv tooling foundation for future contract work. `contracts/ToolingPlaceholder.sol` exists only to validate compilation and test execution; it is not ORMB token business logic.
+The repository now includes a Hardhat, TypeScript, viem, OpenZeppelin, Prisma, PostgreSQL, and dotenv tooling foundation for future contract and ledger work. `contracts/ToolingPlaceholder.sol` exists only to validate compilation and test execution; it is not ORMB token business logic.
 
 The repository currently provides project structure, documentation, agent workflow rules, placeholder scripts, and minimal CI.
 
@@ -51,11 +51,13 @@ npm run prisma:validate
 npm run test:ci
 ```
 
-Contract compile and test commands are active for the placeholder Hardhat setup. Non-contract application commands remain placeholders until focused implementation branches replace them.
+Contract compile/test and Prisma generate/validate commands are active for the placeholder tooling setup. Non-contract application commands remain placeholders until focused implementation branches replace them.
 
 ## Environment
 
 Copy `.env.example` for local environment setup only when future branches need network access. The example values are placeholders. Do not commit real private keys, seed phrases, RPC secrets, production credentials, real USDT, or real RMB configuration.
+
+`DATABASE_URL` is documented for local PostgreSQL-backed Prisma development. The current Prisma schema is a tooling baseline only and does not yet include ORMB business ledger models.
 
 ## Documentation Map
 
