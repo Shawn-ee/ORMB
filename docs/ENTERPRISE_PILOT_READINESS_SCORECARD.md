@@ -12,7 +12,7 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 
 | Rank | Gap | Severity | Status | Next Branch |
 | --- | --- | --- | --- | --- |
-| 1 | Hosted demo readiness is not documented. | High | Open | `audit/280-hosted-demo-readiness` |
+| 1 | Hosted demo readiness requires human acceptance for exact read-only posture. | High | Conditionally addressed | `audit/280-hosted-demo-readiness` |
 | 2 | API design is not specified. | High | Open | `agent/300-api-contract-docs` |
 | 3 | Durable worker runner and persistence adapter boundaries are not specified. | High | Open | `agent/301-worker-adapter-boundary-docs` |
 | 4 | Database migration safety is not documented. | High | Open | `agent/302-database-migration-runbook` |
@@ -51,10 +51,10 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 | Operator runbook exists. | Pass |
 | Incident response runbook exists. | Pass |
 | Legal/compliance boundary says no real funds/public issuance. | Pass |
-| Hosted demo readiness is documented. | Fail |
+| Hosted demo readiness is documented. | Partial |
 | Stripe/Bridge portfolio package is ready. | Partial |
 | `main` remains untouched unless owner approves. | Pass |
 
 ## Current Decision
 
-Proceed next with `audit/280-hosted-demo-readiness` because it addresses the highest remaining unblocker before enterprise-facing demo review: read-only hosted posture, dependency acceptance, environment safety, and prohibited operations.
+Proceed next with `agent/300-api-contract-docs` because API boundaries must be explicit before any enterprise-facing integration or pilot discussion.

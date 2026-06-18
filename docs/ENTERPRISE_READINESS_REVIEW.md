@@ -24,7 +24,7 @@ The repo is stronger than `demo-v0` and is suitable as a local technical demo an
 | --- | --- | --- |
 | Local technical demo | Ready | Unit, contract, CI, build, and browser smoke checks pass; static routes and deterministic worker cores are documented. |
 | Stripe/Bridge portfolio demo | Ready | The repo demonstrates contract controls, mint/burn lifecycle modeling, idempotent event processing, ledger invariants, risk checks, and disciplined documentation. |
-| Public hosted demo | Conditionally ready | Static pages can be hosted only in a read-only mode with clear disclaimers, but hosted-demo readiness and dependency acceptance need final review. |
+| Public hosted demo | Conditionally ready | Static pages can be hosted only in a read-only mode with clear disclaimers and human acceptance of documented dependency findings. |
 | Limited enterprise pilot preparation | Not ready | The technical foundation is improving, but API boundaries, durable runner assumptions, hosted-demo posture, database migration safety, audit retention, and pilot UX still need focused branches. |
 | Production stablecoin infrastructure | Not ready | No production authorization, real compliance program, custody/reserve model, real rails, mainnet approval, or production operations stack exists. |
 
@@ -63,9 +63,9 @@ The repo is stronger than `demo-v0` and is suitable as a local technical demo an
 
 ## Remaining Blockers
 
-### High: Hosted Demo Readiness Is Not Documented
+### High: Hosted Demo Readiness Requires Human Acceptance
 
-A safe hosted demo needs a read-only posture, environment validation checklist, dependency acceptance decision, browser evidence, and explicit prohibited operations.
+A safe hosted demo now has a read-only posture and checklist in `docs/HOSTED_DEMO_READINESS.md`, but the human owner still must accept the exact URL, audience, duration, and dependency posture before external sharing.
 
 Recommended branch: `audit/280-hosted-demo-readiness`
 

@@ -32,8 +32,17 @@ ORMB `demo-v0` is a local/testnet technical demo. It is not a hosted production 
 
 - `npm audit --json` currently reports 25 vulnerabilities: 8 low, 9 moderate, 8 high, and 0 critical.
 - Findings are accepted only for local/testnet demo review.
-- Dependency hardening is required before any hosted, public, or production-like deployment.
+- Dependency hardening or explicit human acceptance is required before any hosted demo.
+- Any hosted demo must remain read-only unless a separate approved branch adds and validates mutation gates.
+- Production-like deployment, real-funds usage, or mainnet activity remains prohibited.
 - Lint remains a placeholder script.
+
+## Hosted Demo Limitations
+
+- Hosted demo readiness is conditional and documented in `docs/HOSTED_DEMO_READINESS.md`.
+- The repository does not currently define a deployment target.
+- No hosted database, queue, worker runtime, or live RPC polling is approved.
+- No live mutations are approved for hosted use.
 
 ## Review Limitations
 
