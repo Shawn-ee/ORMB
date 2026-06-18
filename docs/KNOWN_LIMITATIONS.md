@@ -26,6 +26,7 @@ ORMB `demo-v0` is a local/testnet technical demo. It is not a hosted production 
 
 - Dashboards use representative static demo data.
 - Prisma schema and seed script exist for local development, but no migration/deployment pipeline is included.
+- Database migration safety expectations are documented, but no migration deployment pipeline or backup/restore automation is implemented.
 - Worker cores process supplied data in tests; they are not durable polling loops.
 
 ## Security Limitations

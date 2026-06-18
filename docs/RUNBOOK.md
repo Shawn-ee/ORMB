@@ -62,6 +62,8 @@ npm run demo:seed
 
 Do not run seed scripts against production databases.
 
+Database migration safety expectations are documented in `docs/DATABASE_MIGRATION_RUNBOOK.md`.
+
 ## Contract Scripts
 
 Base Sepolia contract scripts are documented in `docs/DEPLOYMENT.md`.
