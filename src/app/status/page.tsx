@@ -1,6 +1,6 @@
 const readinessMetrics = [
   { label: "CI status", value: "Passing", detail: "GitHub Actions validates test:ci" },
-  { label: "Worker cores", value: "5", detail: "Unit-tested deterministic modules" },
+  { label: "Worker cores", value: "8", detail: "Unit-tested deterministic modules" },
   { label: "Open audit notes", value: "1", detail: "Dependency audit documented" },
   { label: "Live integrations", value: "0", detail: "No real keys or services configured" },
 ];
@@ -10,6 +10,7 @@ const subsystemRows = [
   ["Prisma schema", "Ready", "Domain schema validates for demo lifecycle records and audit logs."],
   ["Deposit listener", "Core ready", "Processes supplied MockUSDT logs idempotently."],
   ["Confirmation worker", "Core ready", "Applies configured testnet confirmation threshold."],
+  ["Worker observability", "Core ready", "Summarizes supplied worker checkpoints without live service access."],
   ["Risk engine", "Core ready", "Checks KYB, wallets, duplicate status, and mint limits."],
   ["Mint flow", "Core ready", "Creates pending requests and gates submission behind manual approval."],
   ["Redemption flow", "Core ready", "Verifies burn chain, source wallet, amount, and duplicate event key."],
