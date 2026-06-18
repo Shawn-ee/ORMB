@@ -1,0 +1,21 @@
+{
+  "name": "ormb",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Testnet-first, whitelisted stablecoin issuance and enterprise settlement demo.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "node -e \"console.log('placeholder: dev server not implemented yet')\"",
+    "build": "node -e \"console.log('placeholder: build not implemented yet')\"",
+    "test": "node -e \"console.log('placeholder: tests not implemented yet')\"",
+    "test:contracts": "node -e \"console.log('placeholder: contract tests not implemented yet')\"",
+    "typecheck": "node -e \"console.log('placeholder: typecheck not implemented yet')\"",
+    "lint": "node -e \"console.log('placeholder: lint not implemented yet')\"",
+    "prisma:generate": "node -e \"console.log('placeholder: prisma generate not implemented yet')\"",
+    "prisma:validate": "node -e \"console.log('placeholder: prisma validate not implemented yet')\"",
+    "test:ci": "npm run lint && npm run typecheck && npm run prisma:validate && npm run test && npm run test:contracts && npm run build"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
