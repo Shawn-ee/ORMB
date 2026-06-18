@@ -6,8 +6,8 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "node -e \"console.log('placeholder: dev server not implemented yet')\"",
-    "build": "node -e \"console.log('placeholder: build not implemented yet')\"",
+    "dev": "next dev",
+    "build": "next build",
     "test": "node -e \"console.log('placeholder: tests not implemented yet')\"",
     "compile:contracts": "hardhat compile",
     "test:contracts": "hardhat test test/contracts/tooling.test.ts",
@@ -24,6 +24,8 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox-viem": "^5.0.7",
     "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "hardhat": "^3.9.0",
     "prisma": "^7.8.0",
     "ts-node": "^10.9.2",
@@ -33,6 +35,9 @@
     "@openzeppelin/contracts": "^5.6.1",
     "@prisma/client": "^7.8.0",
     "dotenv": "^17.4.2",
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "viem": "^2.52.2"
   }
 }

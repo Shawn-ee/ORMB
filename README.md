@@ -31,7 +31,7 @@ This initial repository bootstrap intentionally does not implement:
 - Real deposit monitoring.
 - Real money movement.
 
-The repository now includes a Hardhat, TypeScript, viem, OpenZeppelin, Prisma, PostgreSQL, and dotenv tooling foundation for future contract and ledger work. `contracts/ToolingPlaceholder.sol` exists only to validate compilation and test execution; it is not ORMB token business logic.
+The repository now includes a Hardhat, TypeScript, viem, OpenZeppelin, Prisma, PostgreSQL, Next.js, React, and dotenv tooling foundation for future contract, ledger, and dashboard work. `contracts/ToolingPlaceholder.sol` exists only to validate compilation and test execution; it is not ORMB token business logic.
 
 The repository currently provides project structure, documentation, agent workflow rules, placeholder scripts, and minimal CI.
 
@@ -51,7 +51,18 @@ npm run prisma:validate
 npm run test:ci
 ```
 
-Contract compile/test and Prisma generate/validate commands are active for the placeholder tooling setup. Non-contract application commands remain placeholders until focused implementation branches replace them.
+Next.js dev/build, contract compile/test, and Prisma generate/validate commands are active for the placeholder tooling setup. App tests and lint remain placeholders until focused implementation branches replace them.
+
+## App Shell
+
+The current Next.js app shell includes placeholder routes:
+
+- `/`: Demo control plane overview.
+- `/admin`: Admin operations placeholder.
+- `/company`: Company workspace placeholder.
+- `/status`: System readiness placeholder.
+
+These routes intentionally do not include backend business logic, live dashboard data, contract calls, or real money movement.
 
 ## Environment
 
