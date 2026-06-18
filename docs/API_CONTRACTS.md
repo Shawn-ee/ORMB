@@ -164,6 +164,8 @@ Every accepted mutation must record:
 
 Audit records must not contain private keys, seed phrases, RPC secrets, database URLs, production credentials, real customer data, or real transaction instructions.
 
+Retention and export assumptions for audit records are documented in `docs/AUDIT_RETENTION.md`.
+
 ## Non-Goals
 
 - No API route implementation is added here.

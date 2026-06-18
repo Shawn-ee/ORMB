@@ -84,6 +84,8 @@ The contract threat model is documented in `docs/CONTRACT_THREAT_MODEL.md`.
 
 Incident classification, containment, and escalation procedures are documented in `docs/INCIDENT_RESPONSE_RUNBOOK.md`.
 
+Audit retention and export assumptions are documented in `docs/AUDIT_RETENTION.md`.
+
 Full demo verification status is documented in `docs/DEMO_VERIFICATION.md`.
 
 Browser UI release review is documented in `docs/UI_REVIEW.md`.
