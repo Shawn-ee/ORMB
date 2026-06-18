@@ -17,7 +17,7 @@ ORMB will be organized as an API-first demo with clearly separated responsibilit
 
 Future branches will design a permissioned ERC-20 style ORMB token using OpenZeppelin Contracts v5. Contracts must support a controlled mint/burn lifecycle and clear role boundaries.
 
-No smart contract implementation exists in the bootstrap milestone.
+The repository includes Hardhat 3, TypeScript, viem, OpenZeppelin Contracts v5, dotenv support, and a Base Sepolia network configuration driven by environment variables. `contracts/ToolingPlaceholder.sol` exists only to validate the toolchain. It does not implement ORMB token logic.
 
 ### API Layer
 
@@ -45,7 +45,7 @@ No UI implementation exists in the bootstrap milestone.
 
 ## Chain Choice
 
-The target chain is Base Sepolia. See `docs/decisions/0002-chain-choice.md`.
+The target chain is Base Sepolia. Hardhat network configuration uses `BASE_SEPOLIA_RPC_URL` and `BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY` placeholders for future testnet-only deployment work. See `docs/decisions/0002-chain-choice.md`.
 
 ## Security Model
 
