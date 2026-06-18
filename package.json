@@ -20,6 +20,12 @@
     "lint": "node -e \"console.log('placeholder: lint not implemented yet')\"",
     "prisma:generate": "prisma generate",
     "prisma:validate": "prisma validate",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:migrate:local": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:seed": "npm run demo:seed",
+    "db:reset:local": "prisma migrate reset && npm run db:seed",
     "demo:seed": "tsx scripts/seed-demo.ts",
     "backfill:dry-run": "tsx scripts/backfill-deposits-dry-run.ts",
     "test:ci": "npm run lint && npm run prisma:generate && npm run typecheck && npm run prisma:validate && npm run test && npm run compile:contracts && npm run test:contracts && npm run build"
