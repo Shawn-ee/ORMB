@@ -116,3 +116,22 @@ Before demo release:
 - Apply safe direct upgrades if available.
 - Re-run full validation.
 - Confirm no vulnerable dependency is introduced into server-side production behavior or exposed user-input paths.
+
+## 2026-06-18 Release-Readiness Re-Check
+
+Command:
+
+```bash
+npm audit --json
+```
+
+Result:
+
+- Exit code: 1
+- Low: 8
+- Moderate: 9
+- High: 8
+- Critical: 0
+- Total: 25
+
+The vulnerability count remains unchanged after adding Playwright for browser smoke checks. The findings are accepted for `demo-v0` review only because this repository remains a local/testnet technical demo with no production service, no mainnet deployment, no real funds, and no customer data paths. A dependency-hardening branch remains recommended before any hosted or externally accessible demo.

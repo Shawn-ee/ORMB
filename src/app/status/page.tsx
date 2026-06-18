@@ -26,7 +26,7 @@ const controls = [
 
 const watchItems = [
   ["Dependency audit", "Documented npm audit findings remain unresolved until a dependency-hardening branch."],
-  ["Browser verification", "In-app browser target was unavailable in this session; builds remain the UI gate."],
+  ["Browser verification", "Playwright route and navigation checks are expected before demo release approval."],
   ["Live adapters", "Prisma adapters, RPC indexers, and contract gateways are deferred."],
 ];
 

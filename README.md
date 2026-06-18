@@ -55,7 +55,7 @@ Next.js dev/build, contract compile/test, and Prisma generate/validate commands 
 
 ## App Shell
 
-The current Next.js app shell includes placeholder routes:
+The current Next.js app shell includes static demo routes:
 
 - `/`: Demo control plane overview.
 - `/demo`: Static end-to-end demo flow walkthrough.
@@ -78,7 +78,7 @@ These contracts are not deployed to mainnet and do not represent real USDT, real
 
 Copy `.env.example` for local environment setup only when future branches need network access. The example values are placeholders. Do not commit real private keys, seed phrases, RPC secrets, production credentials, real USDT, or real RMB configuration.
 
-`DATABASE_URL` is documented for local PostgreSQL-backed Prisma development. The current Prisma schema includes ORMB demo ledger models, but no worker or API behavior is implemented yet.
+`DATABASE_URL` is documented for local PostgreSQL-backed Prisma development. The current Prisma schema includes ORMB demo ledger models and deterministic worker cores, but no live API server or persistent worker runner is wired yet.
 
 `npm run demo:seed` seeds deterministic demo companies and wallets once a local PostgreSQL database is available.
 
