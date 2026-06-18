@@ -11,12 +11,13 @@ The page is implemented at `/admin` in the Next.js app shell and uses static dem
 It displays:
 
 1. Operational metrics for companies, mint approvals, redemptions, and risk events.
-2. Enterprise onboarding and wallet review queue.
-3. Mint approval queue with fixed FX and ORMB amounts.
-4. Redemption review queue with burn status.
-5. Risk event list.
-6. Reconciliation summary.
-7. Audit log activity.
+2. Enterprise review rails for risk case triage, ledger reconciliation, and audit coverage.
+3. Enterprise onboarding and wallet review queue.
+4. Mint approval queue with fixed FX and ORMB amounts.
+5. Redemption review queue with burn status.
+6. Risk event list.
+7. Reconciliation summary.
+8. Audit log activity.
 
 ## Safety Boundary
 

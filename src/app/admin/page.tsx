@@ -5,6 +5,27 @@ const metrics = [
   { label: "Open risk events", value: "4", detail: "1 high severity" },
 ];
 
+const reviewRails = [
+  {
+    title: "Risk case triage",
+    status: "Operator review",
+    summary: "Unknown wallets, high-severity failures, and limit exceptions remain blocked until reviewed.",
+    checks: ["OPEN risk events: 4", "High severity: 1", "Mint progression: paused for unknown wallet"],
+  },
+  {
+    title: "Ledger reconciliation",
+    status: "Invariant pass",
+    summary: "Confirmed deposits, mint requests, verified burns, and displayed supply reconcile for demo data.",
+    checks: ["Duplicate mint requests: 0", "Duplicate burn events: skipped", "Unresolved exceptions: 0"],
+  },
+  {
+    title: "Audit coverage",
+    status: "Demo-only logs",
+    summary: "Privileged lifecycle transitions require safe audit metadata with no secrets or real customer data.",
+    checks: ["Manual approvals logged", "Risk failures logged", "Retention policy documented"],
+  },
+];
+
 const onboardingQueue = [
   {
     company: "Harbor Components Ltd.",
@@ -99,6 +120,29 @@ export default function AdminPage() {
             <span>{metric.detail}</span>
           </div>
         ))}
+      </section>
+
+      <section className="section">
+        <div className="section-heading">
+          <h2>Enterprise Review Rails</h2>
+          <span className="status-pill neutral">Read-only controls</span>
+        </div>
+        <div className="review-grid">
+          {reviewRails.map((rail) => (
+            <article className="review-card" key={rail.title}>
+              <div className="review-card-header">
+                <h3>{rail.title}</h3>
+                <span className="status-pill">{rail.status}</span>
+              </div>
+              <p>{rail.summary}</p>
+              <ul>
+                {rail.checks.map((check) => (
+                  <li key={check}>{check}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="section dashboard-grid">

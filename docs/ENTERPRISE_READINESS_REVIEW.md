@@ -89,13 +89,12 @@ Audit retention, export, deletion, and tamper-resistance assumptions are documen
 
 Recommended branch: `agent/303-audit-retention-docs`
 
-### Medium: Admin And Company Pilot UX Need More Enterprise Review Context
+### Medium: Company Pilot UX Needs More Enterprise Review Context
 
-Static pages are readable and safe, but they do not yet show enough risk-case, reconciliation, operator escalation, and pilot participant context for Enterprise Pilot Readiness v1.
+The admin dashboard now shows static risk-case, reconciliation, and audit-review concepts. The company dashboard still needs clearer pilot participant guidance and support/escalation context for Enterprise Pilot Readiness v1.
 
 Recommended branches:
 
-- `agent/270-admin-risk-review-ui`
 - `agent/272-company-pilot-flow-ui`
 - `audit/274-browser-enterprise-readiness-review`
 
