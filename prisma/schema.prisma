@@ -123,6 +123,7 @@ model Deposit {
   txHash          String
   logIndex        Int
   blockNumber     BigInt
+  blockHash       String?
   fromAddress     String
   toAddress       String
   tokenAddress    String

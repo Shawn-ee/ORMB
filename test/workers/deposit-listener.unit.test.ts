@@ -94,8 +94,16 @@ describe("processMockUsdtTransferLogs", () => {
     assert.equal(repository.deposits[0].companyId, "company_1");
     assert.equal(repository.deposits[0].companyWalletId, "wallet_1");
     assert.equal(repository.deposits[0].amount, "125.5");
+    assert.equal(
+      repository.deposits[0].blockHash,
+      "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    );
     assert.equal(repository.deposits[0].status, "DETECTED");
     assert.equal(repository.auditLogs[0].action, "deposit.detected");
+    assert.equal(
+      repository.auditLogs[0].metadata?.blockHash,
+      "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    );
     assert.equal(repository.latestBlockNumber, 100n);
   });
 
@@ -133,6 +141,10 @@ describe("processMockUsdtTransferLogs", () => {
     assert.equal(result.rejectedUnknownWallet, 1);
     assert.equal(repository.deposits[0].companyId, undefined);
     assert.equal(repository.deposits[0].companyWalletId, undefined);
+    assert.equal(
+      repository.deposits[0].blockHash,
+      "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    );
     assert.equal(repository.deposits[0].status, "REJECTED");
     assert.equal(repository.auditLogs[0].action, "deposit.rejected.unknown_wallet");
   });
@@ -159,6 +171,7 @@ function transferLog(overrides: Partial<MockUsdtTransferLog>): MockUsdtTransferL
     txHash: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     logIndex: 0,
     blockNumber: 100n,
+    blockHash: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     fromAddress: COMPANY_WALLET,
     toAddress: TREASURY,
     tokenAddress: MOCK_USDT,
