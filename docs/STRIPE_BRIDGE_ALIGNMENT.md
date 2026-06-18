@@ -13,6 +13,10 @@ ORMB is intended to demonstrate engineering patterns relevant to stablecoin paym
 - Chain event indexing.
 - Manual approval controls.
 - Audit logs.
+- Risk case review.
+- Dry-run operational recovery tooling.
+- Worker observability and incident-response boundaries.
+- Read-only hosted-demo posture.
 - Security and legal boundary documentation.
 - CI and disciplined branch workflow.
 
@@ -33,13 +37,30 @@ The current deterministic worker cores and static dashboards demonstrate:
 
 - Deposit event modeling.
 - Confirmation handling.
+- Reorg-aware confirmation assumptions.
+- Dry-run backfill and retry boundaries.
 - Mint request lifecycle.
 - Redemption request lifecycle.
-- Reconciliation records.
+- Ledger invariant reconciliation.
 - Retry-safe and idempotent processing.
 - Operational visibility through admin tooling.
+- Participant-facing company workflow visibility.
+- Audit retention and export assumptions.
 
-Deferred production-grade work includes API routes, live adapters, RPC indexers, durable worker runners, hosted observability, and external-service integrations.
+Deferred production-grade work includes API route implementation, live adapters, RPC indexers, durable worker runners, hosted observability, authentication/authorization providers, migration pipelines, audit export systems, and external-service integrations.
+
+## Portfolio Review Path
+
+A Stripe/Bridge-style reviewer can inspect:
+
+- `contracts/` and `test/contracts/` for permissioned token controls.
+- `workers/` and `test/workers/` for deterministic state machines and idempotency.
+- `prisma/schema.prisma` for lifecycle and audit data modeling.
+- `docs/API_CONTRACTS.md` for future API boundaries.
+- `docs/WORKER_ADAPTER_BOUNDARIES.md` for live runner boundaries.
+- `docs/LEDGER_INVARIANTS.md` for reconciliation assumptions.
+- `docs/ENTERPRISE_UI_REVIEW.md` for browser-verified admin/company surfaces.
+- `docs/SECURITY.md`, `docs/LEGAL_BOUNDARIES.md`, and `docs/KNOWN_LIMITATIONS.md` for safety boundaries.
 
 ## Demo Boundary
 
