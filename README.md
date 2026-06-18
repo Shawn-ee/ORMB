@@ -24,12 +24,14 @@ The project is designed as a portfolio and technical demonstration of stablecoin
 
 This initial repository bootstrap intentionally does not implement:
 
-- Smart contracts.
+- ORMB smart contracts.
 - Backend mint engine.
 - Worker logic.
 - UI/dashboard logic.
 - Real deposit monitoring.
 - Real money movement.
+
+The repository now includes a Hardhat, TypeScript, viem, OpenZeppelin, and dotenv tooling foundation for future contract work. `contracts/ToolingPlaceholder.sol` exists only to validate compilation and test execution; it is not ORMB token business logic.
 
 The repository currently provides project structure, documentation, agent workflow rules, placeholder scripts, and minimal CI.
 
@@ -40,6 +42,8 @@ npm run dev
 npm run build
 npm run test
 npm run test:contracts
+npm run compile:contracts
+npm run deploy:contracts
 npm run typecheck
 npm run lint
 npm run prisma:generate
@@ -47,7 +51,11 @@ npm run prisma:validate
 npm run test:ci
 ```
 
-These commands are placeholders during bootstrap and will be replaced by focused implementation branches.
+Contract compile and test commands are active for the placeholder Hardhat setup. Non-contract application commands remain placeholders until focused implementation branches replace them.
+
+## Environment
+
+Copy `.env.example` for local environment setup only when future branches need network access. The example values are placeholders. Do not commit real private keys, seed phrases, RPC secrets, production credentials, real USDT, or real RMB configuration.
 
 ## Documentation Map
 
