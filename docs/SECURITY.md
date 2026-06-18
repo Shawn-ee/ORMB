@@ -75,3 +75,5 @@ Current listener baseline:
 Security-sensitive implementation now exists in the smart contract layer. Contract changes require focused tests, documentation updates, and audit follow-up before demo release.
 
 The full project security review is documented in `docs/SECURITY_REVIEW.md`.
+
+Full demo verification status is documented in `docs/DEMO_VERIFICATION.md`.
