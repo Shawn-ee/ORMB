@@ -115,6 +115,15 @@ const auditLog = [
   ["09:51", "redemption.burn_duplicate_skipped", "RD-2016"],
 ];
 
+const stagingReconciliation = [
+  ["Manual deposits", "750.50 simulated USDT", "Owner-confirmed staging records only"],
+  ["Minted ORMB", "5,403.60 ORMB", "Submitted testnet mints after approval"],
+  ["Verified burns", "900.00 ORMB", "Base Sepolia burn evidence matched"],
+  ["Expected supply", "4,503.60 ORMB", "Matches displayed on-chain supply"],
+  ["Simulated reserve", "750.50 simulated USDT", "No real funds or payout claim"],
+  ["Mismatch warnings", "0 open", "Stop operator confidence if nonzero"],
+];
+
 export default function AdminPage() {
   return (
     <main className="page admin-page">
@@ -326,6 +335,22 @@ export default function AdminPage() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="section-heading">
+          <h2>Private Staging Reconciliation</h2>
+          <span className="status-pill neutral">Simulated reserve only</span>
+        </div>
+        <div className="reconciliation" aria-label="Private staging reconciliation">
+          {stagingReconciliation.map(([label, value, detail]) => (
+            <div key={label}>
+              <span>{label}</span>
+              <strong>{value}</strong>
+              <span>{detail}</span>
+            </div>
+          ))}
         </div>
       </section>
     </main>

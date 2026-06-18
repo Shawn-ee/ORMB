@@ -80,6 +80,10 @@ test.describe("UI release readiness", () => {
     await expect(page.getByText("Ledger reconciliation")).toBeVisible();
     await expect(page.getByText("Audit coverage")).toBeVisible();
     await expect(page.getByText("Read-only controls")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Private Staging Reconciliation" })).toBeVisible();
+    await expect(page.getByText("Manual deposits")).toBeVisible();
+    await expect(page.getByText("Expected supply")).toBeVisible();
+    await expect(page.getByText("Simulated reserve only")).toBeVisible();
   });
 
   test("company dashboard shows pilot participation boundaries", async ({ page }) => {

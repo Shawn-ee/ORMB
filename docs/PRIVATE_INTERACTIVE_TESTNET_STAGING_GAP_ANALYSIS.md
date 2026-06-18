@@ -170,7 +170,9 @@ Safety requirement: cashout/redemption is a simulation boundary only. No real pa
 
 ## Reconciliation Dashboard Gap
 
-Current ledger invariant logic exists, but private staging needs a database-backed dashboard:
+Current ledger invariant logic exists, and the admin dashboard now shows private-staging reconciliation checkpoints for manual deposits, minted ORMB, verified burns, expected supply, simulated reserve, and mismatch warnings. A worker helper summarizes balanced and mismatched staging reconciliation inputs.
+
+Private staging still needs a database-backed dashboard:
 
 - Manual deposits by source and status.
 - Mint requests and mint records with tx hashes.
