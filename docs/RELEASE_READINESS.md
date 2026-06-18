@@ -2,9 +2,9 @@
 
 ## Current Verdict
 
-`demo-v0` is ready to enter release packaging, but it is not approved for `main`.
+`demo-v0` is ready for human review after the `release/demo-v0` PR passes GitHub CI, but it is not approved for `main`.
 
-The next branch should be `release/demo-v0` into `dev`. Human owner approval is still required before any merge from `dev` to `main`.
+Human owner approval is still required before any merge from `dev` to `main`.
 
 ## Completed Gates
 
@@ -31,14 +31,10 @@ The findings are accepted only for local/testnet demo review because no critical
 
 ## Remaining Release Tasks
 
-- Prepare `release/demo-v0`.
-- Polish README setup and walkthrough instructions.
-- Add `docs/DEMO_SCRIPT.md`.
-- Add `docs/KNOWN_LIMITATIONS.md`.
-- Add `docs/RELEASE_CHECKLIST.md`.
-- Confirm screenshot paths and browser command in release docs.
-- Re-run the full validation matrix on the release branch.
-- Present `release/demo-v0` for human review.
+- Merge the `release/demo-v0` PR into `dev` only after GitHub CI passes.
+- Human owner reviews `docs/DEMO_SCRIPT.md`, `docs/KNOWN_LIMITATIONS.md`, `docs/RELEASE_CHECKLIST.md`, and screenshot evidence.
+- Human owner decides whether the unresolved dependency audit findings are acceptable for the portfolio demo.
+- Human owner explicitly approves or rejects any later `dev` to `main` release action.
 
 ## Not Approved
 

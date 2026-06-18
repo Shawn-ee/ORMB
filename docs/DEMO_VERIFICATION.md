@@ -6,7 +6,7 @@
 
 ## Summary
 
-The ORMB demo is coherent as a static/testnet portfolio demo with testable contract and worker cores. It is not yet ready for `dev` to merge into `main` because browser visual verification and final release approval remain outstanding.
+The ORMB demo is coherent as a static/testnet portfolio demo with testable contract and worker cores. Browser visual verification has been completed through Playwright. It is not ready for `dev` to merge into `main` until the `release/demo-v0` checklist receives human owner approval.
 
 ## Requirement Matrix
 
@@ -39,7 +39,7 @@ The ORMB demo is coherent as a static/testnet portfolio demo with testable contr
 
 ## Demo Limitations
 
-- Browser screenshot verification was not available because the in-app browser target was unavailable in this session.
+- Browser screenshot verification is documented in `docs/UI_REVIEW.md`.
 - Dashboards and demo flow use static representative data.
 - Live Prisma adapters, RPC polling loops, live contract gateway submission, and real deployment execution are deferred.
 - Dependency audit findings remain documented in `docs/DEPENDENCY_AUDIT.md`.
@@ -48,9 +48,4 @@ The ORMB demo is coherent as a static/testnet portfolio demo with testable contr
 
 Do not merge `dev` into `main` yet.
 
-Before `release/demo-v0`, complete at least one of:
-
-- Browser-based visual verification of `/`, `/demo`, `/admin`, `/company`, and `/status`.
-- Human owner manual UI review.
-
-Also re-check dependency audit status and confirm the human owner accepts the remaining static-demo limitations.
+Before any `dev` to `main` merge, complete `docs/RELEASE_CHECKLIST.md`, re-check dependency audit status, and confirm the human owner accepts the remaining static-demo limitations.

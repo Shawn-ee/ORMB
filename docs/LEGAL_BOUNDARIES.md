@@ -38,3 +38,15 @@ The MVP may:
 ## Required Language
 
 Public documentation and demo materials must describe ORMB as a testnet-first technical demo, not a live financial product.
+
+## Demo-v0 Release Boundary
+
+`demo-v0` may be shown as a portfolio and engineering demo only. It must be accompanied by the visible app disclaimer and the repository-level limitations:
+
+- No real USDT, RMB, CNH, or customer funds.
+- No redemption right or claim on real-world value.
+- No production payment processing.
+- No custody, money transmission, exchange, or brokerage service.
+- No mainnet deployment unless the human owner explicitly approves it in writing.
+
+If a demo viewer asks whether ORMB is a launch plan, product offering, public stablecoin, or regulated payment service, the answer is no.
