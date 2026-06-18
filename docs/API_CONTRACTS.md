@@ -14,6 +14,7 @@ ORMB remains testnet-only, mock-asset-only, no-real-funds, no-mainnet, and non-p
 - Unknown-wallet deposits must never create mint requests.
 - Minting requires confirmed deposits, passing risk checks, and manual approval.
 - Redemption requires manual approval before burn verification and simulated payout completion.
+- Private staging burn evidence must be Base Sepolia-only and must match the approved wallet, amount, transaction hash, and log index before payout simulation can be marked.
 - Hosted-demo mode must be read-only unless a future approved branch adds explicit mutation guards.
 - API responses must not expose secrets, private keys, seed phrases, RPC credentials, database URLs, or real customer data.
 
@@ -129,6 +130,7 @@ Required guards:
 - A mint submission cannot happen twice for the same request.
 - Redemption requests require approved company and whitelisted wallet checks.
 - Burn verification must match chain, wallet, amount, and event key.
+- Burn evidence must be validated as Base Sepolia-only in private staging before it is passed to redemption state transitions.
 - Simulated payout can complete only after burn verification.
 - Risk case transitions must follow `docs/RISK_CASE_MANAGEMENT.md`.
 

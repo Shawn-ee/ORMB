@@ -117,7 +117,7 @@ Contracts and Base Sepolia scripts exist, but private staging needs additional o
 - Script to grant and verify `MINTER_ROLE` for a dedicated staging minter wallet.
 - Deployment verification script for chain ID, bytecode, token metadata, role membership, whitelist state, and total supply.
 - Runtime mint gateway boundary exists for Base Sepolia chain, amount, role, whitelist, and `ORMB.mint()` preflight; wiring it to a staging wallet/API remains future work.
-- Runtime burn gateway using a staging burner/redeem wallet key.
+- Runtime burn evidence boundary exists for Base Sepolia chain, event identity, source wallet, and amount validation; wiring it to a staging API/UI remains future work.
 - API and worker tests that mock gateways and never require real RPC keys in CI.
 
 All on-chain execution must hard-check Base Sepolia chain ID `84532`.
@@ -155,11 +155,13 @@ Safety requirement: manual deposits are simulated staging records only and must 
 
 ## Redemption/Cashout To Burn Gap
 
-Current worker cores model redemption request, approval, burn verification, payout simulation, and completion. Missing pieces:
+Current worker cores model redemption request, approval, burn verification, payout simulation, and completion. A Base Sepolia burn evidence boundary now validates chain, event identity, source wallet, and amount before the core consumes burn evidence.
+
+Remaining missing pieces:
 
 - Protected API routes for redemption creation, approval, returned-ORMB verification, burn execution, and simulated payout completion.
 - Persistent Prisma adapter.
-- Runtime burn gateway or redeem-wallet balance verification path.
+- Runtime API/UI wiring for the burn evidence boundary or a redeem-wallet balance verification path.
 - Admin UI controls that clearly say payout is simulated only.
 - AuditLog records for every state transition.
 - Reconciliation tests proving duplicate burns and premature payout completion fail closed.
