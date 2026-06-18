@@ -127,6 +127,33 @@ describe("processMockUsdtTransferLogs", () => {
 
     assert.equal(result.duplicates, 1);
     assert.equal(repository.deposits.length, 1);
+    assert.equal(repository.auditLogs.length, 1);
+  });
+
+  it("records duplicate logs when verbose audit policy is enabled", async () => {
+    const log = transferLog({ fromAddress: COMPANY_WALLET });
+
+    await processMockUsdtTransferLogs({
+      chainId: CHAIN_ID,
+      treasuryAddress: TREASURY,
+      mockUsdtAddress: MOCK_USDT,
+      logs: [log],
+      repository,
+    });
+    const result = await processMockUsdtTransferLogs({
+      chainId: CHAIN_ID,
+      treasuryAddress: TREASURY,
+      mockUsdtAddress: MOCK_USDT,
+      logs: [log],
+      repository,
+      auditPolicy: "verbose",
+    });
+
+    assert.equal(result.duplicates, 1);
+    assert.equal(repository.deposits.length, 1);
+    assert.equal(repository.auditLogs[1].action, "deposit.duplicate_skipped");
+    assert.equal(repository.auditLogs[1].entityId, `${CHAIN_ID}:${log.txHash}:0`);
+    assert.equal(repository.auditLogs[1].metadata?.reason, "existing_deposit_event_key");
   });
 
   it("rejects unknown wallet deposits without assigning a company", async () => {
@@ -161,6 +188,24 @@ describe("processMockUsdtTransferLogs", () => {
     assert.equal(result.ignored, 1);
     assert.equal(repository.deposits.length, 0);
     assert.equal(repository.auditLogs.length, 0);
+    assert.equal(repository.latestBlockNumber, undefined);
+  });
+
+  it("records ignored logs when verbose audit policy is enabled", async () => {
+    const result = await processMockUsdtTransferLogs({
+      chainId: CHAIN_ID,
+      treasuryAddress: TREASURY,
+      mockUsdtAddress: MOCK_USDT,
+      logs: [transferLog({ fromAddress: COMPANY_WALLET, toAddress: OTHER_TREASURY })],
+      repository,
+      auditPolicy: "verbose",
+    });
+
+    assert.equal(result.ignored, 1);
+    assert.equal(repository.deposits.length, 0);
+    assert.equal(repository.auditLogs[0].action, "deposit.ignored");
+    assert.equal(repository.auditLogs[0].entityType, "SystemJobState");
+    assert.equal(repository.auditLogs[0].metadata?.reason, "outside_filter");
     assert.equal(repository.latestBlockNumber, undefined);
   });
 

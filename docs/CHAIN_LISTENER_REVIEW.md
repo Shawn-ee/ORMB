@@ -91,11 +91,13 @@ Acceptance criteria:
 
 ### Medium: Duplicate And Ignored Events Are Counted But Not Audited
 
+Status: addressed by `agent/237-listener-duplicate-ignored-audit-policy`.
+
 The listener result counts duplicates and ignored logs, but the current core only writes audit logs for detected and unknown-wallet rejected deposits.
 
-Impact: operator review has less traceability during backfills and incident investigations.
+Remaining impact: duplicate and ignored audit logs are opt-in through verbose audit policy to avoid noisy routine scans. Future live runners must choose the policy explicitly.
 
-Recommended branch: `agent/237-listener-audit-events`
+Recommended branch: `agent/237-listener-duplicate-ignored-audit-policy`
 
 Acceptance criteria:
 

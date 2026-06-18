@@ -18,6 +18,7 @@ The listener core:
 - Ignores transfers to the wrong treasury.
 - Avoids duplicate deposits using `chainId + txHash + logIndex`.
 - Writes audit log entries for detected and rejected deposits.
+- Supports `auditPolicy: "verbose"` for duplicate and ignored event audit logs during backfill or incident review.
 - Updates `SystemJobState` with the latest matching event block, or with an explicit finalized scanned block when `scannedToBlock` is supplied by a future runner.
 
 ## Safety Boundary
@@ -25,3 +26,14 @@ The listener core:
 Unknown wallet deposits must never create mint requests. They are recorded for review and audit only.
 
 The listener is for MockUSDT testnet/demo activity only. It must not process real USDT, real RMB, customer funds, or mainnet deposits.
+
+## Duplicate And Ignored Event Audit Policy
+
+The default listener audit policy is `state_changes_only`. This avoids noisy audit logs during routine scans and records only deposits that are detected or rejected.
+
+For backfills and incident investigations, future runners can pass `auditPolicy: "verbose"` to also write:
+
+- `deposit.duplicate_skipped` for events that already have a stored deposit key.
+- `deposit.ignored` for logs outside the configured chain, token, or treasury filter.
+
+Verbose audit mode still does not create mint requests, confirm deposits, call contracts, or process real funds.
