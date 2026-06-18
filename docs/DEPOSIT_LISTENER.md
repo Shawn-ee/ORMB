@@ -18,7 +18,7 @@ The listener core:
 - Ignores transfers to the wrong treasury.
 - Avoids duplicate deposits using `chainId + txHash + logIndex`.
 - Writes audit log entries for detected and rejected deposits.
-- Updates `SystemJobState` with the latest processed block.
+- Updates `SystemJobState` with the latest matching event block, or with an explicit finalized scanned block when `scannedToBlock` is supplied by a future runner.
 
 ## Safety Boundary
 

@@ -60,7 +60,8 @@ The safe backfill model is:
 3. Use `(chainId, txHash, logIndex)` as the idempotency key.
 4. Compare stored block number and block hash for existing events.
 5. Create audit logs for new, duplicate, and reorged events.
-6. Do not create mint requests during backfill until reconciliation passes.
+6. Checkpoint the finalized scanned range, not only the latest matching event.
+7. Do not create mint requests during backfill until reconciliation passes.
 
 No automatic backfill command is introduced in this branch. A future branch should add a bounded dry-run backfill command before any hosted demo.
 
