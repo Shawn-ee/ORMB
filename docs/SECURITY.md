@@ -45,6 +45,8 @@ Current contract baseline:
 - MockUSDT is intentionally public-mint/faucet testnet demo code and must not be used as a real asset.
 - Contract scripts require explicit `ORMB_CONFIRM_TESTNET_DEPLOY=YES` and must remain Base Sepolia-only.
 
+Mint role operations and role separation expectations are documented in `docs/MINT_ROLE_RUNBOOK.md`.
+
 ## Backend And Worker Security Expectations
 
 Future backend and worker work must include:

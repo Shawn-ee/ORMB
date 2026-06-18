@@ -68,6 +68,8 @@ Base Sepolia contract scripts are documented in `docs/DEPLOYMENT.md`.
 
 Do not run contract scripts with real funds or mainnet credentials. Scripts require `ORMB_CONFIRM_TESTNET_DEPLOY=YES` and are not executed by CI.
 
+Mint role operations, emergency pause expectations, and role rotation guidance are documented in `docs/MINT_ROLE_RUNBOOK.md`.
+
 ## Operational Boundary
 
 Do not run production-like operations from this repository. Do not use mainnet keys, real deposits, real customers, real USDT, or real RMB.
