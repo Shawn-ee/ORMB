@@ -54,6 +54,13 @@ Future backend and worker work must include:
 - Audit logs for admin actions.
 - Safe handling of failed or repeated events.
 
+Current listener baseline:
+
+- Deposit logs are idempotent by `chainId + txHash + logIndex`.
+- Unknown wallet deposits are rejected and must never create mint requests.
+- Wrong-treasury transfers are ignored.
+- Live RPC polling and private-key usage are not implemented.
+
 ## Current Security Status
 
 Security-sensitive implementation now exists in the smart contract layer. Contract changes require focused tests, documentation updates, and audit follow-up before demo release.

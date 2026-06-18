@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test": "node -e \"console.log('placeholder: tests not implemented yet')\"",
+    "test": "tsx --test \"test/**/*.unit.test.ts\"",
     "compile:contracts": "hardhat compile",
     "test:contracts": "hardhat test test/contracts/tooling.test.ts test/contracts/ormb-token.test.ts",
     "deploy:contracts": "hardhat run scripts/deploy-contracts.ts --network baseSepolia",

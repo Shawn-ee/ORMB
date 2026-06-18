@@ -22,6 +22,16 @@ Later branches will add:
 - Worker execution commands.
 - Demo seed data.
 
+## Deposit Listener Core
+
+The current deposit listener implementation is a testable core only. It processes supplied MockUSDT transfer logs and does not run a live RPC polling loop.
+
+Run unit tests:
+
+```bash
+npm run test
+```
+
 ## Demo Seed Data
 
 After configuring a local PostgreSQL `DATABASE_URL` and applying the schema in a future migration branch, seed deterministic demo companies and wallets:
