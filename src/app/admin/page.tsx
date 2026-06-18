@@ -5,6 +5,24 @@ const metrics = [
   { label: "Open risk events", value: "4", detail: "1 high severity" },
 ];
 
+const operatorStates = [
+  {
+    label: "Operator queue",
+    value: "Manual review active",
+    detail: "Mint approvals, whitelist exceptions, and redemptions do not progress without admin review.",
+  },
+  {
+    label: "Stop-state visibility",
+    value: "Paused paths shown",
+    detail: "Unknown wallets, high-severity risk events, duplicate burns, and unresolved reconciliation gaps stay blocked.",
+  },
+  {
+    label: "Demo boundary",
+    value: "Non-production",
+    detail: "Read-only pilot surface using mock assets; no customer funds, mainnet activity, or live payment processing.",
+  },
+];
+
 const reviewRails = [
   {
     title: "Risk case triage",
@@ -15,7 +33,7 @@ const reviewRails = [
   {
     title: "Ledger reconciliation",
     status: "Invariant pass",
-    summary: "Confirmed deposits, mint requests, verified burns, and displayed supply reconcile for demo data.",
+    summary: "Confirmed mock deposits, mint requests, verified burns, and displayed supply reconcile for demo data.",
     checks: ["Duplicate mint requests: 0", "Duplicate burn events: skipped", "Unresolved exceptions: 0"],
   },
   {
@@ -105,11 +123,11 @@ export default function AdminPage() {
           <p className="eyebrow">Admin dashboard</p>
           <h1>Operations control panel</h1>
           <p className="lead">
-            Review enterprise onboarding, wallet eligibility, mint approvals, redemption burn status, risk events, and
-            audit activity for the ORMB testnet demo.
+            Review enterprise onboarding, wallet eligibility, mint approvals, redemption burn status, risk events,
+            reconciliation, and audit activity for the ORMB testnet demo. This page is a read-only operator view.
           </p>
         </div>
-        <span className="status-pill">Demo data only</span>
+        <span className="status-pill">Read-only demo data</span>
       </section>
 
       <section className="metric-strip" aria-label="Admin metrics">
@@ -120,6 +138,22 @@ export default function AdminPage() {
             <span>{metric.detail}</span>
           </div>
         ))}
+      </section>
+
+      <section className="section">
+        <div className="section-heading">
+          <h2>Operator Readiness</h2>
+          <span className="status-pill warning">No live controls</span>
+        </div>
+        <div className="status-grid" aria-label="Admin operator readiness">
+          {operatorStates.map((state) => (
+            <article className="status-card" key={state.label}>
+              <span className="metric-label">{state.label}</span>
+              <strong>{state.value}</strong>
+              <p>{state.detail}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="section">
@@ -194,7 +228,7 @@ export default function AdminPage() {
         <div>
           <div className="section-heading">
             <h2>Mint Approvals</h2>
-            <span className="status-pill">Manual gate</span>
+            <span className="status-pill">Manual gate only</span>
           </div>
           <table className="table dense-table">
             <thead>
@@ -225,7 +259,7 @@ export default function AdminPage() {
         <div>
           <div className="section-heading">
             <h2>Redemptions</h2>
-            <span className="status-pill neutral">Burn review</span>
+            <span className="status-pill warning">Burn stop-state</span>
           </div>
           <table className="table dense-table">
             <thead>
@@ -256,7 +290,7 @@ export default function AdminPage() {
         <div>
           <div className="section-heading">
             <h2>Reconciliation</h2>
-            <span className="status-pill">Balanced</span>
+            <span className="status-pill">Demo balanced</span>
           </div>
           <div className="reconciliation">
             <div>

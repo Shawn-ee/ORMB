@@ -61,7 +61,11 @@ Current screenshot evidence is stored at:
 ## Findings
 
 - Admin route presents risk case triage, ledger reconciliation, and audit coverage as read-only review concepts.
+- Admin route now includes an Operator Readiness section that surfaces manual review, paused stop states, and the
+  non-production demo boundary before the detailed queues.
 - Company route presents participant boundary, operator handoff, and support path as read-only pilot guidance.
+- Company route now includes a Participant Readiness section that makes mock-only balances, no self-service fund
+  movement, and operator escalation visible before lifecycle tables.
 - Desktop admin and company screenshots are readable and professional.
 - Mobile admin and company screenshots remain readable, with long tables wrapping rather than overlapping.
 - Safety disclaimer remains visible.
