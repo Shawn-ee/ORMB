@@ -5,6 +5,27 @@ const companyMetrics = [
   { label: "Pending redemption", value: "900.00", detail: "Burn verification required" },
 ];
 
+const pilotGuidance = [
+  {
+    title: "Participant boundary",
+    status: "Read-only demo",
+    summary: "Harbor Components can review lifecycle state, but this page does not submit deposits or move funds.",
+    checks: ["MockUSDT only", "No real RMB/CNH", "No customer obligations"],
+  },
+  {
+    title: "Operator handoff",
+    status: "Manual review",
+    summary: "Mint approvals, risk exceptions, and redemption burn checks remain admin-reviewed demo events.",
+    checks: ["Mint request pending", "Burn verification pending", "Risk review handled by operator"],
+  },
+  {
+    title: "Support path",
+    status: "Escalate safely",
+    summary: "Unexpected wallet, deposit, or redemption states pause the demo and move to operator review.",
+    checks: ["Unknown wallet blocks mint", "Duplicate burn skipped", "Incident runbook available"],
+  },
+];
+
 const depositTimeline = [
   ["Detected", "MockUSDT transfer indexed", "09:37"],
   ["Confirmed", "12 testnet confirmations reached", "09:42"],
@@ -79,6 +100,29 @@ export default function CompanyPage() {
             <span>{metric.detail}</span>
           </div>
         ))}
+      </section>
+
+      <section className="section">
+        <div className="section-heading">
+          <h2>Pilot Participation</h2>
+          <span className="status-pill neutral">No self-service actions</span>
+        </div>
+        <div className="review-grid">
+          {pilotGuidance.map((item) => (
+            <article className="review-card" key={item.title}>
+              <div className="review-card-header">
+                <h3>{item.title}</h3>
+                <span className="status-pill">{item.status}</span>
+              </div>
+              <p>{item.summary}</p>
+              <ul>
+                {item.checks.map((check) => (
+                  <li key={check}>{check}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="section dashboard-grid">

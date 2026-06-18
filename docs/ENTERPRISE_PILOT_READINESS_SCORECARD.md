@@ -18,7 +18,7 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 | 4 | Database migration safety is documented but no migration pipeline exists. | High | Documented | `agent/302-database-migration-runbook` |
 | 5 | Dependency audit reports 25 findings, including 8 high. | High | Accepted for local/testnet demo only | `audit/280-hosted-demo-readiness` |
 | 6 | Admin UI needs stronger risk/reconciliation pilot explanations. | Medium | Addressed for static demo | `agent/270-admin-risk-review-ui` |
-| 7 | Company UI needs stronger pilot participant guidance. | Medium | Open | `agent/272-company-pilot-flow-ui` |
+| 7 | Company UI needs stronger pilot participant guidance. | Medium | Addressed for static demo | `agent/272-company-pilot-flow-ui` |
 | 8 | Browser tests are smoke-level only. | Medium | Open | `audit/274-browser-enterprise-readiness-review` |
 | 9 | Audit log retention and export strategy is documented but not implemented. | Medium | Documented | `agent/303-audit-retention-docs` |
 | 10 | Portfolio packaging can be stronger. | Low | Open | `agent/290-stripe-bridge-readme-polish` |
@@ -57,4 +57,4 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 
 ## Current Decision
 
-Proceed next with `agent/272-company-pilot-flow-ui` because company dashboard pilot participant guidance needs stronger enterprise-facing presentation.
+Proceed next with `audit/274-browser-enterprise-readiness-review` because enterprise UI changes need a fresh browser review across admin and company routes.
