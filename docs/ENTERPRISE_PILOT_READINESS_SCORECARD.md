@@ -2,59 +2,77 @@
 
 ## Summary
 
-Current target: Enterprise Pilot Readiness v1
+Current target: Enterprise Pilot Readiness v1 refresh.
 
-Current verdict: Ready for human review; not approved for production, real funds, mainnet, or external pilot use.
+Current verdict: Ready only as a human-review discussion package after human owner, legal, and compliance approval. It is not approved for production, real funds, real USDT, real RMB/CNH, mainnet, custody, payment processing, live mint/burn behavior, or external enterprise pilot use.
 
-The repo is ready as a local technical demo, Stripe/Bridge portfolio demo, and Enterprise Pilot Readiness v1 release candidate for human review. Human/legal/compliance/security approval is still required before any external pilot, hosted sharing, `dev` to `main` promotion, real funds, mainnet, or production-like use.
+The repo is strongest as a local technical demo and Stripe/Bridge-style portfolio demo. A hosted demo remains conditional on static/read-only posture and explicit human approval. Enterprise pilot readiness means a review packet for discussion, not approval to operate. Production readiness is not achieved.
 
-## Scorecard
+## Readiness Levels
+
+| Level | Status | Notes |
+| --- | --- | --- |
+| Local demo | Ready for human review | Local/testnet, fixture-backed, mock-only, no real funds. |
+| Stripe/Bridge portfolio demo | Ready for human review | Documentation and presentation narrative only. No partnership, integration, payment, custody, or settlement claim. |
+| Hosted demo | Conditional | Static/read-only only after owner approval of URL, audience, duration, environment posture, rollback, screenshots, and dependency risk. |
+| Enterprise pilot readiness | Discussion package only | Requires owner, legal, and compliance approval before any enterprise pilot discussion. |
+| Production readiness | Not ready | Blocked by dependency, architecture, operational, security, compliance, auth, database, worker, API, and legal gaps. |
+
+## Updated Scorecard
 
 | Rank | Gap | Severity | Status | Next Branch |
 | --- | --- | --- | --- | --- |
-| 1 | Hosted demo readiness requires human acceptance for exact read-only posture. | High | Conditionally addressed | `audit/280-hosted-demo-readiness` |
-| 2 | API design is specified but not implemented. | High | Documented | `agent/300-api-contract-docs` |
-| 3 | Durable worker runner and persistence adapter boundaries are documented but not implemented. | High | Documented | `agent/301-worker-adapter-boundary-docs` |
-| 4 | Database migration safety is documented but no migration pipeline exists. | High | Documented | `agent/302-database-migration-runbook` |
-| 5 | Dependency audit reports 25 findings, including 8 high. | High | Accepted for local/testnet demo only | `audit/280-hosted-demo-readiness` |
-| 6 | Admin UI needs stronger risk/reconciliation pilot explanations. | Medium | Addressed for static demo | `agent/270-admin-risk-review-ui` |
-| 7 | Company UI needs stronger pilot participant guidance. | Medium | Addressed for static demo | `agent/272-company-pilot-flow-ui` |
-| 8 | Browser tests cover enterprise admin/company review concepts at smoke level. | Medium | Addressed for static demo | `audit/274-browser-enterprise-readiness-review` |
-| 9 | Audit log retention and export strategy is documented but not implemented. | Medium | Documented | `agent/303-audit-retention-docs` |
-| 10 | Portfolio packaging can be stronger. | Low | Addressed for current review | `agent/290-stripe-bridge-readme-polish` |
-| 11 | Ledger/reconciliation invariants are not tested across deposits, mints, burns, and supply. | Critical | Addressed | `agent/220-ledger-invariant-tests` |
-| 12 | Enterprise pilot process docs are incomplete. | Critical | Addressed | `agent/260-enterprise-pilot-playbook` |
-| 13 | Secret management lacks typed validation and hosted-demo mode boundaries. | High | Addressed | `agent/211-secret-management-hardening` |
-| 14 | Contract role and minter operational threat model is incomplete. | High | Addressed | `audit/214-contract-threat-model` |
-| 15 | Mint role runbook and hot wallet/minter assumptions are incomplete. | High | Addressed | `agent/213-mint-role-runbook-hardening` |
-| 16 | Chain listener lacks reorg/backfill/retry design. | High | Addressed | `agent/230-listener-reorg-resilience` through `agent/238-listener-error-taxonomy` |
-| 17 | Observability and structured logging are not implemented. | High | Partially addressed | `agent/232-worker-observability` |
-| 18 | KYB/risk case management is simplified. | High | Partially addressed | `agent/240-risk-case-management` |
-| 19 | Operator runbook is incomplete for pilot-style operations. | High | Addressed | `agent/262-operator-runbook` |
-| 20 | Incident response runbook is missing. | High | Addressed | `agent/263-incident-response-runbook` |
+| 1 | Production readiness is not established. | Critical | Blocked and out of scope | Future production program only |
+| 2 | Legal/compliance approval is not granted. | Critical | Human gate required | `audit/324-enterprise-pilot-readiness-v1-review` |
+| 3 | Dependency audit reports 25 findings, including 8 high and 0 critical. | High | Accepted only for local/testnet and conditional static/read-only hosted review | `audit/324-enterprise-pilot-readiness-v1-review` |
+| 4 | Hosted demo requires exact owner-approved static/read-only posture. | High | Conditionally addressed | `audit/320-hosted-demo-readiness-refresh` |
+| 5 | API design is specified but not implemented. | High | Documented | `agent/300-api-contract-docs` |
+| 6 | Durable worker runner and persistence adapter boundaries are documented but not implemented. | High | Documented | `agent/301-worker-adapter-boundary-docs` |
+| 7 | Database migration safety is documented but no production migration pipeline exists. | High | Documented | `agent/302-database-migration-runbook` |
+| 8 | No production authn/authz, tenant isolation, or customer data controls exist. | High | Blocked for production | Future scoped branch |
+| 9 | No real compliance provider integration exists. | High | Blocked for production and real pilots | Future scoped branch after approval |
+| 10 | Audit retention is documented but no immutable export/log sink exists. | Medium | Documented | `agent/303-audit-retention-docs` |
+| 11 | Operator and incident drills require human review before external use. | Medium | Addressed for tabletop demo | `agent/318-operator-incident-drills` |
+| 12 | Admin/company enterprise UI remains static/read-only. | Medium | Addressed for demo review | `agent/321-admin-company-ui-enterprise-readiness` |
+| 13 | Stripe/Bridge-style package must avoid partnership and integration claims. | Medium | Addressed for portfolio review | `agent/322-stripe-bridge-portfolio-package` |
+| 14 | Listener recovery, audit policy, and taxonomy are documented but not live-runner automation. | Medium | Addressed for deterministic demo review | `agent/312-listener-recovery-drill`, `audit/313-listener-audit-policy-review`, `audit/314-listener-error-taxonomy-review` |
+| 15 | Ledger and redemption safety remain demo state-machine guarantees, not production accounting. | Medium | Addressed for demo review | `audit/316-ledger-reconciliation-review`, `agent/317-redemption-burn-hardening` |
+
+## Branch 310-322 Coverage
+
+| Area | Branches | Current Status |
+| --- | --- | --- |
+| CI and browser validation | `agent/310-ci-repo-health` | `npm ci`, CI, and Playwright browser checks documented as passing. |
+| Dependency posture | `audit/311-dependency-posture-refresh` | 25 findings, 0 critical, no safe direct upgrades, no force fix. |
+| Listener recovery and audit policy | `agent/312-listener-recovery-drill`, `audit/313-listener-audit-policy-review`, `audit/314-listener-error-taxonomy-review` | Demo dry-run and documentation coverage improved. No live automation approval. |
+| Risk, ledger, and redemption safety | `agent/315-risk-case-management-hardening`, `audit/316-ledger-reconciliation-review`, `agent/317-redemption-burn-hardening` | Deterministic tests and docs improved for demo state machines and stop conditions. |
+| Operations and pilot process | `agent/318-operator-incident-drills`, `agent/319-enterprise-pilot-playbook-refresh` | Human review gates, tabletop drills, and pilot packet guidance refreshed. |
+| Hosted demo | `audit/320-hosted-demo-readiness-refresh` | Static/read-only hosted posture documented with stop conditions. |
+| Enterprise UI | `agent/321-admin-company-ui-enterprise-readiness` | Admin/company read-only demo readiness copy and browser checks refreshed. |
+| Portfolio package | `agent/322-stripe-bridge-portfolio-package` | Stripe/Bridge-style portfolio packet added with forbidden claims and stop conditions. |
 
 ## Enterprise Pilot Readiness v1 Criteria
 
 | Criterion | Current Status |
 | --- | --- |
-| Repo clearly remains testnet/mock-only. | Pass |
-| Core demo flows pass. | Pass |
-| Browser/e2e checks pass. | Pass |
-| Security review is updated. | Pass |
-| Dependency audit is remediated or accepted for demo-only use. | Partial |
+| Repo clearly remains local/testnet/mock-only. | Pass |
+| Core CI validation passes on branch 323. | Pass |
+| Browser/e2e checks pass on branch 323. | Pass |
+| Security/legal/demo boundaries remain explicit. | Pass |
+| Dependency audit is remediated or accepted for demo-only use. | Partial; 25 findings remain |
 | Ledger/reconciliation invariants are documented and tested. | Pass |
-| Mint and redemption flows have idempotency tests. | Pass |
-| Unknown wallet and failed risk paths are safe. | Pass |
-| Admin UI explains risk/review/reconciliation concepts. | Partial |
-| Company UI explains pilot flow clearly. | Partial |
+| Mint and redemption flows have deterministic tests and stop conditions. | Pass for demo |
+| Listener recovery, audit policy, and error taxonomy are documented. | Pass for demo |
+| Risk case high-severity behavior is an operator-review gate. | Pass for demo |
+| Admin UI explains risk/review/reconciliation concepts. | Pass for static/read-only demo |
+| Company UI explains pilot participant boundaries. | Pass for static/read-only demo |
 | Enterprise pilot playbook exists. | Pass |
-| Operator runbook exists. | Pass |
-| Incident response runbook exists. | Pass |
-| Legal/compliance boundary says no real funds/public issuance. | Pass |
-| Hosted demo readiness is documented. | Partial |
-| Stripe/Bridge portfolio package is ready. | Partial |
-| `main` remains untouched unless owner approves. | Pass |
+| Operator and incident drills exist. | Pass |
+| Hosted demo readiness is documented. | Pass with human approval gate |
+| Stripe/Bridge portfolio package is reviewable. | Pass with claim restrictions |
+| `main` remains untouched unless owner approves in writing. | Pass |
+| Production readiness is achieved. | Fail; not in scope |
 
 ## Current Decision
 
-Proceed next with human review of `release/enterprise-pilot-readiness-v1`. Optional follow-up branches may add architecture diagrams or resume bullets, but no material blocker remains for this testnet/mock-only readiness package.
+Proceed next with `audit/324-enterprise-pilot-readiness-v1-review` after branch 323 validation. The next audit should verify this package as a discussion artifact only and confirm no newer evidence changes the blockers, gates, or demo boundaries.
