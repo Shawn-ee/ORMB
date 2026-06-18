@@ -20,18 +20,20 @@ The project is designed as a portfolio and technical demonstration of stablecoin
 - Not a production payment system.
 - Not authorized to process real customer funds, real USDT, real RMB, private keys, seed phrases, or mainnet assets.
 
-## Demo-v0 Status
+## Current Status
 
-ORMB currently provides a local/testnet demo package:
+ORMB currently provides a local/testnet demo package with Enterprise Pilot Readiness v1 foundations in progress:
 
 - Testnet-only ORMBToken and MockUSDT contracts.
 - Deterministic worker cores for deposit detection, confirmations, risk checks, mint requests, and redemption burn verification.
-- Static admin, company, demo-flow, and monitoring dashboards.
+- Static admin, company, demo-flow, and monitoring dashboards with enterprise risk, reconciliation, audit, and pilot-participant review context.
 - Prisma schema for demo lifecycle and audit records.
-- Browser smoke checks and screenshot evidence for the static UI.
+- Ledger invariant tests, risk case management, dry-run backfill tooling, and worker status helpers.
+- API contract docs, worker adapter boundaries, migration runbook, audit retention docs, hosted-demo readiness docs, operator runbook, and incident response runbook.
+- Browser smoke checks and screenshot evidence for the static UI, including enterprise admin/company review checks.
 - CI validation for typecheck, Prisma validation, unit tests, contract tests, and production build.
 
-The demo intentionally does not include live API routes, persistent worker runners, live RPC polling loops, production payment rails, real custody, or real money movement.
+The demo intentionally does not include live API routes, persistent worker runners, live RPC polling loops, production payment rails, real custody, live hosted mutations, or real money movement.
 
 ## Local Setup
 
@@ -103,7 +105,7 @@ These routes intentionally do not include backend business logic, live dashboard
 
 ## Demo Walkthrough
 
-Use `docs/DEMO_SCRIPT.md` for the recruiter-facing walkthrough. The expected story is:
+Use `docs/DEMO_SCRIPT.md` and `docs/PORTFOLIO_WALKTHROUGH.md` for the recruiter-facing walkthrough. The expected story is:
 
 1. Establish the safety boundary: testnet-only, mock assets, no customer funds.
 2. Show the landing overview and target lifecycle.
@@ -111,7 +113,7 @@ Use `docs/DEMO_SCRIPT.md` for the recruiter-facing walkthrough. The expected sto
 4. Show `/admin` for KYB, risk events, mint approvals, reconciliation, and audit logs.
 5. Show `/company` for deposit instructions, balances, transfers, and redemptions.
 6. Show `/status` for security posture, known watch items, and release gates.
-7. Close with known limitations and next engineering branches.
+7. Close with known limitations, Enterprise Pilot Readiness boundaries, and next engineering branches.
 
 ## Contracts
 
@@ -152,11 +154,19 @@ Copy `.env.example` for local environment setup only when future branches need n
 - `docs/DEMO_FLOW_PAGE.md`: Static end-to-end demo flow page scope and safety boundary.
 - `docs/MONITORING_SECURITY.md`: Static monitoring and security readiness dashboard scope.
 - `docs/UI_REVIEW.md`: Browser verification notes and screenshot paths.
+- `docs/ENTERPRISE_UI_REVIEW.md`: Enterprise browser review for admin/company pilot UI.
 - `docs/RELEASE_READINESS.md`: Current release readiness status.
 - `docs/DEMO_SCRIPT.md`: Demo-v0 walkthrough script.
+- `docs/PORTFOLIO_WALKTHROUGH.md`: Stripe/Bridge-style reviewer walkthrough.
 - `docs/KNOWN_LIMITATIONS.md`: Remaining limitations and deferred work.
 - `docs/RELEASE_CHECKLIST.md`: Human approval checklist for demo-v0.
 - `docs/STRIPE_BRIDGE_ALIGNMENT.md`: Engineering alignment with Stripe/Bridge-style infrastructure.
+- `docs/ENTERPRISE_READINESS_REVIEW.md`: Enterprise Pilot Readiness v1 status and blockers.
+- `docs/HOSTED_DEMO_READINESS.md`: Read-only hosted demo conditions and boundaries.
+- `docs/API_CONTRACTS.md`: Future API contract surface and idempotency requirements.
+- `docs/WORKER_ADAPTER_BOUNDARIES.md`: Future worker runner and adapter boundaries.
+- `docs/DATABASE_MIGRATION_RUNBOOK.md`: Future migration safety expectations.
+- `docs/AUDIT_RETENTION.md`: Audit retention and export assumptions.
 - `docs/RUNBOOK.md`: Setup and validation runbook.
 - `docs/decisions/`: Architecture decision records.
 - `docs/agent-reports/`: Agent reports.

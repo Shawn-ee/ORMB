@@ -21,7 +21,7 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 | 7 | Company UI needs stronger pilot participant guidance. | Medium | Addressed for static demo | `agent/272-company-pilot-flow-ui` |
 | 8 | Browser tests cover enterprise admin/company review concepts at smoke level. | Medium | Addressed for static demo | `audit/274-browser-enterprise-readiness-review` |
 | 9 | Audit log retention and export strategy is documented but not implemented. | Medium | Documented | `agent/303-audit-retention-docs` |
-| 10 | Portfolio packaging can be stronger. | Low | Open | `agent/290-stripe-bridge-readme-polish` |
+| 10 | Portfolio packaging can be stronger. | Low | Addressed for current review | `agent/290-stripe-bridge-readme-polish` |
 | 11 | Ledger/reconciliation invariants are not tested across deposits, mints, burns, and supply. | Critical | Addressed | `agent/220-ledger-invariant-tests` |
 | 12 | Enterprise pilot process docs are incomplete. | Critical | Addressed | `agent/260-enterprise-pilot-playbook` |
 | 13 | Secret management lacks typed validation and hosted-demo mode boundaries. | High | Addressed | `agent/211-secret-management-hardening` |
@@ -57,4 +57,4 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 
 ## Current Decision
 
-Proceed next with `agent/290-stripe-bridge-readme-polish` because the remaining work is portfolio packaging and final readiness presentation.
+Proceed next with `release/enterprise-pilot-readiness-v1` because the remaining work is final readiness packaging for human review.
