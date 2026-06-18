@@ -15,9 +15,11 @@ ORMB will be organized as an API-first demo with clearly separated responsibilit
 
 ### Smart Contracts
 
-Future branches will design a permissioned ERC-20 style ORMB token using OpenZeppelin Contracts v5. Contracts must support a controlled mint/burn lifecycle and clear role boundaries.
+The repository includes a permissioned ERC-20 style ORMB demo token using OpenZeppelin Contracts v5. The token supports controlled minting, burning, pause controls, and whitelisted transfers for the testnet demo lifecycle.
 
-The repository includes Hardhat 3, TypeScript, viem, OpenZeppelin Contracts v5, dotenv support, and a Base Sepolia network configuration driven by environment variables. `contracts/ToolingPlaceholder.sol` exists only to validate the toolchain. It does not implement ORMB token logic.
+The repository also includes MockUSDT as a 6-decimal mock deposit asset. Both contracts are testnet-only demo components and must not be represented as production financial instruments.
+
+Hardhat 3, TypeScript, viem, OpenZeppelin Contracts v5, dotenv support, and a Base Sepolia network configuration are driven by environment variables.
 
 ### API Layer
 

@@ -24,14 +24,13 @@ The project is designed as a portfolio and technical demonstration of stablecoin
 
 This initial repository bootstrap intentionally does not implement:
 
-- ORMB smart contracts.
 - Backend mint engine.
 - Worker logic.
 - UI/dashboard logic.
 - Real deposit monitoring.
 - Real money movement.
 
-The repository now includes a Hardhat, TypeScript, viem, OpenZeppelin, Prisma, PostgreSQL, Next.js, React, and dotenv tooling foundation for future contract, ledger, and dashboard work. `contracts/ToolingPlaceholder.sol` exists only to validate compilation and test execution; it is not ORMB token business logic.
+The repository now includes a Hardhat, TypeScript, viem, OpenZeppelin, Prisma, PostgreSQL, Next.js, React, and dotenv tooling foundation for future contract, ledger, and dashboard work. It also includes testnet-only ORMBToken and MockUSDT contracts for the demo lifecycle.
 
 The repository currently provides project structure, documentation, agent workflow rules, placeholder scripts, and minimal CI.
 
@@ -63,6 +62,15 @@ The current Next.js app shell includes placeholder routes:
 - `/status`: System readiness placeholder.
 
 These routes intentionally do not include backend business logic, live dashboard data, contract calls, or real money movement.
+
+## Contracts
+
+The current Solidity contracts are testnet demo contracts:
+
+- `ORMBToken`: permissioned ERC-20 demo token with 6 decimals, role-based minting, whitelisted transfers, pause controls, and burn support.
+- `MockUSDT`: 6-decimal mock asset with public demo mint/faucet behavior.
+
+These contracts are not deployed to mainnet and do not represent real USDT, real RMB, redemption rights, or a production financial product.
 
 ## Environment
 

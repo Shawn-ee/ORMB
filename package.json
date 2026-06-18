@@ -10,7 +10,7 @@
     "build": "next build",
     "test": "node -e \"console.log('placeholder: tests not implemented yet')\"",
     "compile:contracts": "hardhat compile",
-    "test:contracts": "hardhat test test/contracts/tooling.test.ts",
+    "test:contracts": "hardhat test test/contracts/tooling.test.ts test/contracts/ormb-token.test.ts",
     "deploy:contracts": "node -e \"console.log('placeholder: contract deployment is not implemented; do not deploy from this branch')\"",
     "typecheck": "tsc --noEmit",
     "lint": "node -e \"console.log('placeholder: lint not implemented yet')\"",
