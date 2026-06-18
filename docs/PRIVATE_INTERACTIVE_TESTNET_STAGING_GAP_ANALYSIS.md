@@ -49,6 +49,7 @@ The repository does not yet include:
 - Private staging Basic Auth proxy guard for `/admin`, `/api/admin/**`, and `/api/staging/**`.
 - Protected mutation API routes.
 - Persistent Prisma adapters for the existing worker-core interfaces.
+- Manual simulated deposit schema fields and worker core exist; protected API and admin UI integration remain future work.
 - Database-backed admin staging UI.
 - Testnet mint/burn gateway integrations for the web app.
 - Minter-role grant/verification script for a staging minter wallet.
@@ -140,13 +141,14 @@ Required future controls:
 
 ## Manual Deposit To Mint Gap
 
-Current worker cores can create mint requests and submit approved mints through abstract repository/gateway interfaces. Missing pieces:
+Current worker cores can create mint requests and submit approved mints through abstract repository/gateway interfaces. The manual simulated deposit branch adds Prisma fields for owner-confirmed staging deposits and a worker core that creates a simulated confirmed deposit, records audit events, and creates a pending mint request through the existing risk and mint-request core.
+
+Remaining missing pieces:
 
 - Persistent Prisma repository adapter.
-- Manual staging deposit model fields, likely `source`, `manualReference`, `confirmedBy`, and `manualConfirmedAt`.
 - Protected API routes for manual deposit creation, mint request approval, and mint submission.
 - Admin UI forms and status panels.
-- AuditLog records for manual deposit, mint request creation, approval, submission, failure, and idempotent skips.
+- Database-backed AuditLog records for manual deposit, mint request creation, approval, submission, failure, and idempotent skips.
 - Mocked gateway tests and browser checks.
 
 Safety requirement: manual deposits are simulated staging records only and must never be described as real USDT, real funds, customer deposits, or RMB/CNH backing.
