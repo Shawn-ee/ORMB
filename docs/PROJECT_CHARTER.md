@@ -44,6 +44,8 @@ The target demo includes:
 - No real USDT or RMB handling.
 - No retail trading flows.
 
+Enterprise pilot preparation is limited to testnet/mock-only review unless the human owner obtains separate legal, compliance, security, and business approval. See `docs/ENTERPRISE_PILOT_PLAYBOOK.md`.
+
 ## Bootstrap Deliverable
 
 The first repository milestone creates only the framework for future agent work: documents, directories, placeholder scripts, and CI.

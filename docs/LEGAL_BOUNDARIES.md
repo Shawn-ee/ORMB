@@ -50,3 +50,9 @@ Public documentation and demo materials must describe ORMB as a testnet-first te
 - No mainnet deployment unless the human owner explicitly approves it in writing.
 
 If a demo viewer asks whether ORMB is a launch plan, product offering, public stablecoin, or regulated payment service, the answer is no.
+
+## Enterprise Pilot Preparation Boundary
+
+Enterprise Pilot Readiness v1 means the repository may be suitable for discussing a limited enterprise pilot after human, legal, compliance, security, and business approval. It does not mean ORMB is approved for a real pilot.
+
+See `docs/ENTERPRISE_PILOT_PLAYBOOK.md` for the allowed preparation scope, prohibited activities, participant roles, approval gates, and exit criteria.
