@@ -77,4 +77,14 @@ test.describe("UI release readiness", () => {
     await expect(page.getByText("Audit coverage")).toBeVisible();
     await expect(page.getByText("Read-only controls")).toBeVisible();
   });
+
+  test("company dashboard shows pilot participation boundaries", async ({ page }) => {
+    await page.goto("/company");
+
+    await expect(page.getByRole("heading", { name: "Pilot Participation" })).toBeVisible();
+    await expect(page.getByText("Participant boundary")).toBeVisible();
+    await expect(page.getByText("Operator handoff")).toBeVisible();
+    await expect(page.getByText("Support path")).toBeVisible();
+    await expect(page.getByText("No self-service actions")).toBeVisible();
+  });
 });

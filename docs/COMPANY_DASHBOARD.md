@@ -11,12 +11,13 @@ The page is implemented at `/company` in the Next.js app shell and uses static d
 It displays:
 
 1. ORMB, deposit, mint, and redemption metrics.
-2. MockUSDT deposit lifecycle status.
-3. Demo deposit instructions.
-4. Whitelisted company wallets.
-5. Enterprise-to-enterprise transfer activity.
-6. Redemption request status.
-7. Recent lifecycle activity.
+2. Pilot participation guidance, operator handoff boundaries, and support/escalation context.
+3. MockUSDT deposit lifecycle status.
+4. Demo deposit instructions.
+5. Whitelisted company wallets.
+6. Enterprise-to-enterprise transfer activity.
+7. Redemption request status.
+8. Recent lifecycle activity.
 
 ## Safety Boundary
 
