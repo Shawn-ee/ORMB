@@ -12,14 +12,13 @@ Run:
 npm run test:ci
 ```
 
-The bootstrap scripts are placeholders and should pass without external services.
+The current scripts should pass without external services. Next.js build, Prisma validation, and contract tooling checks run locally without real credentials.
 
 ## Future Setup Expectations
 
 Later branches will add:
 
-- Node and Next.js setup.
-- Hardhat and contract compilation.
+- Business UI and API routes.
 - Business Prisma schema and PostgreSQL migrations.
 - Base Sepolia deployment scripts.
 - Worker execution commands.
