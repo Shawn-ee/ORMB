@@ -34,7 +34,7 @@ Non-assets:
 | Contract roles | OpenZeppelin `AccessControl` gates mint, whitelist, and pause. | Initial admin receives every role; role separation is not yet enforced by deployment process. |
 | Token transfers | Both sender and recipient must be whitelisted for normal transfers. | Whitelist governance policy is documented but not operationalized. |
 | Minting | Minter can mint only to whitelisted wallets and only while unpaused. | No on-chain cap, per-mint limit, or multisig/timelock policy. |
-| Burning | Holders can burn their own ORMB through `ERC20Burnable`. | Burn is permissionless for holders; redemption worker must verify source wallet, chain, amount, and duplicate event. |
+| Burning | Holders can burn their own ORMB through `ERC20Burnable`. | Burn is permissionless for holders; redemption worker must verify source wallet, Base Sepolia chain, amount, and duplicate event. |
 | Pausing | Pauser can pause and unpause token movement. | Emergency runbook and role separation are not yet complete. |
 | Testnet scripts | Scripts require `ORMB_CONFIRM_TESTNET_DEPLOY=YES` and Base Sepolia chain ID. | Scripts are not integrated with typed env validation yet. |
 
@@ -89,6 +89,7 @@ Current mitigation:
 
 - `_update()` requires both sender and recipient to be whitelisted for normal transfers.
 - Burn to zero address is allowed so redemption burn can work.
+- Private staging burn evidence must be treated as evidence for simulated cashout only; it must not imply real payout, custody, banking, RMB/CNH settlement, or redemption value.
 - Tests cover transfer rejection to non-whitelisted wallet and rejection after de-whitelisting.
 
 Remaining pilot gap:
