@@ -22,6 +22,8 @@ Risk checks require:
 
 Failed checks are recorded through RiskEvent and AuditLog repository hooks.
 
+Risk events can be reviewed through the deterministic demo case-management helpers documented in `docs/RISK_CASE_MANAGEMENT.md`.
+
 ## Safety Boundary
 
 Unknown-wallet deposits must never mint. Failed risk checks do not create mint requests. The risk engine is part of a testnet-only demo and must not be used for real funds, real USDT, real RMB, or production approvals.
