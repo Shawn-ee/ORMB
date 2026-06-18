@@ -28,6 +28,8 @@ Future API branches must define authentication before exposing live endpoints. U
 
 No production authentication, authorization, SSO, RBAC service, or compliance provider integration exists today.
 
+Private staging currently includes a Basic Auth proxy guard for `/admin`, `/api/admin/**`, and `/api/staging/**` when `ORMB_ENV_MODE=private-staging`. This is an owner-only staging guard, not production authentication. Future mutation routes must still add role checks, same-origin checks, idempotency, state validation, and audit logging before any interactive staging action is exposed.
+
 ## Idempotency Model
 
 Mutation endpoints must accept an `Idempotency-Key` header or derive a deterministic event key from immutable inputs.

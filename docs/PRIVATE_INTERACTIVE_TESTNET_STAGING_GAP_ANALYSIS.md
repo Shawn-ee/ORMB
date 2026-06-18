@@ -46,7 +46,7 @@ The repository does not yet include:
 - Docker PostgreSQL support committed to the repo.
 - Prisma migrations for a private staging database lifecycle.
 - A `private-staging` environment validation mode in `src/lib/config/env.ts`.
-- Admin authentication middleware.
+- Private staging Basic Auth proxy guard for `/admin`, `/api/admin/**`, and `/api/staging/**`.
 - Protected mutation API routes.
 - Persistent Prisma adapters for the existing worker-core interfaces.
 - Database-backed admin staging UI.
@@ -121,15 +121,21 @@ Contracts and Base Sepolia scripts exist, but private staging needs additional o
 
 All on-chain execution must hard-check Base Sepolia chain ID `84532`.
 
-## Private Admin Access Gap
+## Private Admin Access Status
 
-The app currently has static pages and no admin access guard. Private staging must not rely on a hidden URL.
+The app now has a private staging Basic Auth proxy guard. Private staging must not rely on a hidden URL.
+
+Current controls:
+
+- Basic Auth proxy guard activates only when `ORMB_ENV_MODE=private-staging`.
+- `/admin`, `/api/admin/**`, and `/api/staging/**` require staging Basic Auth in private staging.
+- Local and hosted-demo modes keep the static read-only admin page browsable for demo review.
+- Invalid private staging configuration fails closed before serving protected routes.
 
 Required future controls:
 
-- Basic Auth or equivalent password guard in middleware.
-- Protection for `/admin`, `/company`, `/demo`, `/status`, and all `/api/staging/**` routes in private staging.
 - Mutation routes must also require same-origin checks and an explicit staging admin header.
+- Future company participant mutation routes must receive a separate access policy before they are added.
 - Hosted read-only demo mode must reject mutation routes and private keys.
 
 ## Manual Deposit To Mint Gap
