@@ -63,7 +63,7 @@ The safe backfill model is:
 6. Checkpoint the finalized scanned range, not only the latest matching event.
 7. Do not create mint requests during backfill until reconciliation passes.
 
-No automatic backfill command is introduced in this branch. A future branch should add a bounded dry-run backfill command before any hosted demo.
+The current dry-run backfill command is fixture-backed and read-only. It is suitable for listener recovery drills over missed ranges because it reports duplicate event keys, known-wallet matches, unknown-wallet events, ignored events, and advisory potential actions without live RPC polling or database writes.
 
 ## Known Limitations
 
