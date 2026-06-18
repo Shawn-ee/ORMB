@@ -83,9 +83,9 @@ Prisma schema validation passes, and migration safety expectations are documente
 
 Recommended branch: `agent/302-database-migration-runbook`
 
-### Medium: Audit Retention And Export Strategy Is Missing
+### Medium: Audit Retention And Export Strategy Is Documented But Not Implemented
 
-Audit logs are modeled, but retention, export, deletion, and tamper-resistance assumptions are not documented.
+Audit retention, export, deletion, and tamper-resistance assumptions are documented in `docs/AUDIT_RETENTION.md`. No export endpoint, retention scheduler, immutable log sink, or production recordkeeping policy is implemented.
 
 Recommended branch: `agent/303-audit-retention-docs`
 

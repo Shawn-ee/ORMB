@@ -20,7 +20,7 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 | 6 | Admin UI needs stronger risk/reconciliation pilot explanations. | Medium | Open | `agent/270-admin-risk-review-ui` |
 | 7 | Company UI needs stronger pilot participant guidance. | Medium | Open | `agent/272-company-pilot-flow-ui` |
 | 8 | Browser tests are smoke-level only. | Medium | Open | `audit/274-browser-enterprise-readiness-review` |
-| 9 | Audit log retention and export strategy is missing. | Medium | Open | `agent/303-audit-retention-docs` |
+| 9 | Audit log retention and export strategy is documented but not implemented. | Medium | Documented | `agent/303-audit-retention-docs` |
 | 10 | Portfolio packaging can be stronger. | Low | Open | `agent/290-stripe-bridge-readme-polish` |
 | 11 | Ledger/reconciliation invariants are not tested across deposits, mints, burns, and supply. | Critical | Addressed | `agent/220-ledger-invariant-tests` |
 | 12 | Enterprise pilot process docs are incomplete. | Critical | Addressed | `agent/260-enterprise-pilot-playbook` |
@@ -57,4 +57,4 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 
 ## Current Decision
 
-Proceed next with `agent/303-audit-retention-docs` because audit retention and export assumptions must be documented before pilot-style operational review.
+Proceed next with `agent/270-admin-risk-review-ui` because admin risk, reconciliation, and audit-review concepts need stronger enterprise-facing presentation.
