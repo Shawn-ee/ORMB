@@ -1,5 +1,25 @@
 # Enterprise Pilot Gap Analysis
 
+## Current Status Addendum
+
+Final audit branch: `audit/324-final-enterprise-readiness`
+
+The original gap analysis below was created on `audit/200-enterprise-pilot-gap-analysis` after `demo-v0`. Subsequent branches 210-323 addressed many of the documentation, invariant, listener, risk, runbook, hosted-demo, UI, and portfolio packaging gaps. The current final audit verdict is maintained in `docs/ENTERPRISE_READINESS_REVIEW.md` and `docs/ENTERPRISE_PILOT_READINESS_V1.md`.
+
+Current status after branches 310-323:
+
+| Level | Current Status |
+| --- | --- |
+| Local technical demo | Ready for human review, local/testnet/mock-only. |
+| Stripe/Bridge portfolio demo | Ready for human review as narrative-only portfolio material. |
+| Hosted demo | Conditional human-review candidate, static/read-only only. |
+| Enterprise pilot readiness | Human-review discussion package only; not an approved external pilot. |
+| Production readiness | Not ready and not approved. |
+
+The remaining blockers are legal/compliance approval, human owner approval for exact external scope, open dependency findings, placeholder lint, no production API, no durable worker runner, no production database or migration pipeline, no production auth/tenant controls, no real compliance provider integrations, no custody/reserve/payment rails, no immutable audit export, and no production monitoring/incident operations.
+
+This addendum does not approve real funds, real USDT, real RMB/CNH, customer deposits, custody, payment processing, live mint/burn behavior, mainnet deployment, production use, or public RMB/CNH stablecoin claims.
+
 ## Scope
 
 Branch: `audit/200-enterprise-pilot-gap-analysis`
