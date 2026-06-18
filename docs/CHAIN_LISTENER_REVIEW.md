@@ -43,9 +43,11 @@ Readiness:
 
 ### High: Block Hash Is Not Persisted In The Schema
 
-The confirmation worker can compare a stored deposit block hash with the current canonical hash, but the current Prisma deposit schema does not persist a deposit block hash. Without persisted block hashes, the reorg guard depends on future adapters supplying data outside the current database model.
+Status: addressed by `agent/234-deposit-blockhash-schema`.
 
-Impact: a future live listener could still confirm deposits using block numbers only unless the schema and repository adapter store block hashes.
+Original finding: the confirmation worker could compare a stored deposit block hash with the current canonical hash, but the Prisma deposit schema did not persist a deposit block hash. `agent/234-deposit-blockhash-schema` added optional `Deposit.blockHash` persistence and listener preservation so future adapters can store observed block hashes.
+
+Remaining impact: a future live listener can still confirm deposits using block numbers only if its adapter does not populate `blockHash`. Live adapters must supply the observed block hash before relying on the reorg guard.
 
 Recommended branch: `agent/234-deposit-blockhash-schema`
 

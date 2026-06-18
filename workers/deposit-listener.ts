@@ -7,6 +7,7 @@ export type MockUsdtTransferLog = {
   txHash: `0x${string}`;
   logIndex: number;
   blockNumber: bigint;
+  blockHash?: `0x${string}`;
   fromAddress: `0x${string}`;
   toAddress: `0x${string}`;
   tokenAddress: `0x${string}`;
@@ -28,6 +29,7 @@ export type CreateDepositInput = {
   txHash: `0x${string}`;
   logIndex: number;
   blockNumber: bigint;
+  blockHash?: `0x${string}`;
   fromAddress: `0x${string}`;
   toAddress: `0x${string}`;
   tokenAddress: `0x${string}`;
@@ -119,6 +121,7 @@ export async function processMockUsdtTransferLogs({
       txHash: log.txHash,
       logIndex: log.logIndex,
       blockNumber: log.blockNumber,
+      blockHash: log.blockHash,
       fromAddress: normalizeAddress(log.fromAddress),
       toAddress: treasury,
       tokenAddress: token,
@@ -137,6 +140,8 @@ export async function processMockUsdtTransferLogs({
         chainId,
         txHash: log.txHash,
         logIndex: log.logIndex,
+        blockNumber: log.blockNumber.toString(),
+        blockHash: log.blockHash,
         fromAddress: normalizeAddress(log.fromAddress),
       },
     });

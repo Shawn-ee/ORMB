@@ -31,7 +31,7 @@ A reorg-aware listener should persist:
 - company wallet mapping at detection time
 - amount and token decimals
 
-The database schema currently tracks the core event identity and block number. Full block-hash persistence remains a follow-up schema migration before hosted pilot preparation.
+The database schema tracks the core event identity, block number, and optional deposit block hash. Future live adapters must populate the block hash from the observed log block before confirmation processing can rely on reorg-aware checks.
 
 ## Confirmation Policy
 
@@ -66,7 +66,6 @@ No automatic backfill command is introduced in this branch. A future branch shou
 
 ## Known Limitations
 
-- This branch does not add a Prisma block-hash column.
 - This branch does not implement a live RPC-backed backfill command.
 - This branch does not modify mint request creation.
 - This branch does not call contracts or deploy anything.

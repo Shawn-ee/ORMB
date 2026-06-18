@@ -14,6 +14,7 @@ The listener core:
 - Matches the source address to an active `CompanyWallet`.
 - Saves known-wallet deposits with `DETECTED` status.
 - Saves unknown-wallet deposits with `REJECTED` status and no company assignment.
+- Preserves the observed deposit block hash when supplied by the caller.
 - Ignores transfers to the wrong treasury.
 - Avoids duplicate deposits using `chainId + txHash + logIndex`.
 - Writes audit log entries for detected and rejected deposits.
