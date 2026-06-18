@@ -15,7 +15,7 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 | 1 | Hosted demo readiness requires human acceptance for exact read-only posture. | High | Conditionally addressed | `audit/280-hosted-demo-readiness` |
 | 2 | API design is specified but not implemented. | High | Documented | `agent/300-api-contract-docs` |
 | 3 | Durable worker runner and persistence adapter boundaries are documented but not implemented. | High | Documented | `agent/301-worker-adapter-boundary-docs` |
-| 4 | Database migration safety is not documented. | High | Open | `agent/302-database-migration-runbook` |
+| 4 | Database migration safety is documented but no migration pipeline exists. | High | Documented | `agent/302-database-migration-runbook` |
 | 5 | Dependency audit reports 25 findings, including 8 high. | High | Accepted for local/testnet demo only | `audit/280-hosted-demo-readiness` |
 | 6 | Admin UI needs stronger risk/reconciliation pilot explanations. | Medium | Open | `agent/270-admin-risk-review-ui` |
 | 7 | Company UI needs stronger pilot participant guidance. | Medium | Open | `agent/272-company-pilot-flow-ui` |
@@ -57,4 +57,4 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 
 ## Current Decision
 
-Proceed next with `agent/302-database-migration-runbook` because database migration safety must be documented before any persistent pilot-style environment can be discussed.
+Proceed next with `agent/303-audit-retention-docs` because audit retention and export assumptions must be documented before pilot-style operational review.

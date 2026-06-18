@@ -77,9 +77,9 @@ Recommended branches:
 
 - future `agent/304-worker-runner-prototype`, only if explicitly scoped as testnet/mock-only
 
-### High: Database Migration Safety Is Not Documented
+### High: Database Migration Pipeline Is Not Implemented
 
-Prisma schema validation passes, but the repo has no migration runbook, rollback expectations, seed isolation policy, or backup/restore assumptions.
+Prisma schema validation passes, and migration safety expectations are documented in `docs/DATABASE_MIGRATION_RUNBOOK.md`. The repo still has no migration deployment pipeline, live database, backup/restore automation, or production database approval.
 
 Recommended branch: `agent/302-database-migration-runbook`
 
