@@ -150,6 +150,8 @@ If a listener checkpoint is stale, degraded, or failed:
 
 Do not convert dry-run output into database writes without a separately scoped, reviewed apply-mode branch.
 
+See `docs/LISTENER_RETRY_AND_BACKFILL.md` for fixture-backed listener recovery drill evidence covering missed-range review, duplicate event keys, unknown wallets, ignored events, and dry-run non-mutation.
+
 Exit criteria:
 
 - Missed, duplicate, unknown-wallet, or reorg-related events are documented.
