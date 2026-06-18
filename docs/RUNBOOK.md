@@ -32,6 +32,16 @@ Run unit tests:
 npm run test
 ```
 
+## Web App
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+The `/admin` page is currently a static demo dashboard. It does not execute approvals, database writes, contract calls, payouts, or real payment actions.
+
 ## Demo Seed Data
 
 After configuring a local PostgreSQL `DATABASE_URL` and applying the schema in a future migration branch, seed deterministic demo companies and wallets:
