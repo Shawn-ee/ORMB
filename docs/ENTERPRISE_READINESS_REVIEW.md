@@ -89,9 +89,9 @@ Audit retention, export, deletion, and tamper-resistance assumptions are documen
 
 Recommended branch: `agent/303-audit-retention-docs`
 
-### Medium: Enterprise UI Needs Fresh Browser Review
+### Medium: Enterprise UI Browser Review Is Complete For Static Demo
 
-The admin dashboard now shows static risk-case, reconciliation, and audit-review concepts. The company dashboard now shows static pilot participant guidance and support/escalation context. A fresh browser review should verify the combined enterprise UI updates.
+The admin dashboard now shows static risk-case, reconciliation, and audit-review concepts. The company dashboard now shows static pilot participant guidance and support/escalation context. A fresh browser review is documented in `docs/ENTERPRISE_UI_REVIEW.md`.
 
 Recommended branches:
 

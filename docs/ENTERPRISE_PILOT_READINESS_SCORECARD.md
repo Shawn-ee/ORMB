@@ -19,7 +19,7 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 | 5 | Dependency audit reports 25 findings, including 8 high. | High | Accepted for local/testnet demo only | `audit/280-hosted-demo-readiness` |
 | 6 | Admin UI needs stronger risk/reconciliation pilot explanations. | Medium | Addressed for static demo | `agent/270-admin-risk-review-ui` |
 | 7 | Company UI needs stronger pilot participant guidance. | Medium | Addressed for static demo | `agent/272-company-pilot-flow-ui` |
-| 8 | Browser tests are smoke-level only. | Medium | Open | `audit/274-browser-enterprise-readiness-review` |
+| 8 | Browser tests cover enterprise admin/company review concepts at smoke level. | Medium | Addressed for static demo | `audit/274-browser-enterprise-readiness-review` |
 | 9 | Audit log retention and export strategy is documented but not implemented. | Medium | Documented | `agent/303-audit-retention-docs` |
 | 10 | Portfolio packaging can be stronger. | Low | Open | `agent/290-stripe-bridge-readme-polish` |
 | 11 | Ledger/reconciliation invariants are not tested across deposits, mints, burns, and supply. | Critical | Addressed | `agent/220-ledger-invariant-tests` |
@@ -57,4 +57,4 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 
 ## Current Decision
 
-Proceed next with `audit/274-browser-enterprise-readiness-review` because enterprise UI changes need a fresh browser review across admin and company routes.
+Proceed next with `agent/290-stripe-bridge-readme-polish` because the remaining work is portfolio packaging and final readiness presentation.
