@@ -42,9 +42,49 @@ Future backfill tooling should:
 6. Write audit logs for new, duplicate, ignored, and reorged events.
 7. Avoid mint request creation until deposit reconciliation passes.
 
+## Dry-Run Backfill Command
+
+`npm run backfill:dry-run -- ...` runs a dry-run-only backfill report over supplied fixture files. It does not connect to RPC, write to the database, create deposits, write audit logs, create mint requests, submit contract transactions, or change confirmation state.
+
+Required arguments:
+
+- `--chain-id`
+- `--treasury`
+- `--mock-usdt`
+- `--from-block`
+- `--to-block`
+- `--logs-file`
+- `--known-wallets-file`
+
+Optional arguments:
+
+- `--existing-deposits-file`
+- `--batch-size`, default `500`
+- `--max-blocks`, default `5000`
+
+Example:
+
+```bash
+npm run backfill:dry-run -- --chain-id 84532 --treasury 0x3000000000000000000000000000000000000003 --mock-usdt 0x4000000000000000000000000000000000000004 --from-block 100 --to-block 200 --logs-file ./tmp/mock-transfer-logs.json --known-wallets-file ./tmp/company-wallets.json --existing-deposits-file ./tmp/existing-deposits.json
+```
+
+The report includes:
+
+- block range scanned
+- planned batches
+- events found inside the range
+- matching treasury deposits
+- known company wallet matches
+- unknown wallet events
+- duplicates already present
+- ignored events
+- potential actions a non-dry-run listener would consider
+
+The command is intentionally file-backed for CI and demo safety. A future live adapter may fetch logs from Base Sepolia RPC, but it must keep dry-run mode read-only and must not require secrets in CI.
+
 ## Non-Goals
 
-- No live RPC backfill command is introduced in this branch.
+- No live RPC backfill command is introduced.
 - No Prisma schema migration is introduced in this branch.
 - No contract calls or deployments are introduced in this branch.
 - No production monitoring, alerting, or incident automation is introduced in this branch.

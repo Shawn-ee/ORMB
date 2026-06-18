@@ -60,9 +60,11 @@ Acceptance criteria:
 
 ### High: No Dry-Run Backfill Command Exists
 
+Status: addressed for file-backed demo dry runs by `agent/235-dry-run-backfill-command`.
+
 The repo now has bounded backfill planning helpers but no operator command that performs a dry-run backfill over supplied logs or RPC reads.
 
-Impact: an operator cannot rehearse recovery from missed blocks using the repo tooling.
+Remaining impact: an operator can rehearse recovery from supplied log fixtures, but there is still no live RPC-backed adapter. Live adapters must remain dry-run/read-only unless separately reviewed.
 
 Recommended branch: `agent/235-dry-run-backfill-command`
 
