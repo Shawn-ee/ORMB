@@ -92,6 +92,18 @@ The report includes:
 
 The command is intentionally file-backed for CI and demo safety. A future live adapter may fetch logs from Base Sepolia RPC, but it must keep dry-run mode read-only and must not require secrets in CI.
 
+## Listener Recovery Drill Evidence
+
+The listener recovery drill is covered by `test/workers/listener-dry-run-backfill.unit.test.ts` with an in-memory, fixture-style missed block range. The drill fixture includes:
+
+- one duplicate event that already exists by `(chainId, txHash, logIndex)`
+- one known company-wallet treasury deposit that would be eligible for detected-deposit review
+- one unknown-wallet treasury deposit that would remain rejected/manual-review only
+- one ignored event outside the treasury/token filter
+- one event outside the reviewed missed range that is excluded from the report
+
+The drill asserts that dry-run output reports the missed range, duplicate, unknown-wallet, and ignored-event counts without repository writes. The `potentialActions` list remains advisory only and must not be treated as approval to create deposits, mint requests, audit records, or ORMB mints.
+
 ## Non-Goals
 
 - No live RPC backfill command is introduced.

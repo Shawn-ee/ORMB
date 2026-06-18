@@ -141,6 +141,71 @@ describe("dryRunMockUsdtBackfill", () => {
     assert.equal(repository.writes, 0);
   });
 
+  it("reviews a missed range fixture with duplicates, unknown wallets, and ignored events without writes", async () => {
+    const duplicateLog = transferLog({
+      txHash: "0x1111111111111111111111111111111111111111111111111111111111111111",
+      logIndex: 0,
+      blockNumber: 102n,
+    });
+    const knownWalletLog = transferLog({
+      txHash: "0x2222222222222222222222222222222222222222222222222222222222222222",
+      logIndex: 1,
+      blockNumber: 103n,
+      amount: parseUnits("250", 6),
+    });
+    const unknownWalletLog = transferLog({
+      txHash: "0x3333333333333333333333333333333333333333333333333333333333333333",
+      logIndex: 2,
+      blockNumber: 104n,
+      fromAddress: UNKNOWN_WALLET,
+    });
+    const ignoredLog = transferLog({
+      txHash: "0x4444444444444444444444444444444444444444444444444444444444444444",
+      logIndex: 3,
+      blockNumber: 105n,
+      toAddress: OTHER_TREASURY,
+    });
+    const outsideMissedRangeLog = transferLog({
+      txHash: "0x5555555555555555555555555555555555555555555555555555555555555555",
+      logIndex: 4,
+      blockNumber: 120n,
+    });
+    repository.existingDeposits.add(
+      `${CHAIN_ID}:${duplicateLog.txHash.toLowerCase()}:${duplicateLog.logIndex}`,
+    );
+
+    const report = await dryRunMockUsdtBackfill({
+      chainId: CHAIN_ID,
+      treasuryAddress: TREASURY,
+      mockUsdtAddress: MOCK_USDT,
+      fromBlock: 100n,
+      toBlock: 110n,
+      batchSize: 5n,
+      maxBlocks: 25n,
+      logs: [duplicateLog, knownWalletLog, unknownWalletLog, ignoredLog, outsideMissedRangeLog],
+      repository,
+    });
+
+    assert.equal(report.mode, "dry-run");
+    assert.deepEqual(report.blockRangeScanned, { fromBlock: "100", toBlock: "110" });
+    assert.equal(report.eventsFound, 4);
+    assert.equal(report.matchingTreasuryDeposits, 3);
+    assert.equal(report.duplicatesAlreadyPresent, 1);
+    assert.equal(report.knownCompanyWalletMatches, 1);
+    assert.equal(report.unknownWalletEvents, 1);
+    assert.equal(report.ignoredEvents, 1);
+    assert.deepEqual(
+      report.potentialActions.map((action) => action.type),
+      [
+        "would_skip_duplicate",
+        "would_create_detected_deposit",
+        "would_create_rejected_unknown_wallet_deposit",
+        "would_ignore_event",
+      ],
+    );
+    assert.equal(repository.writes, 0);
+  });
+
   it("handles empty ranges without potential actions", async () => {
     const report = await dryRunMockUsdtBackfill({
       chainId: CHAIN_ID,
