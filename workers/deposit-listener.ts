@@ -2,6 +2,8 @@ import { formatUnits, getAddress, isAddress } from "viem";
 
 export type DepositStatus = "DETECTED" | "REJECTED";
 
+export type ListenerAuditPolicy = "state_changes_only" | "verbose";
+
 export type MockUsdtTransferLog = {
   chainId: number;
   txHash: `0x${string}`;
@@ -62,6 +64,7 @@ export type ProcessTransferLogsInput = {
   logs: MockUsdtTransferLog[];
   repository: DepositListenerRepository;
   scannedToBlock?: bigint;
+  auditPolicy?: ListenerAuditPolicy;
 };
 
 export type ProcessTransferLogsResult = {
@@ -82,6 +85,7 @@ export async function processMockUsdtTransferLogs({
   logs,
   repository,
   scannedToBlock,
+  auditPolicy = "state_changes_only",
 }: ProcessTransferLogsInput): Promise<ProcessTransferLogsResult> {
   assertAddress("treasuryAddress", treasuryAddress);
   assertAddress("mockUsdtAddress", mockUsdtAddress);
@@ -102,6 +106,26 @@ export async function processMockUsdtTransferLogs({
   for (const log of logs) {
     if (log.chainId !== chainId || normalizeAddress(log.toAddress) !== treasury || normalizeAddress(log.tokenAddress) !== token) {
       result.ignored += 1;
+      await createVerboseAuditLog(repository, auditPolicy, {
+        actorType: "system",
+        action: "deposit.ignored",
+        entityType: "SystemJobState",
+        entityId: JOB_NAME,
+        metadata: {
+          chainId: log.chainId,
+          expectedChainId: chainId,
+          txHash: log.txHash,
+          logIndex: log.logIndex,
+          blockNumber: log.blockNumber.toString(),
+          blockHash: log.blockHash,
+          fromAddress: normalizeAddress(log.fromAddress),
+          toAddress: normalizeAddress(log.toAddress),
+          tokenAddress: normalizeAddress(log.tokenAddress),
+          expectedTreasuryAddress: treasury,
+          expectedTokenAddress: token,
+          reason: "outside_filter",
+        },
+      });
       continue;
     }
 
@@ -112,6 +136,20 @@ export async function processMockUsdtTransferLogs({
 
     if (await repository.depositExists(chainId, log.txHash, log.logIndex)) {
       result.duplicates += 1;
+      await createVerboseAuditLog(repository, auditPolicy, {
+        actorType: "system",
+        action: "deposit.duplicate_skipped",
+        entityType: "Deposit",
+        entityId: toEventKey(chainId, log.txHash, log.logIndex),
+        metadata: {
+          chainId,
+          txHash: log.txHash,
+          logIndex: log.logIndex,
+          blockNumber: log.blockNumber.toString(),
+          blockHash: log.blockHash,
+          reason: "existing_deposit_event_key",
+        },
+      });
       continue;
     }
 
@@ -182,4 +220,18 @@ function normalizeAddress(address: `0x${string}`): `0x${string}` {
 
 function maxBigInt(left: bigint | undefined, right: bigint) {
   return left === undefined || right > left ? right : left;
+}
+
+async function createVerboseAuditLog(
+  repository: DepositListenerRepository,
+  auditPolicy: ListenerAuditPolicy,
+  input: CreateAuditLogInput,
+) {
+  if (auditPolicy === "verbose") {
+    await repository.createAuditLog(input);
+  }
+}
+
+function toEventKey(chainId: number, txHash: `0x${string}`, logIndex: number) {
+  return `${chainId}:${txHash.toLowerCase()}:${logIndex}`;
 }
