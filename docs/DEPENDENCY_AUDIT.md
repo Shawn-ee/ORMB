@@ -135,3 +135,57 @@ Result:
 - Total: 25
 
 The vulnerability count remains unchanged after adding Playwright for browser smoke checks. The findings are accepted for `demo-v0` review only because this repository remains a local/testnet technical demo with no production service, no mainnet deployment, no real funds, and no customer data paths. A dependency-hardening branch remains recommended before any hosted or externally accessible demo.
+
+## 2026-06-18 Enterprise Pilot Hardening Re-Check
+
+Branch: `agent/210-dependency-hardening`
+
+Commands:
+
+```bash
+npm outdated
+npm audit --json
+npm view next version
+npm view postcss version
+npm view viem version
+npm view @nomicfoundation/hardhat-toolbox-viem version
+npm view prisma version
+npm view @prisma/client version
+npm view @playwright/test version
+npm view typescript version
+```
+
+Results:
+
+- `npm outdated`: no outdated direct dependencies reported.
+- `npm audit --json`: exit code 1.
+- Low: 8
+- Moderate: 9
+- High: 8
+- Critical: 0
+- Total: 25
+
+Current latest direct versions reported by npm:
+
+- `next`: 16.2.9
+- `viem`: 2.52.2
+- `@nomicfoundation/hardhat-toolbox-viem`: 5.0.7
+- `prisma`: 7.8.0
+- `@prisma/client`: 7.8.0
+- `@playwright/test`: 1.61.0
+- `typescript`: 6.0.3
+
+Decision:
+
+- No dependency changes were made because the installed direct dependencies already match the latest versions available from npm.
+- No `npm audit fix --force` was run.
+- npm's currently suggested forced paths include unsafe ecosystem changes or downgrades for this repository's current toolchain.
+- The findings remain accepted only for local/testnet demo development and portfolio review.
+- Public hosted demo or enterprise pilot preparation should keep this gap open until upstream patched dependency ranges are available or a focused toolchain replacement branch is approved.
+
+Exposure summary:
+
+- Hardhat/viem findings are concentrated in development and contract-test tooling.
+- Prisma findings are concentrated in CLI/dev tooling.
+- Next/PostCSS remains runtime-adjacent, but the app currently serves static demo pages with no user-supplied CSS input.
+- GitHub Actions HTTP client findings are transitive tooling exposure.
