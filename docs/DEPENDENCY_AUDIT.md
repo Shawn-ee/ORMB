@@ -189,3 +189,29 @@ Exposure summary:
 - Prisma findings are concentrated in CLI/dev tooling.
 - Next/PostCSS remains runtime-adjacent, but the app currently serves static demo pages with no user-supplied CSS input.
 - GitHub Actions HTTP client findings are transitive tooling exposure.
+
+## 2026-06-18 Enterprise Readiness Re-Check
+
+Branch: `audit/270-enterprise-readiness-review`
+
+Command:
+
+```bash
+npm audit --json
+```
+
+Result:
+
+- Exit code: 1
+- Low: 8
+- Moderate: 9
+- High: 8
+- Critical: 0
+- Total: 25
+
+Decision:
+
+- The vulnerability count is unchanged from the prior Enterprise hardening re-check.
+- The findings remain accepted only for local/testnet demo and portfolio review.
+- They remain a blocker for production, real-funds usage, mainnet deployment, or any hosted demo that is not explicitly read-only and approved by the human owner.
+- The next hosted-demo readiness branch must re-evaluate whether these findings are acceptable for the exact hosting posture.
