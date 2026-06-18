@@ -46,6 +46,21 @@ describe("evaluateDemoLedgerInvariants", () => {
     assert.equal(result.failures.some((failure) => failure.code === "MINT_REQUEST_AMOUNT_MISMATCH"), true);
   });
 
+  it("rejects duplicate confirmed mints for one mint request", () => {
+    const snapshot = validSnapshot();
+    snapshot.mints.push({
+      id: "mint_duplicate",
+      mintRequestId: "mint_request_1042",
+      status: "CONFIRMED",
+      amount: "3600",
+    });
+
+    const result = evaluateDemoLedgerInvariants(snapshot);
+
+    assert.equal(result.valid, false);
+    assert.equal(result.failures.some((failure) => failure.code === "DUPLICATE_MINT_FOR_MINT_REQUEST"), true);
+  });
+
   it("rejects minted requests without a confirmed mint record", () => {
     const snapshot = validSnapshot();
     snapshot.mints = snapshot.mints.filter((mint) => mint.mintRequestId !== "mint_request_1042");
@@ -95,7 +110,27 @@ describe("evaluateDemoLedgerInvariants", () => {
       status: "FAILED",
       amount: "3600",
     });
+    snapshot.mints.push({
+      id: "mint_pending",
+      mintRequestId: "mint_request_1042",
+      status: "PENDING",
+      amount: "3600",
+    });
+    snapshot.mints.push({
+      id: "mint_submitted",
+      mintRequestId: "mint_request_1042",
+      status: "SUBMITTED",
+      amount: "3600",
+    });
     snapshot.redemptions.push({ id: "redemption_rejected", status: "REJECTED", amount: "999" });
+    snapshot.redemptions.push({
+      id: "redemption_failed",
+      status: "FAILED",
+      amount: "999",
+      burnChainId: 84532,
+      burnTxHash: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      burnLogIndex: 7,
+    });
 
     const result = evaluateDemoLedgerInvariants(snapshot);
 
