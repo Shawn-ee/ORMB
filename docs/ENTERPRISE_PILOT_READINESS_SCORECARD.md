@@ -4,9 +4,9 @@
 
 Current target: Enterprise Pilot Readiness v1
 
-Current verdict: Not ready; blockers remain after Enterprise hardening branches.
+Current verdict: Ready for human review; not approved for production, real funds, mainnet, or external pilot use.
 
-The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It is not ready for Enterprise Pilot Readiness v1 until hosted-demo posture, API/worker boundaries, database migration safety, audit retention, enterprise UX context, and final portfolio packaging are addressed or explicitly accepted by the human owner.
+The repo is ready as a local technical demo, Stripe/Bridge portfolio demo, and Enterprise Pilot Readiness v1 release candidate for human review. Human/legal/compliance/security approval is still required before any external pilot, hosted sharing, `dev` to `main` promotion, real funds, mainnet, or production-like use.
 
 ## Scorecard
 
@@ -57,4 +57,4 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 
 ## Current Decision
 
-Proceed next with `release/enterprise-pilot-readiness-v1` because the remaining work is final readiness packaging for human review.
+Proceed next with human review of `release/enterprise-pilot-readiness-v1`. Optional follow-up branches may add architecture diagrams or resume bullets, but no material blocker remains for this testnet/mock-only readiness package.
