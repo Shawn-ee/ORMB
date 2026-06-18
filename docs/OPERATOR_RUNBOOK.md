@@ -223,6 +223,8 @@ Operator review may:
 - reopen a case
 - add a note in audit metadata
 
+High-severity `OPEN` or `ACKNOWLEDGED` cases pause demo mint progression until resolved for demo purposes. Reopened high-severity cases return to `OPEN` and pause progression again. Use audit notes to record demo evidence and branch context, not real compliance approvals.
+
 Operator review must not:
 
 - approve real KYB
