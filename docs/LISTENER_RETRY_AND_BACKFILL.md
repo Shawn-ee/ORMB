@@ -38,7 +38,15 @@ The helper does not sleep or perform network I/O. Future worker runners can use 
 - `terminal`: validation or configuration failures that should not be retried without changing input, such as invalid addresses, invalid block ranges, invalid chain IDs, and missing required arguments.
 - `manual_review`: chain, policy, or invariant conditions that need operator review, such as reorg detection, block-hash mismatch, unknown wallets, duplicate conflicts, and unexpected state transitions.
 
-Future live runners should retry only `retryable` classifications. Terminal validation failures should fail closed. Manual-review classifications should stop automatic progression and create operator-facing review context.
+Future live runners should retry only `retryable` classifications. A retryable classification allows another read or write attempt against the same bounded listener operation only; it is not permission to advance confirmation state, create a mint request, mint ORMB, or reconcile a deposit as complete. Terminal validation failures should fail closed. Manual-review classifications should stop automatic progression and create operator-facing review context.
+
+| Classification | Typical source | Automatic action | Operator action |
+| --- | --- | --- | --- |
+| `retryable` | RPC timeout, RPC rate limit, temporary network failure, database connection loss, database deadlock | Retry the same bounded operation under `decideRetryDelay` until `maxAttempts` is reached. Do not advance deposit, confirmation, or mint state because of the retry classification alone. | Inspect retry count and dependency health if the retry threshold is reached; pause dependent demo mint progression while the listener is degraded. |
+| `terminal` | Invalid address, invalid block range, invalid chain ID, invalid token/config, missing required argument, schema validation failure | Stop the operation and fail closed. Do not retry without changing the invalid input or configuration. | Correct the fixture, command input, or testnet/demo configuration on a focused branch, then rerun validation. |
+| `manual_review` | Reorg detection, block-hash mismatch, duplicate conflict, invariant violation, unexpected state transition, unknown wallet | Stop automatic progression and record review context. Do not create deposits for unknown wallets, create mint requests, mint ORMB, or change confirmation state from this classification alone. | Compare `(chainId, txHash, logIndex)`, checkpoint, and block-hash evidence; run dry-run backfill when relevant; escalate under the incident runbook for reorgs, duplicate conflicts, or invariant failures. |
+
+Unmapped RPC or database errors default to `retryable`, unmapped validation errors default to `terminal`, and other unmapped listener errors default to `manual_review`. These defaults are conservative for a testnet-only demo and must not be treated as production incident automation.
 
 ## Safe Backfill Procedure
 

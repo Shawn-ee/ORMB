@@ -195,10 +195,14 @@ No worker helper currently polls live services or sends alerts. Incident respons
 When the deposit listener, confirmation worker, or backfill review surfaces a problem:
 
 1. Confirm the issue is on fixture-backed or Base Sepolia testnet data only.
-2. Run the dry-run backfill command over the suspected block range when relevant.
-3. Review matching treasury deposits, unknown wallet events, duplicates, ignored events, and potential actions.
-4. Compare reported event keys against existing demo deposits using `(chainId, txHash, logIndex)`.
-5. Stop if a reorg, block-hash mismatch, duplicate conflict, or unexpected state transition appears.
+2. Classify listener errors with the taxonomy in `docs/LISTENER_RETRY_AND_BACKFILL.md`.
+3. Treat `retryable` classifications as permission to retry the same bounded listener operation only; do not use retries to advance deposits, mint requests, ORMB mints, or confirmation state.
+4. Treat `terminal` classifications as fail-closed input or configuration problems.
+5. Treat `manual_review` classifications as a stop point for automatic progression and collect operator review evidence.
+6. Run the dry-run backfill command over the suspected block range when relevant.
+7. Review matching treasury deposits, unknown wallet events, duplicates, ignored events, and potential actions.
+8. Compare reported event keys against existing demo deposits using `(chainId, txHash, logIndex)`.
+9. Stop if a reorg, block-hash mismatch, duplicate conflict, invariant violation, or unexpected state transition appears.
 
 Dry-run output is not permission to write deposits, create mint requests, mint ORMB, or change confirmation state.
 
