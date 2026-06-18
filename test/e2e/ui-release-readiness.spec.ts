@@ -71,6 +71,10 @@ test.describe("UI release readiness", () => {
   test("admin dashboard shows enterprise review concepts", async ({ page }) => {
     await page.goto("/admin");
 
+    await expect(page.getByRole("heading", { name: "Operator Readiness" })).toBeVisible();
+    await expect(page.getByText("Manual review active")).toBeVisible();
+    await expect(page.getByText("Paused paths shown")).toBeVisible();
+    await expect(page.getByText("No live controls")).toBeVisible();
     await expect(page.getByRole("heading", { name: "Enterprise Review Rails" })).toBeVisible();
     await expect(page.getByText("Risk case triage")).toBeVisible();
     await expect(page.getByText("Ledger reconciliation")).toBeVisible();
@@ -81,6 +85,10 @@ test.describe("UI release readiness", () => {
   test("company dashboard shows pilot participation boundaries", async ({ page }) => {
     await page.goto("/company");
 
+    await expect(page.getByRole("heading", { name: "Participant Readiness" })).toBeVisible();
+    await expect(page.getByText("Mock-only balances")).toBeVisible();
+    await expect(page.getByText("No self-service transfers")).toBeVisible();
+    await expect(page.getByText("No fund movement")).toBeVisible();
     await expect(page.getByRole("heading", { name: "Pilot Participation" })).toBeVisible();
     await expect(page.getByText("Participant boundary")).toBeVisible();
     await expect(page.getByText("Operator handoff")).toBeVisible();

@@ -1,8 +1,26 @@
 const companyMetrics = [
-  { label: "Available ORMB", value: "4,503.60", detail: "Demo balance after verified burn" },
+  { label: "Displayed ORMB", value: "4,503.60", detail: "Mock testnet balance after verified burn" },
   { label: "Confirmed deposits", value: "750.50", detail: "MockUSDT detected and confirmed" },
   { label: "Pending mint", value: "3,600.00", detail: "Awaiting admin approval" },
   { label: "Pending redemption", value: "900.00", detail: "Burn verification required" },
+];
+
+const participantStates = [
+  {
+    label: "Asset boundary",
+    value: "Mock-only balances",
+    detail: "Values are testnet demo records only; no real USDT, RMB, CNH, customer deposits, or obligations are shown.",
+  },
+  {
+    label: "Movement boundary",
+    value: "No self-service transfers",
+    detail: "Participant users can inspect lifecycle state but cannot move funds, mint, burn, redeem, or approve requests here.",
+  },
+  {
+    label: "Escalation path",
+    value: "Operator review required",
+    detail: "Unexpected wallet, deposit, risk, or redemption states pause the pilot and move to the admin operator queue.",
+  },
 ];
 
 const pilotGuidance = [
@@ -15,7 +33,7 @@ const pilotGuidance = [
   {
     title: "Operator handoff",
     status: "Manual review",
-    summary: "Mint approvals, risk exceptions, and redemption burn checks remain admin-reviewed demo events.",
+    summary: "Mint approvals, risk exceptions, and redemption burn checks remain admin-reviewed demo events with no participant controls.",
     checks: ["Mint request pending", "Burn verification pending", "Risk review handled by operator"],
   },
   {
@@ -44,14 +62,14 @@ const transfers = [
     counterparty: "Pioneer Imports",
     direction: "Sent",
     amount: "720.00 ORMB",
-    status: "Settled",
+    status: "Recorded demo settlement",
   },
   {
     id: "TR-3002",
     counterparty: "Northstar Logistics",
     direction: "Received",
     amount: "360.00 ORMB",
-    status: "Settled",
+    status: "Recorded demo settlement",
   },
 ];
 
@@ -85,8 +103,8 @@ export default function CompanyPage() {
           <p className="eyebrow">Company dashboard</p>
           <h1>Harbor Components workspace</h1>
           <p className="lead">
-            Track mock deposit confirmations, ORMB balances, whitelisted wallets, enterprise transfers, redemption
-            requests, and lifecycle activity for the ORMB testnet demo.
+            Track mock deposit confirmations, displayed ORMB balances, whitelisted wallets, recorded settlement events,
+            redemption requests, and lifecycle activity for the ORMB testnet demo. This workspace is read-only.
           </p>
         </div>
         <span className="status-pill">Mock assets only</span>
@@ -100,6 +118,22 @@ export default function CompanyPage() {
             <span>{metric.detail}</span>
           </div>
         ))}
+      </section>
+
+      <section className="section">
+        <div className="section-heading">
+          <h2>Participant Readiness</h2>
+          <span className="status-pill warning">No fund movement</span>
+        </div>
+        <div className="status-grid" aria-label="Company participant readiness">
+          {participantStates.map((state) => (
+            <article className="status-card" key={state.label}>
+              <span className="metric-label">{state.label}</span>
+              <strong>{state.value}</strong>
+              <p>{state.detail}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="section">
@@ -148,12 +182,15 @@ export default function CompanyPage() {
         <div>
           <div className="section-heading">
             <h2>Deposit Instructions</h2>
-            <span className="status-pill neutral">Demo only</span>
+            <span className="status-pill neutral">Mock address</span>
           </div>
           <div className="instruction-panel">
             <span>MockUSDT deposit address</span>
             <strong className="mono">0xA000...D011</strong>
-            <span>Source wallet must be whitelisted before detection can create a mint request.</span>
+            <span>
+              Source wallet must be whitelisted before detection can create a mint request. Do not send real assets to
+              demo addresses.
+            </span>
           </div>
         </div>
       </section>
@@ -206,8 +243,8 @@ export default function CompanyPage() {
       <section className="section dashboard-grid">
         <div>
           <div className="section-heading">
-            <h2>Enterprise Transfers</h2>
-            <span className="status-pill">Whitelisted counterparties</span>
+            <h2>Settlement Records</h2>
+            <span className="status-pill neutral">Read-only history</span>
           </div>
           <table className="table dense-table">
             <thead>
