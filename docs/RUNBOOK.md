@@ -29,6 +29,50 @@ Later branches will add:
 
 Do not run production-like operations from this repository. Do not use mainnet keys, real deposits, real customers, real USDT, or real RMB.
 
+## Creating and Merging Agent PRs
+
+Agent branches target `dev`. Do not open agent PRs directly into `main`.
+
+Before creating a PR, confirm the branch state:
+
+```bash
+git status --short --branch
+git branch -vv --all
+git remote -v
+```
+
+When the GitHub CLI is installed and authenticated, create the PR with an explicit base and head:
+
+```bash
+gh auth status
+gh pr create --base dev --head agent/<goal> --title "<title>" --body-file <body-file>
+```
+
+If a PR already exists, do not create a duplicate. Report the existing PR URL.
+
+Inspect checks before merging:
+
+```bash
+gh pr checks
+gh pr status
+```
+
+If checks pass and repository rules allow the merge, merge the focused agent branch into `dev`. Prefer squash merge unless a stricter repository policy exists:
+
+```bash
+gh pr merge --squash
+git switch dev
+git pull origin dev
+```
+
+If `gh` is unavailable, provide the manual compare URL:
+
+```text
+https://github.com/Shawn-ee/ORMB/compare/dev...agent/<goal>?expand=1
+```
+
+Do not merge `dev` into `main` during normal agent work.
+
 ## Release Checklist Placeholder
 
 Before merging `dev` into `main`, confirm:

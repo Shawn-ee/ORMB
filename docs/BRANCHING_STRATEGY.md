@@ -14,6 +14,7 @@
 - `dev` must not merge into `main` until the release/demo checklist passes.
 - Each pull request must include a validation report.
 - Checks must pass before merge.
+- Force-pushing to `main` or `dev` is forbidden unless explicitly approved by the human owner.
 
 ## Naming Examples
 
