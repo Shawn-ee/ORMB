@@ -60,6 +60,8 @@ Current listener baseline:
 - Unknown wallet deposits are rejected and must never create mint requests.
 - Wrong-treasury transfers are ignored.
 - Live RPC polling and private-key usage are not implemented.
+- Confirmation handling is threshold-based and must complete before later mint request creation.
+- Confirmation worker reruns avoid rewriting unchanged records.
 
 ## Current Security Status
 
