@@ -64,6 +64,7 @@ Copy `.env.example` for local environment setup only when future branches need n
 - `docs/ROADMAP.md`: Focused branch roadmap.
 - `docs/AGENT_WORKFLOW.md`: Required agent process.
 - `docs/BRANCHING_STRATEGY.md`: Branch and merge policy.
+- `docs/LONG_RUNNING_CODEX_AGENT_RULES.md`: Long-running autonomous agent operating rules.
 - `docs/DEMO_REQUIREMENTS.md`: Demo lifecycle requirements.
 - `docs/SECURITY.md`: Security posture and restrictions.
 - `docs/LEGAL_BOUNDARIES.md`: Non-production and legal boundaries.
