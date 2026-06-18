@@ -20,9 +20,14 @@ Later branches will add:
 
 - Business UI and API routes.
 - Business Prisma schema and PostgreSQL migrations.
-- Base Sepolia deployment scripts.
 - Worker execution commands.
 - Demo seed data.
+
+## Contract Scripts
+
+Base Sepolia contract scripts are documented in `docs/DEPLOYMENT.md`.
+
+Do not run contract scripts with real funds or mainnet credentials. Scripts require `ORMB_CONFIRM_TESTNET_DEPLOY=YES` and are not executed by CI.
 
 ## Operational Boundary
 

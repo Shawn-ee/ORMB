@@ -41,6 +41,7 @@ Current contract baseline:
 - Normal transfers require both sender and recipient to be whitelisted.
 - Pausing blocks token movement.
 - MockUSDT is intentionally public-mint/faucet testnet demo code and must not be used as a real asset.
+- Contract scripts require explicit `ORMB_CONFIRM_TESTNET_DEPLOY=YES` and must remain Base Sepolia-only.
 
 ## Backend And Worker Security Expectations
 
