@@ -82,6 +82,8 @@ The full project security review is documented in `docs/SECURITY_REVIEW.md`.
 
 The contract threat model is documented in `docs/CONTRACT_THREAT_MODEL.md`.
 
+Incident classification, containment, and escalation procedures are documented in `docs/INCIDENT_RESPONSE_RUNBOOK.md`.
+
 Full demo verification status is documented in `docs/DEMO_VERIFICATION.md`.
 
 Browser UI release review is documented in `docs/UI_REVIEW.md`.

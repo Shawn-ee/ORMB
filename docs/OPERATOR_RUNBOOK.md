@@ -162,6 +162,8 @@ Stop operations if:
 - UI copy implies production readiness or public stablecoin issuance
 - legal/compliance approval is unclear
 
+Incident classification and response steps are documented in `docs/INCIDENT_RESPONSE_RUNBOOK.md`.
+
 ## Escalation
 
 Escalate to the human owner before:
