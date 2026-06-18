@@ -114,6 +114,7 @@ Before merging `dev` into `main`, confirm:
 - Documentation is current.
 - Demo walkthrough works.
 - Security review is complete.
+- Demo verification is complete.
 - Legal boundaries are current.
 - No secrets are committed.
 - No real money flow exists.
