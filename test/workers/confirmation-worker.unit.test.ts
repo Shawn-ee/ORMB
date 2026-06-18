@@ -74,21 +74,62 @@ describe("processDepositConfirmations", () => {
 
   it("confirms deposits when the threshold is reached", async () => {
     const now = new Date("2026-06-18T00:00:00.000Z");
-    repository.deposits.push(deposit({ status: "CONFIRMING", confirmations: 9 }));
+    repository.deposits.push(
+      deposit({
+        status: "CONFIRMING",
+        confirmations: 9,
+        blockHash: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      }),
+    );
 
     const result = await processDepositConfirmations({
       chainId: CHAIN_ID,
       currentBlockNumber: 109n,
       requiredConfirmations: 10,
       repository,
+      getBlockHash: async () =>
+        "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
       now,
     });
 
     assert.equal(result.confirmed, 1);
+    assert.equal(result.reorgDetected, 0);
     assert.equal(repository.updates[0].status, "CONFIRMED");
     assert.equal(repository.updates[0].confirmations, 10);
     assert.equal(repository.updates[0].confirmedAt, now);
     assert.equal(repository.auditLogs[0].action, "deposit.confirmed");
+  });
+
+  it("does not confirm deposits when the stored block hash no longer matches", async () => {
+    repository.deposits.push(
+      deposit({
+        status: "CONFIRMING",
+        confirmations: 9,
+        blockHash: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      }),
+    );
+
+    const result = await processDepositConfirmations({
+      chainId: CHAIN_ID,
+      currentBlockNumber: 109n,
+      requiredConfirmations: 10,
+      repository,
+      getBlockHash: async () =>
+        "0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    });
+
+    assert.equal(result.confirmed, 0);
+    assert.equal(result.reorgDetected, 1);
+    assert.equal(repository.updates.length, 0);
+    assert.equal(repository.auditLogs[0].action, "deposit.reorg_detected");
+    assert.deepEqual(repository.auditLogs[0].metadata, {
+      chainId: CHAIN_ID,
+      txHash: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      logIndex: 0,
+      blockNumber: "100",
+      expectedBlockHash: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      currentBlockHash: "0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    });
   });
 
   it("does not rewrite unchanged confirmation records", async () => {

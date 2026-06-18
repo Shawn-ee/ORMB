@@ -7,6 +7,7 @@ export type ConfirmableDeposit = {
   txHash: `0x${string}`;
   logIndex: number;
   blockNumber: bigint;
+  blockHash?: `0x${string}`;
   confirmations: number;
   status: ConfirmableDepositStatus;
 };
@@ -21,7 +22,7 @@ export type UpdateDepositConfirmationInput = {
 export type ConfirmationAuditLogInput = {
   companyId?: string;
   actorType: "system";
-  action: "deposit.confirming" | "deposit.confirmed";
+  action: "deposit.confirming" | "deposit.confirmed" | "deposit.reorg_detected";
   entityType: "Deposit";
   entityId: string;
   metadata: Record<string, unknown>;
@@ -38,6 +39,7 @@ export type ProcessConfirmationsInput = {
   currentBlockNumber: bigint;
   requiredConfirmations: number;
   repository: ConfirmationWorkerRepository;
+  getBlockHash?: (blockNumber: bigint) => Promise<`0x${string}` | undefined>;
   now?: Date;
 };
 
@@ -45,6 +47,7 @@ export type ProcessConfirmationsResult = {
   checked: number;
   movedToConfirming: number;
   confirmed: number;
+  reorgDetected: number;
   unchanged: number;
 };
 
@@ -53,6 +56,7 @@ export async function processDepositConfirmations({
   currentBlockNumber,
   requiredConfirmations,
   repository,
+  getBlockHash,
   now = new Date(),
 }: ProcessConfirmationsInput): Promise<ProcessConfirmationsResult> {
   if (requiredConfirmations <= 0) {
@@ -64,10 +68,40 @@ export async function processDepositConfirmations({
     checked: deposits.length,
     movedToConfirming: 0,
     confirmed: 0,
+    reorgDetected: 0,
     unchanged: 0,
   };
 
   for (const deposit of deposits) {
+    if (deposit.blockHash !== undefined && getBlockHash !== undefined) {
+      const currentBlockHash = await getBlockHash(deposit.blockNumber);
+
+      if (
+        currentBlockHash !== undefined &&
+        currentBlockHash.toLowerCase() !== deposit.blockHash.toLowerCase()
+      ) {
+        result.reorgDetected += 1;
+
+        await repository.createAuditLog({
+          companyId: deposit.companyId,
+          actorType: "system",
+          action: "deposit.reorg_detected",
+          entityType: "Deposit",
+          entityId: deposit.id,
+          metadata: {
+            chainId: deposit.chainId,
+            txHash: deposit.txHash,
+            logIndex: deposit.logIndex,
+            blockNumber: deposit.blockNumber.toString(),
+            expectedBlockHash: deposit.blockHash,
+            currentBlockHash,
+          },
+        });
+
+        continue;
+      }
+    }
+
     const confirmations = calculateConfirmations(currentBlockNumber, deposit.blockNumber);
     const nextStatus: ConfirmableDepositStatus =
       confirmations >= requiredConfirmations ? "CONFIRMED" : "CONFIRMING";
