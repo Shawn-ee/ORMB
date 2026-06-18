@@ -45,7 +45,7 @@ The repository does not yet include:
 
 - Docker PostgreSQL support committed to the repo.
 - Prisma migrations for a private staging database lifecycle.
-- A `private-staging` environment mode.
+- A `private-staging` environment validation mode in `src/lib/config/env.ts`.
 - Admin authentication middleware.
 - Protected mutation API routes.
 - Persistent Prisma adapters for the existing worker-core interfaces.
@@ -71,17 +71,18 @@ Current environment modes are:
 - `local`
 - `testnet-script`
 - `hosted-demo`
+- `private-staging`
 
-Private staging requires a new `private-staging` mode because `hosted-demo` is intentionally read-only and rejects deployer keys.
+Private staging requires a distinct `private-staging` mode because `hosted-demo` is intentionally read-only and rejects deployer, minter, and burner keys.
 
-Required future behavior:
+Current and required future behavior:
 
 - `local`: PostgreSQL-backed local development with no required testnet keys.
 - `hosted-demo`: static/read-only only; no private keys and no mutation APIs.
 - `testnet-script`: one-off Base Sepolia deploy/admin scripts with explicit confirmation.
-- `private-staging`: owner-only interactive staging with Basic Auth, PostgreSQL, Base Sepolia RPC, deployed contract addresses, staging minter/burner keys, and mutation APIs enabled.
+- `private-staging`: owner-only interactive staging with Basic Auth, PostgreSQL, Base Sepolia RPC, deployed contract addresses, and staging minter/burner keys. This branch adds strict environment validation only; mutation APIs, admin access middleware, persistent adapters, and on-chain gateways remain future branches.
 
-Required future env values for `private-staging`:
+Required env values for `private-staging` validation:
 
 ```env
 ORMB_ENV_MODE=private-staging
@@ -91,13 +92,11 @@ BASE_SEPOLIA_CHAIN_ID=84532
 ORMB_CONTRACT_ADDRESS=
 BASE_SEPOLIA_MINTER_PRIVATE_KEY=
 BASE_SEPOLIA_BURNER_PRIVATE_KEY=
-STAGING_REDEEM_WALLET_ADDRESS=
 STAGING_BASIC_AUTH_USERNAME=
 STAGING_BASIC_AUTH_PASSWORD=
-ORMB_CONFIRM_TESTNET_DEPLOY=YES
 ```
 
-All values must remain local or server environment values only. `.env.example` must stay placeholder-only.
+Validation requires `BASE_SEPOLIA_CHAIN_ID=84532` exactly and rejects mainnet-like chain IDs such as Ethereum mainnet `1` and Base mainnet `8453`. `ORMB_CONFIRM_TESTNET_DEPLOY=YES` remains specific to `testnet-script` mode and is not required by this validation-only private staging branch. All values must remain local or server environment values only. `.env.example` must stay placeholder-only.
 
 ## Docker And PostgreSQL Gap
 

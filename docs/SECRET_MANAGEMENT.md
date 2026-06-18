@@ -2,13 +2,14 @@
 
 ## Scope
 
-ORMB remains a testnet-only, mock-asset-only technical demo. This document defines how secrets must be handled for local development, testnet scripts, and any future read-only hosted demo.
+ORMB remains a testnet-only, mock-asset-only technical demo. This document defines how secrets must be handled for local development, testnet scripts, any future read-only hosted demo, and future owner-only private staging.
 
 ## Non-Negotiable Rules
 
 - Do not commit private keys, seed phrases, API keys, database credentials, RPC secrets, production credentials, or customer data.
 - Do not configure mainnet deployment keys.
 - Do not use real USDT, real RMB/CNH, customer funds, or production payment credentials.
+- Do not use private staging to claim custody, payment processing, production readiness, or live mint/burn service availability.
 - Keep `.env` files ignored.
 - Keep `.env.example` values as placeholders only.
 
@@ -18,7 +19,8 @@ ORMB remains a testnet-only, mock-asset-only technical demo. This document defin
 
 - `local`: default mode for local validation and static demo work. Does not require secrets.
 - `testnet-script`: Base Sepolia script mode. Requires explicit `ORMB_CONFIRM_TESTNET_DEPLOY=YES`, a non-placeholder Base Sepolia RPC URL, and a non-placeholder testnet deployer key.
-- `hosted-demo`: future read-only hosted demo mode. Requires `ORMB_READ_ONLY_DEMO_MODE=true` and must not configure deployer private keys or enable testnet deployment confirmation.
+- `hosted-demo`: future read-only hosted demo mode. Requires `ORMB_READ_ONLY_DEMO_MODE=true` and must not configure deployer, minter, or burner private keys or enable testnet deployment confirmation.
+- `private-staging`: future owner-only interactive Base Sepolia staging mode. Requires a non-placeholder Base Sepolia RPC URL, `BASE_SEPOLIA_CHAIN_ID=84532`, a non-placeholder ORMB testnet contract address, staging Basic Auth username and password, and non-placeholder testnet-only minter and burner keys. Must not enable hosted read-only mode.
 
 ## Validation Helper
 
@@ -29,8 +31,18 @@ Current behavior:
 - Defaults to `local` mode.
 - Rejects unknown environment modes.
 - Rejects hosted-demo mode if deployer keys are configured.
+- Rejects hosted-demo mode if minter or burner keys are configured.
 - Rejects hosted-demo mode if `ORMB_CONFIRM_TESTNET_DEPLOY=YES`.
 - Rejects testnet-script mode when Base Sepolia RPC or deployer key values are placeholders.
+- Rejects private-staging mode when Base Sepolia RPC, chain ID, ORMB contract address, Basic Auth credentials, minter key, or burner key are missing or placeholders.
+- Rejects private-staging mode when `BASE_SEPOLIA_CHAIN_ID` is not exactly `84532`, including mainnet-like chain IDs such as Ethereum mainnet `1` or Base mainnet `8453`.
+- Rejects private-staging mode when `ORMB_READ_ONLY_DEMO_MODE=true`.
+
+## Private Staging Boundary
+
+`private-staging` is an environment validation mode for future owner-only Base Sepolia staging. It does not add admin middleware, mutation APIs, custody, payment processing, live mint/burn routes, or production operation.
+
+Private staging secrets must live only in local or server environment configuration. They must never be committed to the repository or copied into agent reports. The minter and burner keys must be testnet-only keys with no mainnet or production use.
 
 ## Hosted Demo Boundary
 
