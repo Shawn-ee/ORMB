@@ -23,6 +23,8 @@ Never commit:
 
 Use documented environment variables and local `.env` files only after tooling is added. `.env` files must remain ignored.
 
+Environment mode and secret handling requirements are documented in `docs/SECRET_MANAGEMENT.md`. Future scripts and hosted-demo work should use `parseOrmbEnvironment()` from `src/lib/config/env.ts` to fail closed for unsafe modes.
+
 ## Smart Contract Security Expectations
 
 Contract work must include:
