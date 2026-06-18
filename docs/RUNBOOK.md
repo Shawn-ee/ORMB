@@ -74,6 +74,8 @@ Mint role operations, emergency pause expectations, and role rotation guidance a
 
 Do not run production-like operations from this repository. Do not use mainnet keys, real deposits, real customers, real USDT, or real RMB.
 
+For Enterprise Pilot Readiness v1 operator procedures, see `docs/OPERATOR_RUNBOOK.md`.
+
 ## Creating and Merging Agent PRs
 
 Agent branches target `dev`. Do not open agent PRs directly into `main`.
