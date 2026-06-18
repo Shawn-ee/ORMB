@@ -24,7 +24,7 @@ Later branches will add:
 
 ## Deposit Listener Core
 
-The current deposit listener implementation is a testable core only. It processes supplied MockUSDT transfer logs and does not run a live RPC polling loop.
+The current deposit listener and confirmation worker implementations are testable cores only. They process supplied data and do not run live RPC polling loops.
 
 Run unit tests:
 
