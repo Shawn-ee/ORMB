@@ -13,8 +13,8 @@ on:
       - "audit/**"
 
 jobs:
-  placeholder:
-    name: Placeholder validation
+  validation:
+    name: Repository validation
     runs-on: ubuntu-latest
 
     steps:
@@ -25,9 +25,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run CI checks
         run: npm run test:ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run browser checks
+        run: npm run test:e2e
