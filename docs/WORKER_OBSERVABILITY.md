@@ -35,6 +35,8 @@ Future worker runners should report:
 
 Error summaries must never include private keys, RPC secrets, seed phrases, database URLs, customer data, or real transaction instructions.
 
+Future runner and adapter boundaries are documented in `docs/WORKER_ADAPTER_BOUNDARIES.md`.
+
 ## Operator Use
 
 For local/testnet demos, an operator can use the fleet summary to decide whether to:

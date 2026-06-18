@@ -69,13 +69,13 @@ A safe hosted demo now has a read-only posture and checklist in `docs/HOSTED_DEM
 
 Recommended branch: `audit/280-hosted-demo-readiness`
 
-### High: Durable Worker Boundaries Are Not Specified
+### High: Durable Worker Implementation Is Not Present
 
-The repo intentionally has no live mutation handlers, RPC polling loops, or persistent worker runners. API contract boundaries are now documented in `docs/API_CONTRACTS.md`, but durable worker adapter boundaries are still needed before any pilot-like integration discussion.
+The repo intentionally has no live mutation handlers, RPC polling loops, or persistent worker runners. API contract boundaries are documented in `docs/API_CONTRACTS.md`, and future worker adapter boundaries are documented in `docs/WORKER_ADAPTER_BOUNDARIES.md`. Durable worker implementation remains deferred and is not required for the current read-only hosted-demo posture.
 
 Recommended branches:
 
-- `agent/301-worker-adapter-boundary-docs`
+- future `agent/304-worker-runner-prototype`, only if explicitly scoped as testnet/mock-only
 
 ### High: Database Migration Safety Is Not Documented
 
