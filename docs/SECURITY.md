@@ -67,6 +67,7 @@ Current listener baseline:
 - Redemption burn flow requires manual approval before burn verification, verifies burn chain/source/amount, and skips duplicate burn events.
 - Admin dashboard data is static demo data and does not trigger lifecycle mutations, contract calls, payouts, or database writes.
 - Company dashboard data is static demo data and does not trigger deposits, transfers, redemptions, contract calls, payouts, or database writes.
+- Demo flow page content is static and does not trigger APIs, worker jobs, contract calls, deployments, payouts, or database writes.
 
 ## Current Security Status
 

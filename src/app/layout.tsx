@@ -23,6 +23,7 @@ export default function RootLayout({
               <span className="brand-subtitle">Testnet settlement infrastructure demo</span>
             </Link>
             <nav className="nav" aria-label="Primary navigation">
+              <Link href="/demo">Demo Flow</Link>
               <Link href="/admin">Admin</Link>
               <Link href="/company">Company</Link>
               <Link href="/status">System Status</Link>

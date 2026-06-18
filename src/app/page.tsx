@@ -1,10 +1,10 @@
 const lifecycle = [
-  "Whitelisted enterprise onboarding",
-  "Mock USDT deposit detection",
-  "Confirmation handling",
-  "Fixed FX quote and mint request",
-  "Manual approval and ORMB mint",
-  "Enterprise transfer and redemption",
+  ["Whitelisted enterprise onboarding", "Dashboarded"],
+  ["Mock USDT deposit detection", "Worker core"],
+  ["Confirmation handling", "Worker core"],
+  ["Fixed FX quote and mint request", "Worker core"],
+  ["Manual approval and ORMB mint", "Demo-gated"],
+  ["Enterprise transfer and redemption", "Dashboarded"],
 ];
 
 export default function HomePage() {
@@ -19,7 +19,7 @@ export default function HomePage() {
             onboarding, deposit monitoring, mint approvals, transfers, redemptions, reconciliation, and audit logs.
           </p>
         </div>
-        <span className="status-pill">Framework ready</span>
+        <span className="status-pill">Demo surfaces ready</span>
       </section>
 
       <section className="grid three" aria-label="Demo areas">
@@ -41,10 +41,10 @@ export default function HomePage() {
         <div className="card">
           <h2>Planned lifecycle</h2>
           <ul className="list">
-            {lifecycle.map((item) => (
+            {lifecycle.map(([item, state]) => (
               <li key={item}>
                 <span>{item}</span>
-                <span className="muted">Planned</span>
+                <span className="muted">{state}</span>
               </li>
             ))}
           </ul>
@@ -52,8 +52,8 @@ export default function HomePage() {
         <div className="card">
           <h2>Current implementation boundary</h2>
           <p className="muted">
-            This branch adds only the Next.js application shell. Business data, contract calls, workers, and dashboards
-            are intentionally deferred to focused roadmap branches.
+            Current surfaces use deterministic demo data and testable worker cores. Live API wiring, production
+            persistence adapters, and real payment actions remain out of scope.
           </p>
         </div>
       </section>

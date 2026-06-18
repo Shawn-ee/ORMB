@@ -477,6 +477,50 @@ h3 {
   overflow-wrap: anywhere;
 }
 
+.flow-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.flow-step {
+  align-items: start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 38px minmax(0, 1fr);
+  min-height: 144px;
+  padding: 16px;
+}
+
+.flow-number {
+  align-items: center;
+  background: #e7f7f4;
+  border: 1px solid #bfe6df;
+  border-radius: 999px;
+  color: var(--accent-strong);
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 800;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+.flow-step h2 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.flow-step p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 0;
+}
+
 @media (max-width: 820px) {
   .topbar,
   .page-header {
@@ -499,7 +543,8 @@ h3 {
 
   .metric-strip,
   .dashboard-grid,
-  .reconciliation {
+  .reconciliation,
+  .flow-grid {
     grid-template-columns: 1fr;
   }
 
