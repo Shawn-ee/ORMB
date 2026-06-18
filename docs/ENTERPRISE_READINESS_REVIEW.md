@@ -14,9 +14,9 @@ ORMB remains testnet-only, mock-asset-only, no-real-funds, no-mainnet, and non-p
 
 ## Current Verdict
 
-Enterprise Pilot Readiness v1: **Not ready; blockers listed below.**
+Enterprise Pilot Readiness v1: **Ready for human review; not approved for production, real funds, mainnet, or external pilot use.**
 
-The repo is stronger than `demo-v0` and is suitable as a local technical demo and Stripe/Bridge-style portfolio artifact. It is not yet ready for Enterprise Pilot Readiness v1 because hosted-demo posture, API/worker adapter boundaries, database migration safety, audit retention, UI pilot workflows, and final portfolio packaging are still incomplete.
+The repo is stronger than `demo-v0` and is suitable as a local technical demo and Stripe/Bridge-style portfolio artifact. Enterprise Pilot Readiness v1 can now be reviewed by the human owner because hosted-demo posture, API/worker adapter boundaries, database migration safety, audit retention, enterprise UI review, and portfolio packaging are documented. It remains non-production and mock/testnet-only.
 
 ## Readiness Levels
 
@@ -25,7 +25,7 @@ The repo is stronger than `demo-v0` and is suitable as a local technical demo an
 | Local technical demo | Ready | Unit, contract, CI, build, and browser smoke checks pass; static routes and deterministic worker cores are documented. |
 | Stripe/Bridge portfolio demo | Ready | The repo demonstrates contract controls, mint/burn lifecycle modeling, idempotent event processing, ledger invariants, risk checks, and disciplined documentation. |
 | Public hosted demo | Conditionally ready | Static pages can be hosted only in a read-only mode with clear disclaimers and human acceptance of documented dependency findings. |
-| Limited enterprise pilot preparation | Not ready | The technical foundation is improving, but API boundaries, durable runner assumptions, hosted-demo posture, database migration safety, audit retention, and pilot UX still need focused branches. |
+| Limited enterprise pilot preparation | Ready for human review | Foundations are documented for a testnet/mock-only pilot discussion, but human/legal/compliance/security approval is still required before any external pilot. |
 | Production stablecoin infrastructure | Not ready | No production authorization, real compliance program, custody/reserve model, real rails, mainnet approval, or production operations stack exists. |
 
 ## Completed Enterprise Hardening Since Audit 200
@@ -51,14 +51,14 @@ The repo is stronger than `demo-v0` and is suitable as a local technical demo an
 | Ledger/reconciliation invariants are documented and tested. | Pass | Deterministic ledger invariant tests exist. |
 | Mint and redemption flows have idempotency tests. | Pass | Duplicate mint and burn paths are covered. |
 | Unknown wallet and failed risk paths are safe. | Pass | Unknown-wallet deposits do not mint; risk failures block mint request creation. |
-| Admin UI explains risk/review/reconciliation concepts. | Partial | Static dashboard exists, but risk-case/reconciliation workflows need stronger enterprise-review presentation. |
-| Company UI explains the pilot flow clearly. | Partial | Static company dashboard exists, but pilot participant guidance can be clearer. |
+| Admin UI explains risk/review/reconciliation concepts. | Pass | Static dashboard includes enterprise review rails and browser checks. |
+| Company UI explains the pilot flow clearly. | Pass | Static company dashboard includes pilot participation guidance and browser checks. |
 | Enterprise pilot playbook exists. | Pass | `docs/ENTERPRISE_PILOT_PLAYBOOK.md`. |
 | Operator runbook exists. | Pass | `docs/OPERATOR_RUNBOOK.md`. |
 | Incident response runbook exists. | Pass | `docs/INCIDENT_RESPONSE_RUNBOOK.md`. |
 | Legal/compliance boundary says no real funds or public issuance. | Pass | Legal boundaries and app disclaimers remain explicit. |
-| Hosted demo readiness is documented. | Fail | A hosted-demo readiness review is still needed. |
-| Stripe/Bridge portfolio package is ready. | Partial | Core alignment exists; final recruiter/walkthrough packaging remains open. |
+| Hosted demo readiness is documented. | Pass with gate | Human owner must approve exact hosted posture and dependency acceptance. |
+| Stripe/Bridge portfolio package is ready. | Pass | README, alignment, and portfolio walkthrough are current. |
 | `main` remains untouched unless owner approves. | Pass | Work continues through `dev` and focused branches. |
 
 ## Remaining Blockers
@@ -103,21 +103,20 @@ The dependency audit remains acceptable only for local/testnet demo review. It m
 
 Recommended branch: include re-check in `audit/280-hosted-demo-readiness`.
 
-### Low: Portfolio Packaging Is Not Final
+### Low: Portfolio Packaging Is Complete For Current Review
 
-Stripe/Bridge alignment exists, but architecture diagram docs, recruiter walkthrough, and final portfolio package remain incomplete.
+Stripe/Bridge alignment and portfolio walkthrough are current for Enterprise Pilot Readiness v1 human review. Architecture diagrams and resume bullets remain optional follow-up polish.
 
 Recommended branches:
 
-- `agent/290-stripe-bridge-readme-polish`
-- `agent/291-architecture-diagram-docs`
-- `release/enterprise-pilot-readiness-v1`
+- optional `agent/291-architecture-diagram-docs`
+- optional `agent/293-resume-bullets`
 
 ## Next Branch Decision
 
-Proceed next with `audit/280-hosted-demo-readiness`.
+Proceed next with `release/enterprise-pilot-readiness-v1`.
 
-Rationale: hosted-demo readiness is the highest unblock value after runbooks because it forces a clear decision on read-only mode, dependency acceptance, environment posture, browser validation, and what must remain prohibited before any enterprise-facing demo discussion.
+Rationale: the remaining material work is final readiness packaging for human review.
 
 ## Safety Confirmation
 
