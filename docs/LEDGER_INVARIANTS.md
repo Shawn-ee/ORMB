@@ -22,6 +22,10 @@ The demo ledger should satisfy:
 - Expected supply equals confirmed minted ORMB minus verified burned ORMB.
 - If an on-chain supply value is supplied, it must match expected supply.
 
+Only confirmed mint records are supply-positive. Pending, submitted, and failed mint records may share a mint request while they are not final; the invariant failure is raised only when more than one mint for the same mint request reaches `CONFIRMED`.
+
+Only burn-verified, payout-simulated, and completed redemptions are supply-negative. Requested, burn-pending, rejected, and failed redemptions do not consume burn-event uniqueness or reduce expected supply.
+
 ## Exclusions
 
 The checker intentionally does not count:
@@ -37,6 +41,7 @@ Run:
 
 ```bash
 npm run test
+npm run test:ci
 ```
 
-The unit tests cover happy-path reconciliation, duplicate mint requests, amount mismatches, missing confirmed mint records, duplicate burn events, supply mismatch, and ignored failed/rejected records.
+The unit tests cover happy-path reconciliation, duplicate mint requests, duplicate confirmed mints, amount mismatches, missing confirmed mint records, duplicate burn events, supply mismatch, and ignored pending/submitted/failed/rejected records.
