@@ -37,3 +37,10 @@ For backfills and incident investigations, future runners can pass `auditPolicy:
 - `deposit.ignored` for logs outside the configured chain, token, or treasury filter.
 
 Verbose audit mode still does not create mint requests, confirm deposits, call contracts, or process real funds.
+
+Current unit coverage confirms:
+
+- Duplicate events are counted and skipped without a second deposit; verbose mode adds `deposit.duplicate_skipped`.
+- Ignored events outside the configured chain, token, or treasury filter are counted without deposits; verbose mode adds `deposit.ignored`.
+- Unknown-wallet treasury deposits are stored as `REJECTED`, audited as `deposit.rejected.unknown_wallet`, and left unassigned to a company.
+- `scannedToBlock` advances the checkpoint for no-log and all-ignored ranges so future runners can checkpoint the finalized scanned range rather than only matching deposits.

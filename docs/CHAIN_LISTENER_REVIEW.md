@@ -18,7 +18,7 @@ Reviewed areas:
 
 ## Executive Verdict
 
-The chain listener foundation is suitable for a local technical demo and a Stripe/Bridge-style portfolio demo. It is not yet sufficient for limited enterprise pilot preparation because block-hash persistence, checkpoint semantics, dry-run backfill tooling, and operational incident workflow are still incomplete.
+The chain listener foundation is suitable for a local technical demo and a Stripe/Bridge-style portfolio demo. It is not yet sufficient for limited enterprise pilot preparation because operational incident workflow and live-runner integration are still incomplete.
 
 Readiness:
 
@@ -75,19 +75,21 @@ Acceptance criteria:
 - Produce a reconciliation summary without writing mints or contracts.
 - Do not require real secrets in CI.
 
-### High: Live Checkpoint Semantics Are Not Fully Defined
+### High: Live Checkpoint Semantics Need Runner Integration
 
-The listener core updates `SystemJobState` with the latest matching processed log block. A future live runner must checkpoint the finalized scanned block range, not only the latest accepted or matching log.
+Status: addressed at the listener-core level by `agent/236-listener-checkpoint-model`.
 
-Impact: a live runner could skip ranges with no matching logs if checkpointing is implemented incorrectly around the current core helper.
+The listener core can update `SystemJobState` with an explicit finalized scanned block through `scannedToBlock`, including no-log and all-ignored ranges. Without `scannedToBlock`, it updates to the latest matching processed log block.
 
-Recommended branch: `agent/236-listener-checkpoint-model`
+Remaining impact: a future live runner must pass the finalized scanned range explicitly. If a live adapter omits `scannedToBlock`, it could still checkpoint only matching event blocks and leave no-log ranges ambiguous.
+
+Completed branch: `agent/236-listener-checkpoint-model`
 
 Acceptance criteria:
 
-- Document checkpoint semantics for scanned range, finalized range, and matching event range.
-- Add deterministic tests for no-log ranges and ignored-log ranges.
-- Keep the current core helper pure and avoid live RPC requirements.
+- Documented checkpoint semantics for scanned range, finalized range, and matching event range.
+- Added deterministic tests for no-log ranges and ignored-log ranges.
+- Kept the current core helper pure and avoided live RPC requirements.
 
 ### Medium: Duplicate And Ignored Events Are Counted But Not Audited
 
@@ -146,8 +148,8 @@ No reviewed code:
 
 ## Enterprise Pilot Readiness Impact
 
-The recent listener hardening branches materially improved demo reliability. They do not yet satisfy Enterprise Pilot Readiness v1 because the system still lacks persisted block-hash data, dry-run backfill tooling, checkpoint semantics, incident response, and pilot operator procedures.
+The recent listener hardening branches materially improved demo reliability. They do not yet satisfy Enterprise Pilot Readiness v1 because the system still lacks live-runner integration, incident response automation, and pilot operator procedures.
 
 ## Next Recommended Branch
 
-`agent/234-deposit-blockhash-schema`
+Future live-runner integration or incident-response automation, after explicit owner approval for any live service behavior.
