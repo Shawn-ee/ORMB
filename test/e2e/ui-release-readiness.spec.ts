@@ -67,4 +67,14 @@ test.describe("UI release readiness", () => {
     await page.getByRole("link", { name: "System Status" }).click();
     await expect(page).toHaveURL(/\/status$/);
   });
+
+  test("admin dashboard shows enterprise review concepts", async ({ page }) => {
+    await page.goto("/admin");
+
+    await expect(page.getByRole("heading", { name: "Enterprise Review Rails" })).toBeVisible();
+    await expect(page.getByText("Risk case triage")).toBeVisible();
+    await expect(page.getByText("Ledger reconciliation")).toBeVisible();
+    await expect(page.getByText("Audit coverage")).toBeVisible();
+    await expect(page.getByText("Read-only controls")).toBeVisible();
+  });
 });
