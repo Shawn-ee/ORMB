@@ -9,6 +9,6 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["hardhat.config.ts", "test/**/*.ts", "scripts/**/*.ts"],
+  "include": ["hardhat.config.ts", "prisma.config.ts", "src/**/*.ts", "test/**/*.ts", "scripts/**/*.ts"],
   "exclude": ["node_modules", "artifacts", "cache"]
 }

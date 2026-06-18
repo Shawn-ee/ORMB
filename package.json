@@ -14,9 +14,9 @@
     "deploy:contracts": "node -e \"console.log('placeholder: contract deployment is not implemented; do not deploy from this branch')\"",
     "typecheck": "tsc --noEmit",
     "lint": "node -e \"console.log('placeholder: lint not implemented yet')\"",
-    "prisma:generate": "node -e \"console.log('placeholder: prisma generate not implemented yet')\"",
-    "prisma:validate": "node -e \"console.log('placeholder: prisma validate not implemented yet')\"",
-    "test:ci": "npm run lint && npm run typecheck && npm run prisma:validate && npm run test && npm run compile:contracts && npm run test:contracts && npm run build"
+    "prisma:generate": "prisma generate",
+    "prisma:validate": "prisma validate",
+    "test:ci": "npm run lint && npm run prisma:generate && npm run typecheck && npm run prisma:validate && npm run test && npm run compile:contracts && npm run test:contracts && npm run build"
   },
   "engines": {
     "node": ">=22"
@@ -25,11 +25,13 @@
     "@nomicfoundation/hardhat-toolbox-viem": "^5.0.7",
     "@types/node": "^25.9.3",
     "hardhat": "^3.9.0",
+    "prisma": "^7.8.0",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.6.1",
+    "@prisma/client": "^7.8.0",
     "dotenv": "^17.4.2",
     "viem": "^2.52.2"
   }

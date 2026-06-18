@@ -20,7 +20,7 @@ Later branches will add:
 
 - Node and Next.js setup.
 - Hardhat and contract compilation.
-- Prisma schema and PostgreSQL setup.
+- Business Prisma schema and PostgreSQL migrations.
 - Base Sepolia deployment scripts.
 - Worker execution commands.
 - Demo seed data.

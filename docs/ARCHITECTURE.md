@@ -35,7 +35,7 @@ No worker implementation exists in the bootstrap milestone.
 
 Prisma and PostgreSQL will be used for durable demo state including companies, whitelist status, deposits, mint requests, transfers, redemption requests, chain events, reconciliation records, and audit logs.
 
-No Prisma schema exists in the bootstrap milestone.
+The repository includes a Prisma/PostgreSQL tooling baseline with a minimal schema and shared Prisma Client helper. ORMB business ledger models will be added in a later domain schema branch.
 
 ### UI
 
