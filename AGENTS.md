@@ -21,6 +21,8 @@ ORMB is an agentic software engineering project for a testnet-first, whitelisted
 - Each branch must have one focused goal.
 - Agents may merge focused branches into `dev` only when checks pass.
 - Agents must not merge `dev` into `main` unless the release/demo checklist passes.
+- Agents should use the GitHub CLI (`gh`) to create pull requests when it is installed and authenticated.
+- If `gh` is unavailable, agents must provide a manual GitHub compare URL for the intended PR.
 
 ## Required Agent Deliverables
 
@@ -32,6 +34,27 @@ Every agent branch must include:
 - Updated docs for any changed behavior, assumptions, APIs, contracts, security posture, or demo flow.
 
 Use `docs/agent-reports/TEMPLATE.md` for agent reports.
+
+## Pull Request Automation
+
+Before opening a PR, run:
+
+```bash
+git status --short --branch
+gh auth status
+```
+
+When `gh` is available and authenticated, create PRs with an explicit base and head:
+
+```bash
+gh pr create --base dev --head agent/<goal> --title "<title>" --body-file <body-file>
+```
+
+If `gh` is unavailable, include this manual compare URL pattern in the final report:
+
+```text
+https://github.com/Shawn-ee/ORMB/compare/dev...agent/<goal>?expand=1
+```
 
 ## Current Bootstrap Scope
 
