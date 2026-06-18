@@ -120,6 +120,80 @@ Expected files:
 - `test/workers/confirmation-worker.unit.test.ts`
 - `docs/agent-reports/agent-230-listener-reorg-resilience.md`
 
+### 6a. `agent/234-deposit-blockhash-schema`
+
+Role: Chain reliability sub-agent.
+
+Objective: Persist deposit block hash data needed by the reorg-aware confirmation guard and update tests/docs around block-hash preservation.
+
+Dependencies: `agent/230-listener-reorg-resilience` and `audit/233-chain-listener-review`.
+
+Expected files:
+
+- `prisma/schema.prisma`
+- `workers/deposit-listener.ts`
+- `test/workers/deposit-listener.unit.test.ts`
+- `docs/CHAIN_REORG_AND_BACKFILL.md`
+- `docs/agent-reports/agent-234-deposit-blockhash-schema.md`
+
+Acceptance criteria:
+
+- Deposit records can carry the block hash observed at detection time.
+- Listener tests prove block hash is preserved for known and unknown wallet deposits.
+- Prisma schema validates.
+- No live RPC, deployment, mainnet, real funds, or production behavior is introduced.
+
+Validation:
+
+- `npm run prisma:generate`
+- `npm run prisma:validate`
+- `npm run typecheck`
+- `npm run test`
+- `npm run test:ci`
+
+### 6b. `agent/235-dry-run-backfill-command`
+
+Role: Chain reliability sub-agent.
+
+Objective: Add a dry-run-only backfill command that uses bounded range planning and produces a reconciliation summary without state-changing mint or contract behavior.
+
+Dependencies: `agent/231-listener-retry-and-backfill` and `agent/234-deposit-blockhash-schema`.
+
+Expected files:
+
+- `scripts/backfill-deposits-dry-run.ts`
+- `test/workers` or `test/scripts` coverage as appropriate
+- `docs/LISTENER_RETRY_AND_BACKFILL.md`
+- `docs/agent-reports/agent-235-dry-run-backfill-command.md`
+
+Acceptance criteria:
+
+- Backfill ranges are bounded.
+- Dry-run output is deterministic in tests.
+- No real secrets are required in CI.
+- No mints, contract calls, deployments, or database writes occur.
+
+### 6c. `agent/236-listener-checkpoint-model`
+
+Role: Chain reliability sub-agent.
+
+Objective: Define and test listener checkpoint semantics for scanned ranges, finalized ranges, matching event ranges, and no-log ranges.
+
+Dependencies: `audit/233-chain-listener-review`.
+
+Expected files:
+
+- `workers` helper updates as needed
+- worker tests
+- `docs/CHAIN_REORG_AND_BACKFILL.md`
+- `docs/agent-reports/agent-236-listener-checkpoint-model.md`
+
+Acceptance criteria:
+
+- No-log scanned ranges cannot be skipped accidentally by future runners.
+- Checkpoint docs distinguish scanned blocks from matching event blocks.
+- Full validation passes.
+
 ### 7. `agent/240-risk-case-management`
 
 Role: Risk workflow sub-agent.
