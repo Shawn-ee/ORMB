@@ -190,6 +190,8 @@ For worker status from `docs/WORKER_OBSERVABILITY.md`:
 
 No worker helper currently polls live services or sends alerts. Incident response is manual and documentation-driven.
 
+For redemption burn incidents, stop demo progression and review `docs/REDEMPTION_BURN_FLOW.md` if an invalid state transition, duplicate burn identity, mismatched amount, wrong source wallet, wrong chain id, malformed tx hash, malformed log index, or premature payout simulation is detected. Duplicate burn events must not advance another redemption, and any payout marker must remain simulated only.
+
 ## Listener And Backfill Incidents
 
 When the deposit listener, confirmation worker, or backfill review surfaces a problem:

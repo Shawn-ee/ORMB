@@ -167,7 +167,12 @@ export async function approveRedemptionRequest({
   repository: RedemptionRepository;
   now?: Date;
 }): Promise<RedemptionRecord> {
+  const current = await requireRedemption(repository, redemptionId);
+  assertRedemptionStatus(current, "REQUESTED", "redemption.approve");
+
   const redemption = await repository.approveRedemptionRequest(redemptionId, approvedBy, now);
+  assertRedemptionStatus(redemption, "BURN_PENDING", "redemption.approve.postcondition");
+
   await repository.createRedemptionAuditLog({
     companyId: redemption.companyId,
     actorType: "admin",
@@ -195,10 +200,11 @@ export async function verifyRedemptionBurn({
   now?: Date;
 }): Promise<{ verified: boolean; reason?: string; redemption: RedemptionRecord }> {
   const redemption = await requireRedemption(repository, redemptionId);
+  const normalizedBurnEvent = normalizeBurnEvent(burnEvent);
   const existingBurn = await repository.findRedemptionByBurnEvent(
-    burnEvent.chainId,
-    burnEvent.txHash,
-    burnEvent.logIndex,
+    normalizedBurnEvent.chainId,
+    normalizedBurnEvent.txHash,
+    normalizedBurnEvent.logIndex,
   );
 
   if (existingBurn !== null) {
@@ -210,8 +216,9 @@ export async function verifyRedemptionBurn({
       entityId: redemption.id,
       metadata: {
         existingRedemptionId: existingBurn.id,
-        txHash: burnEvent.txHash,
-        logIndex: burnEvent.logIndex,
+        chainId: normalizedBurnEvent.chainId,
+        txHash: normalizedBurnEvent.txHash,
+        logIndex: normalizedBurnEvent.logIndex,
       },
     });
 
@@ -222,7 +229,7 @@ export async function verifyRedemptionBurn({
     };
   }
 
-  const failure = burnVerificationFailure(redemption, burnEvent, expectedWallet);
+  const failure = burnVerificationFailure(redemption, normalizedBurnEvent, expectedWallet);
   if (failure !== null) {
     const failed = await repository.markBurnVerificationFailed(redemption.id, failure);
     await repository.createRedemptionAuditLog({
@@ -231,7 +238,7 @@ export async function verifyRedemptionBurn({
       action: "redemption.burn_verification_failed",
       entityType: "Redemption",
       entityId: redemption.id,
-      metadata: { reason: failure, burnEvent },
+      metadata: { reason: failure, burnEvent: normalizedBurnEvent },
     });
 
     return { verified: false, reason: failure, redemption: failed };
@@ -239,11 +246,14 @@ export async function verifyRedemptionBurn({
 
   const verified = await repository.markBurnVerified({
     redemptionId: redemption.id,
-    chainId: burnEvent.chainId,
-    txHash: burnEvent.txHash,
-    logIndex: burnEvent.logIndex,
+    chainId: normalizedBurnEvent.chainId,
+    txHash: normalizedBurnEvent.txHash,
+    logIndex: normalizedBurnEvent.logIndex,
     verifiedAt: now,
   });
+  assertRedemptionStatus(verified, "BURN_VERIFIED", "redemption.burn_verify.postcondition");
+  assertBurnEventIdentity(verified, normalizedBurnEvent);
+
   await repository.createRedemptionAuditLog({
     companyId: redemption.companyId,
     actorType: "system",
@@ -251,10 +261,10 @@ export async function verifyRedemptionBurn({
     entityType: "Redemption",
     entityId: redemption.id,
     metadata: {
-      chainId: burnEvent.chainId,
-      txHash: burnEvent.txHash,
-      logIndex: burnEvent.logIndex,
-      amount: burnEvent.amount,
+      chainId: normalizedBurnEvent.chainId,
+      txHash: normalizedBurnEvent.txHash,
+      logIndex: normalizedBurnEvent.logIndex,
+      amount: normalizedBurnEvent.amount,
     },
   });
 
@@ -281,6 +291,8 @@ export async function simulateRedemptionPayout({
   }
 
   const paid = await repository.markPayoutSimulated(redemption.id, now);
+  assertRedemptionStatus(paid, "PAYOUT_SIMULATED", "redemption.payout_simulate.postcondition");
+
   await repository.createRedemptionAuditLog({
     companyId: redemption.companyId,
     actorType: "system",
@@ -291,6 +303,8 @@ export async function simulateRedemptionPayout({
   });
 
   const completed = await repository.completeRedemption(paid.id, now);
+  assertRedemptionStatus(completed, "COMPLETED", "redemption.complete.postcondition");
+
   await repository.createRedemptionAuditLog({
     companyId: completed.companyId,
     actorType: "system",
@@ -332,7 +346,8 @@ function firstRedemptionEligibilityFailure({
     return "WALLET_NOT_WHITELISTED";
   }
 
-  if (parseDecimal6(amount) <= 0n) {
+  const parsedAmount = tryParseDecimal6(amount);
+  if (parsedAmount === null || parsedAmount <= 0n) {
     return "INVALID_AMOUNT";
   }
 
@@ -344,6 +359,18 @@ function burnVerificationFailure(
   burnEvent: BurnEvent,
   expectedWallet: RedemptionWallet,
 ): string | null {
+  if (!isValidChainId(burnEvent.chainId)) {
+    return "BURN_CHAIN_ID_INVALID";
+  }
+
+  if (!isValidTxHash(burnEvent.txHash)) {
+    return "BURN_TX_HASH_INVALID";
+  }
+
+  if (!isValidLogIndex(burnEvent.logIndex)) {
+    return "BURN_LOG_INDEX_INVALID";
+  }
+
   if (redemption.status !== "BURN_PENDING") {
     return "REDEMPTION_NOT_BURN_PENDING";
   }
@@ -360,7 +387,17 @@ function burnVerificationFailure(
     return "BURN_SOURCE_WALLET_MISMATCH";
   }
 
-  if (parseDecimal6(burnEvent.amount) !== parseDecimal6(redemption.amount)) {
+  const burnAmount = tryParseDecimal6(burnEvent.amount);
+  if (burnAmount === null || burnAmount <= 0n) {
+    return "BURN_AMOUNT_INVALID";
+  }
+
+  const redemptionAmount = tryParseDecimal6(redemption.amount);
+  if (redemptionAmount === null || redemptionAmount <= 0n) {
+    return "REDEMPTION_AMOUNT_INVALID";
+  }
+
+  if (burnAmount !== redemptionAmount) {
     return "BURN_AMOUNT_MISMATCH";
   }
 
@@ -381,9 +418,52 @@ function normalizeAddress(address: `0x${string}`): string {
   return address.toLowerCase();
 }
 
-function parseDecimal6(value: string): bigint {
+function normalizeBurnEvent(burnEvent: BurnEvent): BurnEvent {
+  return {
+    ...burnEvent,
+    txHash: normalizeTxHash(burnEvent.txHash),
+    fromAddress: normalizeAddress(burnEvent.fromAddress) as `0x${string}`,
+  };
+}
+
+function normalizeTxHash(txHash: `0x${string}`): `0x${string}` {
+  return txHash.toLowerCase() as `0x${string}`;
+}
+
+function assertRedemptionStatus(redemption: RedemptionRecord, expected: RedemptionStatus, action: string): void {
+  if (redemption.status !== expected) {
+    throw new Error(
+      `INVALID_REDEMPTION_TRANSITION: ${action} expected ${expected} but received ${redemption.status}.`,
+    );
+  }
+}
+
+function assertBurnEventIdentity(redemption: RedemptionRecord, burnEvent: BurnEvent): void {
+  const matches =
+    redemption.burnChainId === burnEvent.chainId &&
+    redemption.burnTxHash === burnEvent.txHash &&
+    redemption.burnLogIndex === burnEvent.logIndex;
+
+  if (!matches) {
+    throw new Error("BURN_VERIFICATION_POSTCONDITION_FAILED: burn event identity was not recorded exactly.");
+  }
+}
+
+function isValidChainId(chainId: number): boolean {
+  return Number.isSafeInteger(chainId) && chainId > 0;
+}
+
+function isValidTxHash(txHash: `0x${string}`): boolean {
+  return /^0x[0-9a-f]{64}$/i.test(txHash);
+}
+
+function isValidLogIndex(logIndex: number): boolean {
+  return Number.isSafeInteger(logIndex) && logIndex >= 0;
+}
+
+function tryParseDecimal6(value: string): bigint | null {
   if (!/^\d+(\.\d{1,6})?$/.test(value)) {
-    throw new Error(`Invalid 6-decimal amount: ${value}`);
+    return null;
   }
 
   const [whole, fractional = ""] = value.split(".");

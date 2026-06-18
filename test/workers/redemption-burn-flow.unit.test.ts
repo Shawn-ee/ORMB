@@ -168,6 +168,21 @@ describe("redemption burn flow", () => {
     assert.equal(repository.auditLogs.at(-1)?.action, "redemption.rejected");
   });
 
+  it("rejects a redemption request with a malformed amount", async () => {
+    const result = await createRedemptionRequest({
+      company: company(),
+      companyWallet: wallet(),
+      amount: "250.1234567",
+      requestedBy: "company-user@example.com",
+      repository,
+    });
+
+    assert.equal(result.created, false);
+    assert.equal(result.reason, "INVALID_AMOUNT");
+    assert.equal(repository.redemptions[0].status, "REJECTED");
+    assert.equal(repository.rejectionReasons[0], "INVALID_AMOUNT");
+  });
+
   it("requires manual approval before burn verification", async () => {
     const created = await createValidRedemption(repository);
 
@@ -194,6 +209,33 @@ describe("redemption burn flow", () => {
 
     assert.equal(approved.status, "BURN_PENDING");
     assert.equal(repository.auditLogs.at(-1)?.action, "redemption.approved");
+  });
+
+  it("fails closed when approval is attempted after the request state", async () => {
+    const created = await createValidRedemption(repository);
+    await approveRedemptionRequest({
+      redemptionId: created.id,
+      approvedBy: "admin@example.com",
+      repository,
+    });
+
+    await assert.rejects(
+      () =>
+        approveRedemptionRequest({
+          redemptionId: created.id,
+          approvedBy: "admin@example.com",
+          repository,
+        }),
+      {
+        message: "INVALID_REDEMPTION_TRANSITION: redemption.approve expected REQUESTED but received BURN_PENDING.",
+      },
+    );
+
+    assert.equal(repository.redemptions[0].status, "BURN_PENDING");
+    assert.equal(
+      repository.auditLogs.filter((auditLog) => auditLog.action === "redemption.approved").length,
+      1,
+    );
   });
 
   it("verifies a matching burn event", async () => {
@@ -241,6 +283,62 @@ describe("redemption burn flow", () => {
     assert.equal(duplicate.verified, false);
     assert.equal(duplicate.reason, "BURN_ALREADY_VERIFIED");
     assert.equal(repository.auditLogs.at(-1)?.action, "redemption.burn_duplicate_skipped");
+  });
+
+  it("does not let a duplicate burn event advance another redemption", async () => {
+    const first = await createValidRedemption(repository);
+    await approveRedemptionRequest({
+      redemptionId: first.id,
+      approvedBy: "admin@example.com",
+      repository,
+    });
+    await verifyRedemptionBurn({
+      redemptionId: first.id,
+      burnEvent: burnEvent(),
+      expectedWallet: wallet(),
+      repository,
+    });
+
+    const second = await createValidRedemption(repository);
+    await approveRedemptionRequest({
+      redemptionId: second.id,
+      approvedBy: "admin@example.com",
+      repository,
+    });
+
+    const duplicate = await verifyRedemptionBurn({
+      redemptionId: second.id,
+      burnEvent: burnEvent(),
+      expectedWallet: wallet(),
+      repository,
+    });
+
+    assert.equal(duplicate.verified, false);
+    assert.equal(duplicate.reason, "BURN_EVENT_ALREADY_USED");
+    assert.equal(repository.redemptions[1].status, "BURN_PENDING");
+    assert.equal(repository.redemptions[1].burnTxHash, undefined);
+    assert.equal(repository.auditLogs.at(-1)?.action, "redemption.burn_duplicate_skipped");
+  });
+
+  it("fails burn verification when the burn event identity is malformed", async () => {
+    const created = await createValidRedemption(repository);
+    await approveRedemptionRequest({
+      redemptionId: created.id,
+      approvedBy: "admin@example.com",
+      repository,
+    });
+
+    const result = await verifyRedemptionBurn({
+      redemptionId: created.id,
+      burnEvent: burnEvent({ txHash: "0xabc" as `0x${string}` }),
+      expectedWallet: wallet(),
+      repository,
+    });
+
+    assert.equal(result.verified, false);
+    assert.equal(result.reason, "BURN_TX_HASH_INVALID");
+    assert.equal(result.redemption.status, "FAILED");
+    assert.equal(repository.failureReasons[0], "BURN_TX_HASH_INVALID");
   });
 
   it("fails burn verification when amount does not match", async () => {
