@@ -158,6 +158,27 @@ Exit criteria:
 - Any code change has focused validation.
 - No dry-run output is treated as approval to create deposits, mint requests, or ORMB mints.
 
+### Redemption Burn Review
+
+Goal: verify the redemption burn state machine remains a local/testnet demo workflow only.
+
+1. Confirm the redemption request is demo/testnet-only and does not involve real funds, real USDT, real RMB/CNH, customer deposits, custody, or production redemption rights.
+2. Confirm the request is `REQUESTED` before manual approval and `BURN_PENDING` before burn verification.
+3. Confirm the supplied burn event has the expected amount, source wallet, chain id, tx hash, and log index.
+4. Confirm `(chainId, txHash, logIndex)` has not already been used by another redemption.
+5. Stop progression if any state transition, burn identity, amount, wallet, or chain value is ambiguous.
+6. Confirm payout remains a simulation marker and is never described as real settlement or payment processing.
+7. Run `npm run test`, `npm run typecheck`, `npm run test:ci`, and `git diff --check` after behavior changes.
+
+See `docs/REDEMPTION_BURN_FLOW.md` for the full validation checklist and stop conditions.
+
+Exit criteria:
+
+- Invalid transitions fail closed with deterministic errors or reason codes.
+- Duplicate burn events do not advance another redemption.
+- Simulated payout and completion remain gated by burn verification.
+- No production, mainnet, real-funds, custody, payment, or legal/compliance claim is introduced.
+
 ### Dependency Change
 
 Goal: review dependency movement without making production-readiness claims.
