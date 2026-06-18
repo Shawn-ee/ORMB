@@ -58,6 +58,7 @@ Next.js dev/build, contract compile/test, and Prisma generate/validate commands 
 The current Next.js app shell includes placeholder routes:
 
 - `/`: Demo control plane overview.
+- `/demo`: Static end-to-end demo flow walkthrough.
 - `/admin`: Static admin operations dashboard.
 - `/company`: Static company settlement dashboard.
 - `/status`: System readiness placeholder.
@@ -100,6 +101,7 @@ Copy `.env.example` for local environment setup only when future branches need n
 - `docs/REDEMPTION_BURN_FLOW.md`: Redemption request, burn verification, and simulated payout safety boundary.
 - `docs/ADMIN_DASHBOARD.md`: Static admin operations dashboard scope and safety boundary.
 - `docs/COMPANY_DASHBOARD.md`: Static company settlement dashboard scope and safety boundary.
+- `docs/DEMO_FLOW_PAGE.md`: Static end-to-end demo flow page scope and safety boundary.
 - `docs/STRIPE_BRIDGE_ALIGNMENT.md`: Engineering alignment with Stripe/Bridge-style infrastructure.
 - `docs/RUNBOOK.md`: Setup and validation runbook.
 - `docs/decisions/`: Architecture decision records.

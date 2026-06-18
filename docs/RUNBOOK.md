@@ -40,7 +40,7 @@ Run the development server:
 npm run dev
 ```
 
-The `/admin` and `/company` pages are currently static demo dashboards. They do not execute approvals, transfers, redemptions, database writes, contract calls, payouts, or real payment actions.
+The `/demo`, `/admin`, and `/company` pages are currently static demo surfaces. They do not execute approvals, transfers, redemptions, database writes, contract calls, payouts, worker jobs, or real payment actions.
 
 ## Demo Seed Data
 
