@@ -5,3 +5,270 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum CompanyKybStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum CompanyStatus {
+  ACTIVE
+  SUSPENDED
+  ARCHIVED
+}
+
+enum WalletWhitelistStatus {
+  PENDING
+  WHITELISTED
+  REJECTED
+  REMOVED
+}
+
+enum DepositStatus {
+  DETECTED
+  CONFIRMING
+  CONFIRMED
+  REJECTED
+  MINT_REQUESTED
+}
+
+enum MintRequestStatus {
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
+  MINTING
+  MINTED
+  FAILED
+}
+
+enum MintStatus {
+  PENDING
+  SUBMITTED
+  CONFIRMED
+  FAILED
+}
+
+enum RedemptionStatus {
+  REQUESTED
+  BURN_PENDING
+  BURN_VERIFIED
+  PAYOUT_SIMULATED
+  COMPLETED
+  REJECTED
+  FAILED
+}
+
+enum JobStatus {
+  IDLE
+  RUNNING
+  FAILED
+}
+
+enum RiskSeverity {
+  INFO
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum RiskEventStatus {
+  OPEN
+  ACKNOWLEDGED
+  RESOLVED
+}
+
+model Company {
+  id          String           @id @default(cuid())
+  legalName   String           @unique
+  displayName String
+  kybStatus   CompanyKybStatus @default(PENDING)
+  status      CompanyStatus    @default(ACTIVE)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  wallets      CompanyWallet[]
+  deposits     Deposit[]
+  mintRequests MintRequest[]
+  redemptions  Redemption[]
+  auditLogs    AuditLog[]
+  riskEvents   RiskEvent[]
+}
+
+model CompanyWallet {
+  id              String                @id @default(cuid())
+  companyId       String
+  chainId         Int
+  address         String
+  label           String
+  whitelistStatus WalletWhitelistStatus @default(PENDING)
+  isActive        Boolean               @default(true)
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  company      Company       @relation(fields: [companyId], references: [id])
+  deposits     Deposit[]
+  mintRequests MintRequest[]
+  redemptions  Redemption[]
+
+  @@unique([chainId, address])
+  @@index([companyId])
+}
+
+model Deposit {
+  id              String        @id @default(cuid())
+  companyId       String?
+  companyWalletId String?
+  chainId         Int
+  txHash          String
+  logIndex        Int
+  blockNumber     BigInt
+  fromAddress     String
+  toAddress       String
+  tokenAddress    String
+  amount          Decimal       @db.Decimal(38, 6)
+  confirmations   Int           @default(0)
+  status          DepositStatus @default(DETECTED)
+  detectedAt      DateTime      @default(now())
+  confirmedAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  company       Company?       @relation(fields: [companyId], references: [id])
+  companyWallet CompanyWallet? @relation(fields: [companyWalletId], references: [id])
+  fxQuote       FxQuote?
+  mintRequest   MintRequest?
+
+  @@unique([chainId, txHash, logIndex])
+  @@index([companyId])
+  @@index([status])
+}
+
+model FxQuote {
+  id        String   @id @default(cuid())
+  depositId String   @unique
+  fromAsset String   @default("USDT")
+  toAsset   String   @default("ORMB")
+  rate      Decimal  @db.Decimal(18, 8)
+  source    String   @default("fixed-demo-rate")
+  createdAt DateTime @default(now())
+
+  deposit     Deposit      @relation(fields: [depositId], references: [id])
+  mintRequest MintRequest?
+}
+
+model MintRequest {
+  id              String            @id @default(cuid())
+  companyId       String
+  companyWalletId String
+  depositId       String            @unique
+  fxQuoteId       String            @unique
+  status          MintRequestStatus @default(PENDING_APPROVAL)
+  usdtAmount      Decimal           @db.Decimal(38, 6)
+  ormbAmount      Decimal           @db.Decimal(38, 6)
+  requestedBy     String            @default("system")
+  approvedBy      String?
+  approvedAt      DateTime?
+  rejectionReason String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  company       Company       @relation(fields: [companyId], references: [id])
+  companyWallet CompanyWallet @relation(fields: [companyWalletId], references: [id])
+  deposit       Deposit       @relation(fields: [depositId], references: [id])
+  fxQuote       FxQuote       @relation(fields: [fxQuoteId], references: [id])
+  mint          Mint?
+
+  @@index([companyId])
+  @@index([status])
+}
+
+model Mint {
+  id            String     @id @default(cuid())
+  mintRequestId String     @unique
+  chainId       Int
+  txHash        String?
+  toAddress     String
+  amount        Decimal    @db.Decimal(38, 6)
+  status        MintStatus @default(PENDING)
+  submittedAt   DateTime?
+  confirmedAt   DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  mintRequest MintRequest @relation(fields: [mintRequestId], references: [id])
+
+  @@unique([chainId, txHash])
+  @@index([status])
+}
+
+model Redemption {
+  id              String           @id @default(cuid())
+  companyId       String
+  companyWalletId String
+  amount          Decimal          @db.Decimal(38, 6)
+  status          RedemptionStatus @default(REQUESTED)
+  burnChainId     Int?
+  burnTxHash      String?
+  burnLogIndex    Int?
+  requestedBy     String           @default("company")
+  approvedBy      String?
+  requestedAt     DateTime         @default(now())
+  burnVerifiedAt  DateTime?
+  payoutSimulatedAt DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  company       Company       @relation(fields: [companyId], references: [id])
+  companyWallet CompanyWallet @relation(fields: [companyWalletId], references: [id])
+
+  @@unique([burnChainId, burnTxHash, burnLogIndex])
+  @@index([companyId])
+  @@index([status])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  companyId  String?
+  actorType  String
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  company Company? @relation(fields: [companyId], references: [id])
+
+  @@index([companyId])
+  @@index([entityType, entityId])
+}
+
+model SystemJobState {
+  name              String    @id
+  status            JobStatus @default(IDLE)
+  latestBlockNumber BigInt?
+  cursor            Json?
+  lastRunAt         DateTime?
+  updatedAt         DateTime  @updatedAt
+}
+
+model RiskEvent {
+  id         String          @id @default(cuid())
+  companyId  String?
+  severity   RiskSeverity    @default(INFO)
+  status     RiskEventStatus @default(OPEN)
+  code       String
+  message    String
+  entityType String?
+  entityId   String?
+  metadata   Json?
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  company Company? @relation(fields: [companyId], references: [id])
+
+  @@index([companyId])
+  @@index([status])
+  @@index([entityType, entityId])
+}

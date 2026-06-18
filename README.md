@@ -47,6 +47,7 @@ npm run typecheck
 npm run lint
 npm run prisma:generate
 npm run prisma:validate
+npm run demo:seed
 npm run test:ci
 ```
 
@@ -76,7 +77,9 @@ These contracts are not deployed to mainnet and do not represent real USDT, real
 
 Copy `.env.example` for local environment setup only when future branches need network access. The example values are placeholders. Do not commit real private keys, seed phrases, RPC secrets, production credentials, real USDT, or real RMB configuration.
 
-`DATABASE_URL` is documented for local PostgreSQL-backed Prisma development. The current Prisma schema is a tooling baseline only and does not yet include ORMB business ledger models.
+`DATABASE_URL` is documented for local PostgreSQL-backed Prisma development. The current Prisma schema includes ORMB demo ledger models, but no worker or API behavior is implemented yet.
+
+`npm run demo:seed` seeds deterministic demo companies and wallets once a local PostgreSQL database is available.
 
 ## Documentation Map
 
