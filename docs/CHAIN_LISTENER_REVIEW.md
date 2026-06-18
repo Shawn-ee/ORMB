@@ -120,9 +120,11 @@ Acceptance criteria:
 
 ### Medium: RPC Error Taxonomy Is Not Defined
 
+Status: addressed by `agent/238-listener-error-taxonomy`.
+
 Retry helpers provide timing decisions, but the repo does not yet classify retryable versus non-retryable RPC, database, or validation errors.
 
-Impact: future runners could retry unsafe validation failures or stop too early on transient RPC failures.
+Remaining impact: the taxonomy is deterministic and tested, but no live runner consumes it yet.
 
 Recommended branch: `agent/238-listener-error-taxonomy`
 

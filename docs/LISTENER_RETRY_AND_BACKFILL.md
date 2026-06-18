@@ -30,6 +30,16 @@ This prevents accidental unbounded historical scans in local or hosted-demo envi
 
 The helper does not sleep or perform network I/O. Future worker runners can use it to schedule safe retries around RPC reads, database writes, or bounded backfill batches.
 
+## Error Taxonomy
+
+`workers/listener-error-taxonomy.ts` classifies listener and backfill errors into:
+
+- `retryable`: transient RPC or database dependency failures, such as timeouts, rate limits, temporary network failures, and database deadlocks.
+- `terminal`: validation or configuration failures that should not be retried without changing input, such as invalid addresses, invalid block ranges, invalid chain IDs, and missing required arguments.
+- `manual_review`: chain, policy, or invariant conditions that need operator review, such as reorg detection, block-hash mismatch, unknown wallets, duplicate conflicts, and unexpected state transitions.
+
+Future live runners should retry only `retryable` classifications. Terminal validation failures should fail closed. Manual-review classifications should stop automatic progression and create operator-facing review context.
+
 ## Safe Backfill Procedure
 
 Future backfill tooling should:
