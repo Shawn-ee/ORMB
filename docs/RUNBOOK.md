@@ -24,7 +24,7 @@ Later branches will add:
 
 ## Worker Cores
 
-The current deposit listener, confirmation worker, and risk engine implementations are testable cores only. They process supplied data and do not run live RPC polling loops or create mint requests.
+The current deposit listener, confirmation worker, risk engine, and mint request flow implementations are testable cores only. They process supplied data and do not run live RPC polling loops or use real contract gateways in CI.
 
 Run unit tests:
 

@@ -31,7 +31,7 @@ No API implementation exists in the bootstrap milestone.
 
 Workers will simulate deposit detection, confirmation tracking, chain event ingestion, reconciliation, and retry handling. All deposit data in the MVP must be mock or testnet-only.
 
-The repository includes testable worker cores for MockUSDT deposit log processing, deposit confirmation handling, and mint eligibility risk checks. Live RPC polling runners and mint request creation are deferred to later branches.
+The repository includes testable worker cores for MockUSDT deposit log processing, deposit confirmation handling, mint eligibility risk checks, and mint request lifecycle orchestration. Live RPC polling runners and production persistence adapters are deferred to later branches.
 
 ### Database
 
