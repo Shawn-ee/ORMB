@@ -31,7 +31,7 @@ No API implementation exists in the bootstrap milestone.
 
 Workers will simulate deposit detection, confirmation tracking, chain event ingestion, reconciliation, and retry handling. All deposit data in the MVP must be mock or testnet-only.
 
-No worker implementation exists in the bootstrap milestone.
+The repository includes a testable MockUSDT deposit listener core that processes already-fetched transfer logs through a repository interface. A live RPC polling runner is deferred to a later branch.
 
 ### Database
 

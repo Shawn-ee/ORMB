@@ -93,6 +93,7 @@ Copy `.env.example` for local environment setup only when future branches need n
 - `docs/SECURITY.md`: Security posture and restrictions.
 - `docs/LEGAL_BOUNDARIES.md`: Non-production and legal boundaries.
 - `docs/DEPLOYMENT.md`: Base Sepolia testnet script guidance and safety boundaries.
+- `docs/DEPOSIT_LISTENER.md`: MockUSDT deposit listener behavior and safety boundary.
 - `docs/STRIPE_BRIDGE_ALIGNMENT.md`: Engineering alignment with Stripe/Bridge-style infrastructure.
 - `docs/RUNBOOK.md`: Setup and validation runbook.
 - `docs/decisions/`: Architecture decision records.
