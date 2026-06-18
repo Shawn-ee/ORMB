@@ -215,3 +215,28 @@ Decision:
 - The findings remain accepted only for local/testnet demo and portfolio review.
 - They remain a blocker for production, real-funds usage, mainnet deployment, or any hosted demo that is not explicitly read-only and approved by the human owner.
 - The next hosted-demo readiness branch must re-evaluate whether these findings are acceptable for the exact hosting posture.
+
+## 2026-06-18 Hosted Demo Readiness Re-Check
+
+Branch: `audit/280-hosted-demo-readiness`
+
+Command:
+
+```bash
+npm audit --json
+```
+
+Result:
+
+- Exit code: 1
+- Low: 8
+- Moderate: 9
+- High: 8
+- Critical: 0
+- Total: 25
+
+Decision:
+
+- The vulnerability count remains unchanged.
+- The findings may be accepted only for a static/read-only hosted demo after human owner review of the exact URL, audience, duration, and environment posture.
+- The findings remain blockers for live mutations, production services, real funds, real USDT, real RMB/CNH, mainnet deployment, or customer data.
