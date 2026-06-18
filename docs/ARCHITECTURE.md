@@ -45,7 +45,7 @@ Workers and APIs are responsible for enforcing state transitions in later branch
 
 The UI includes admin and company dashboard surfaces for the target demo lifecycle.
 
-The repository includes a Next.js app shell with home, demo flow, admin, company, and system status routes. The demo route is a static end-to-end lifecycle walkthrough. The admin route is a static demo operations dashboard for onboarding, mint approvals, redemption review, reconciliation, risk events, and audit activity. The company route is a static enterprise dashboard for deposit status, balances, wallets, transfers, redemptions, and activity. The status route remains a static placeholder until later focused branches.
+The repository includes a Next.js app shell with home, demo flow, admin, company, and system status routes. The demo route is a static end-to-end lifecycle walkthrough. The admin route is a static demo operations dashboard for onboarding, mint approvals, redemption review, reconciliation, risk events, and audit activity. The company route is a static enterprise dashboard for deposit status, balances, wallets, transfers, redemptions, and activity. The status route is a static monitoring and security readiness dashboard for CI, subsystem readiness, security controls, known watch items, and release gates.
 
 ## Chain Choice
 
