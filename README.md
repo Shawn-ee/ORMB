@@ -40,7 +40,7 @@ The demo intentionally does not include live API routes, persistent worker runne
 Install dependencies:
 
 ```bash
-npm install
+npm ci
 ```
 
 Run the local app:
