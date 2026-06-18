@@ -43,9 +43,9 @@ Workers and APIs are responsible for enforcing state transitions in later branch
 
 ### UI
 
-The UI will include an admin dashboard and company dashboard for the target demo lifecycle.
+The UI includes admin and company dashboard surfaces for the target demo lifecycle.
 
-The repository includes a Next.js app shell with placeholder home, admin, company, and system status routes. These routes are static placeholders only; business data wiring and operational dashboards will be added in later focused branches.
+The repository includes a Next.js app shell with home, admin, company, and system status routes. The admin route is a static demo operations dashboard for onboarding, mint approvals, redemption review, reconciliation, risk events, and audit activity. The company and status routes remain static placeholders until later focused branches.
 
 ## Chain Choice
 
