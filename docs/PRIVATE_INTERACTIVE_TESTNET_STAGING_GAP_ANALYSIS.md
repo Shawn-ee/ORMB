@@ -116,7 +116,7 @@ Contracts and Base Sepolia scripts exist, but private staging needs additional o
 
 - Script to grant and verify `MINTER_ROLE` for a dedicated staging minter wallet.
 - Deployment verification script for chain ID, bytecode, token metadata, role membership, whitelist state, and total supply.
-- Runtime mint gateway using a staging minter key, not the deployer key.
+- Runtime mint gateway boundary exists for Base Sepolia chain, amount, role, whitelist, and `ORMB.mint()` preflight; wiring it to a staging wallet/API remains future work.
 - Runtime burn gateway using a staging burner/redeem wallet key.
 - API and worker tests that mock gateways and never require real RPC keys in CI.
 

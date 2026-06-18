@@ -16,6 +16,7 @@ Use `.env.example` as the source of placeholder names.
 ```env
 BASE_SEPOLIA_RPC_URL=
 BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY=
+BASE_SEPOLIA_MINTER_PRIVATE_KEY=
 ORMB_CONFIRM_TESTNET_DEPLOY=YES
 ORMB_CONTRACT_ADDRESS=
 MOCK_USDT_CONTRACT_ADDRESS=
@@ -53,6 +54,8 @@ Manual testnet mint:
 ```bash
 npm run contracts:manual-mint
 ```
+
+The future private staging runtime mint path uses a dedicated testnet minter key and the reusable Base Sepolia mint gateway boundary. Do not reuse a mainnet key, production wallet, customer wallet, or deployer key for routine staging mint execution.
 
 ## Validation Boundary
 

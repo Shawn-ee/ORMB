@@ -62,6 +62,18 @@ Required operator checks:
 - No unknown-wallet or failed-risk deposit is involved.
 - Audit log records approval and submission.
 
+## Private Staging Gateway Boundary
+
+`src/lib/staging/base-sepolia-mint-gateway.ts` provides the reusable gateway boundary for future private staging mint execution. It:
+
+- Requires Base Sepolia chain ID `84532`.
+- Parses ORMB amounts with 6 decimals.
+- Optionally verifies the configured minter has `MINTER_ROLE` when a contract role reader is provided.
+- Optionally verifies the recipient is whitelisted when a contract whitelist reader is provided.
+- Calls `ORMB.mint()` only through an injected contract client.
+
+The gateway does not load secrets, create wallet clients, deploy contracts, grant roles, run workers, or expose HTTP routes. Future private staging integration must wire it only after admin approval, audit logging, idempotency, and environment validation pass.
+
 ## Emergency Pause Procedure
 
 Use pause only for testnet demo containment:
