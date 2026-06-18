@@ -78,6 +78,8 @@ Security-sensitive implementation now exists in the smart contract layer. Contra
 
 The full project security review is documented in `docs/SECURITY_REVIEW.md`.
 
+The contract threat model is documented in `docs/CONTRACT_THREAT_MODEL.md`.
+
 Full demo verification status is documented in `docs/DEMO_VERIFICATION.md`.
 
 Browser UI release review is documented in `docs/UI_REVIEW.md`.
