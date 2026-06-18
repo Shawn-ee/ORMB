@@ -277,7 +277,7 @@ h3 {
 .dashboard-grid {
   display: grid;
   gap: 16px;
-  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+  grid-template-columns: minmax(0, 1.4fr) minmax(360px, 0.7fr);
 }
 
 .dashboard-grid > div {
@@ -309,13 +309,18 @@ h3 {
 }
 
 .dense-table {
-  table-layout: fixed;
+  display: block;
+  max-width: 100%;
+  min-width: 100%;
+  overflow-x: auto;
+  table-layout: auto;
 }
 
 .dense-table th,
 .dense-table td {
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
   vertical-align: top;
+  white-space: normal;
 }
 
 .mono {
@@ -356,6 +361,12 @@ h3 {
 .event-list li:last-child,
 .audit-list li:last-child {
   border-bottom: 0;
+}
+
+.event-list span,
+.audit-list span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .severity {
@@ -553,6 +564,26 @@ h3 {
   .timeline-list li {
     align-items: start;
     grid-template-columns: 1fr;
+  }
+
+  .dense-table {
+    display: table;
+    max-width: 100%;
+    min-width: 100%;
+    overflow: visible;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .dense-table th,
+  .dense-table td {
+    font-size: 12px;
+    overflow-wrap: anywhere;
+    padding: 10px 8px;
+  }
+
+  .dense-table .mono {
+    font-size: 11px;
   }
 
   .reconciliation div {
