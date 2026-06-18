@@ -24,11 +24,24 @@ Risk events use the existing Prisma `RiskEventStatus` values:
 - `ACKNOWLEDGED` can be reopened.
 - `RESOLVED` can be reopened.
 
-Every transition requires an operator actor ID and produces audit metadata with previous status, next status, actor, optional note, and timestamp.
+Every transition requires an operator actor ID and produces audit metadata with previous status, next status, actor, optional note, and timestamp. Operators should use the note for demo evidence, such as "fixture reviewed" or "reopened during release review." Notes must not claim real KYB/KYC/AML/sanctions clearance, legal approval, custody, settlement finality, or production readiness.
+
+Invalid transitions fail closed:
+
+- `ACKNOWLEDGED` cannot be acknowledged again.
+- `RESOLVED` cannot be acknowledged.
+- `RESOLVED` cannot be resolved again.
+- Missing or blank actor IDs are rejected.
+
+Reopening a case returns it to `OPEN`; it must be reviewed again before the demo can treat the case as closed.
 
 ## Summary
 
-The summary helper counts risk cases by status and severity and flags whether operator review is required. High-severity unresolved cases always require operator review.
+The summary helper counts risk cases by status and severity and flags whether operator review is required. High-severity unresolved cases always require operator review. In the current helper, `highOpenCount` counts high-severity cases whose status is not `RESOLVED`; this includes both `OPEN` and `ACKNOWLEDGED` cases.
+
+Any high-severity `OPEN` or `ACKNOWLEDGED` case is a documented stop condition for demo mint progression. This stop is an operator-review gate only. It does not approve or deny real customers, real wallets, real assets, KYB, KYC, sanctions, AML, legal compliance, or production payments.
+
+Lower-severity `OPEN` cases also require operator review before the demo treats the risk queue as clear. Acknowledged lower-severity cases are already under operator review and should remain documented until resolved or reopened.
 
 ## Safety Boundary
 
@@ -45,8 +58,11 @@ Risk case transitions do not:
 
 Human, legal, compliance, and security approval would be required before using any real customer, real stablecoin, real RMB/CNH, or mainnet workflow.
 
+## Operator Runbooks
+
+See `docs/OPERATOR_RUNBOOK.md` for the tabletop review checklist and `docs/INCIDENT_RESPONSE_RUNBOOK.md` for high-severity incident handling. Those runbooks preserve the same local/testnet, mock-asset-only, no-real-funds, no-mainnet, and non-production boundary.
+
 ## Follow-Up
 
 - Add admin UI views for risk cases.
-- Add operator runbook steps for reviewing and resolving demo risk cases.
-- Add incident response procedures for high-severity risk events.
+- Add persistence wiring for risk case transition audit metadata when a separately scoped branch owns database mutation behavior.
