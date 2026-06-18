@@ -15,7 +15,10 @@ It displays:
 3. Security controls for secrets, mainnet, real funds, static actions, and branch audit reports.
 4. Known watch items for dependency audit findings, browser verification limits, and deferred live adapters.
 5. Release gate reminder that `dev` must not merge into `main` before audit and release checks pass.
+6. Static worker observability status for supplied demo worker checkpoints.
 
 ## Safety Boundary
 
 The page does not read live logs, poll services, expose secrets, run workers, deploy contracts, write to the database, or execute monitoring actions. It is a static readiness summary for the portfolio demo.
+
+See `docs/WORKER_OBSERVABILITY.md` for the deterministic worker status model.
