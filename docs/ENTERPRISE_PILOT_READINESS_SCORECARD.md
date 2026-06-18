@@ -13,7 +13,7 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 | Rank | Gap | Severity | Status | Next Branch |
 | --- | --- | --- | --- | --- |
 | 1 | Hosted demo readiness requires human acceptance for exact read-only posture. | High | Conditionally addressed | `audit/280-hosted-demo-readiness` |
-| 2 | API design is not specified. | High | Open | `agent/300-api-contract-docs` |
+| 2 | API design is specified but not implemented. | High | Documented | `agent/300-api-contract-docs` |
 | 3 | Durable worker runner and persistence adapter boundaries are not specified. | High | Open | `agent/301-worker-adapter-boundary-docs` |
 | 4 | Database migration safety is not documented. | High | Open | `agent/302-database-migration-runbook` |
 | 5 | Dependency audit reports 25 findings, including 8 high. | High | Accepted for local/testnet demo only | `audit/280-hosted-demo-readiness` |
@@ -57,4 +57,4 @@ The repo is ready as a local technical demo and Stripe/Bridge portfolio demo. It
 
 ## Current Decision
 
-Proceed next with `agent/300-api-contract-docs` because API boundaries must be explicit before any enterprise-facing integration or pilot discussion.
+Proceed next with `agent/301-worker-adapter-boundary-docs` because durable worker adapter boundaries must be explicit before any enterprise-facing integration or pilot discussion.
