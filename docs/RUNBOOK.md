@@ -19,9 +19,18 @@ The current scripts should pass without external services. Next.js build, Prisma
 Later branches will add:
 
 - Business UI and API routes.
-- Business Prisma schema and PostgreSQL migrations.
 - Worker execution commands.
 - Demo seed data.
+
+## Demo Seed Data
+
+After configuring a local PostgreSQL `DATABASE_URL` and applying the schema in a future migration branch, seed deterministic demo companies and wallets:
+
+```bash
+npm run demo:seed
+```
+
+Do not run seed scripts against production databases.
 
 ## Contract Scripts
 

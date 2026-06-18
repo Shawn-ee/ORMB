@@ -25,6 +25,7 @@ The ORMB demo must show a professional, end-to-end stablecoin payment infrastruc
 ## Demo Data Rules
 
 - Use deterministic mock data where possible.
+- Seed demo companies and wallets must be clearly fictional.
 - Use Base Sepolia testnet assets only.
 - Never require real USDT, real RMB, real customers, or production credentials.
 

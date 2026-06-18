@@ -37,7 +37,9 @@ No worker implementation exists in the bootstrap milestone.
 
 Prisma and PostgreSQL will be used for durable demo state including companies, whitelist status, deposits, mint requests, transfers, redemption requests, chain events, reconciliation records, and audit logs.
 
-The repository includes a Prisma/PostgreSQL tooling baseline with a minimal schema and shared Prisma Client helper. ORMB business ledger models will be added in a later domain schema branch.
+The repository includes Prisma/PostgreSQL models for companies, company wallets, deposits, FX quotes, mint requests, mints, redemptions, audit logs, system job state, and risk events. Deposit ingestion is designed around an idempotency constraint on `chainId + txHash + logIndex`.
+
+Workers and APIs are responsible for enforcing state transitions in later branches.
 
 ### UI
 

@@ -18,6 +18,7 @@
     "lint": "node -e \"console.log('placeholder: lint not implemented yet')\"",
     "prisma:generate": "prisma generate",
     "prisma:validate": "prisma validate",
+    "demo:seed": "tsx scripts/seed-demo.ts",
     "test:ci": "npm run lint && npm run prisma:generate && npm run typecheck && npm run prisma:validate && npm run test && npm run compile:contracts && npm run test:contracts && npm run build"
   },
   "engines": {
@@ -31,6 +32,7 @@
     "hardhat": "^3.9.0",
     "prisma": "^7.8.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   },
   "dependencies": {
