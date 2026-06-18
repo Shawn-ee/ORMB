@@ -31,7 +31,7 @@ No API implementation exists yet. Future API branches must follow the documented
 
 Workers will simulate deposit detection, confirmation tracking, chain event ingestion, reconciliation, and retry handling. All deposit data in the MVP must be mock or testnet-only.
 
-The repository includes testable worker cores for MockUSDT deposit log processing, deposit confirmation handling, mint eligibility risk checks, mint request lifecycle orchestration, and redemption burn verification. Live RPC polling runners and production persistence adapters are deferred to later branches.
+The repository includes testable worker cores for MockUSDT deposit log processing, deposit confirmation handling, mint eligibility risk checks, mint request lifecycle orchestration, and redemption burn verification. Live RPC polling runners and production persistence adapters are deferred to later branches and must follow `docs/WORKER_ADAPTER_BOUNDARIES.md`.
 
 ### Database
 
