@@ -19,6 +19,21 @@ Actions:
 3. Confirm `.env` is not tracked by git.
 4. Do not paste secrets into docs, PRs, logs, or chat.
 
+## Preflight Fails
+
+Symptoms:
+
+- `npm run staging:preflight` exits nonzero.
+- Output includes one or more `ERROR` checks.
+
+Actions:
+
+1. Fix errors before any live Base Sepolia test.
+2. Treat warnings as operator review items.
+3. Confirm the command output redacts secrets.
+4. Do not weaken checks to make the command pass.
+5. Use `STAGING_CONTRACTS_NOT_YET_DEPLOYED=true` only before deployment; do not mint or burn while that warning is present.
+
 ## Wrong Chain ID
 
 Symptoms:

@@ -28,6 +28,7 @@
     "db:reset:local": "prisma migrate reset && npm run db:seed",
     "demo:seed": "tsx scripts/seed-demo.ts",
     "backfill:dry-run": "tsx scripts/backfill-deposits-dry-run.ts",
+    "staging:preflight": "tsx scripts/preflight-private-staging.ts",
     "test:ci": "npm run lint && npm run prisma:generate && npm run typecheck && npm run prisma:validate && npm run test && npm run compile:contracts && npm run test:contracts && npm run build"
   },
   "engines": {

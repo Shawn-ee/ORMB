@@ -26,7 +26,7 @@ There is no current `MUTATIONS_DISABLED` or `WORKERS_DISABLED` environment flag.
 
 ## Required Local Values
 
-Create a local `.env` or server environment file from `.env.example`. Fill values only on the owner machine or private server.
+Create a local `.env` or server environment file from `.env.private-staging.example`. Fill values only on the owner machine or private server.
 
 ```env
 ORMB_ENV_MODE=private-staging
@@ -93,6 +93,24 @@ Before any Base Sepolia action:
 9. `.env` is ignored by git and must not appear in `git status`.
 10. `npm run test:ci`, `npm run test:e2e`, and `npm run build` pass before live testing.
 
+## Preflight Command
+
+Before any owner live test, run:
+
+```bash
+npm run staging:preflight
+```
+
+To check a specific local file without printing secrets:
+
+```bash
+npm run staging:preflight -- --env-file .env
+```
+
+The preflight is local-only. It does not deploy contracts, grant roles, call RPC methods, mint, burn, write to the database, or send transactions. It fails closed for missing database/RPC/admin guard values, mainnet-like chain IDs, hosted-demo mode conflicts, and mutation-disabled interactive staging.
+
+The preflight supports `STAGING_CONTRACTS_NOT_YET_DEPLOYED=true` for planning. In that state it may pass with warnings, but the owner must not run live mint or burn until Base Sepolia contract addresses are configured.
+
 ## Validation Commands
 
 Run locally before staging:
@@ -101,6 +119,7 @@ Run locally before staging:
 npm ci
 npx prisma generate
 npx prisma validate
+npm run staging:preflight
 npm run test:ci
 npm run test:e2e
 npm run build
