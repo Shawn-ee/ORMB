@@ -19,11 +19,10 @@ Available today:
 
 Not enabled yet:
 
-- Protected mutation API routes for the full browser flow.
+- Protected mutation API routes for manual deposits, mint approval, redemption approval, burn evidence verification, simulated payout, reconciliation, and audit-log reads.
 - Admin UI form actions that write to the database.
 - Runtime wallet client loading private keys.
 - Live worker runner that sends mint or burn transactions.
-- Dedicated script to grant `MINTER_ROLE`.
 - Dedicated script to execute ORMB burn on Base Sepolia.
 
 If a step below requires behavior that is not enabled yet, stop and create a focused implementation branch instead of improvising live operations.

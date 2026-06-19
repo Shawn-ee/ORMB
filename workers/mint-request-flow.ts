@@ -1,4 +1,4 @@
-import { type RiskDeposit, type RiskEngineRepository, evaluateMintRisk } from "./risk-engine.js";
+import { type RiskDeposit, type RiskEngineRepository, evaluateMintRisk } from "./risk-engine";
 
 export type MintRequestRecord = {
   id: string;

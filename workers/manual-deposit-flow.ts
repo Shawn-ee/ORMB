@@ -2,8 +2,8 @@ import {
   type CreateMintRequestForDepositResult,
   type MintRequestRepository,
   createMintRequestForDeposit,
-} from "./mint-request-flow.js";
-import type { RiskDeposit } from "./risk-engine.js";
+} from "./mint-request-flow";
+import type { RiskDeposit } from "./risk-engine";
 
 export type ManualDepositRecord = RiskDeposit & {
   id: string;
