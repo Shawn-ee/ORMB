@@ -276,3 +276,31 @@ Residual exposure summary:
 - `next` remains a direct moderate finding through transitive `postcss`; current remediation suggested by npm is not a viable modern Next.js upgrade.
 - `prisma` remains a direct moderate finding through Prisma CLI/dev tooling; current remediation suggested by npm is not compatible with the current Prisma 7 setup.
 - Additional transitive findings remain in `@actions/http-client`, `undici`, `@ethersproject/*`, `ethers`, `elliptic`, `lodash-es`, and related Hardhat/Prisma tooling packages.
+
+## 2026-06-19 Private Staging Deploy Candidate Re-Check
+
+Branch: `release/530-private-staging-deploy-candidate`
+
+Commands:
+
+```bash
+npm audit --json
+npm outdated
+```
+
+Results:
+
+- `npm audit --json`: exit code 1.
+- Low: 8
+- Moderate: 9
+- High: 8
+- Critical: 0
+- Total: 25
+- `npm outdated`: exit code 0 with no outdated direct dependencies reported.
+
+Decision:
+
+- No dependency changes were made.
+- No `npm audit fix --force` was run.
+- The findings remain accepted only for local/owner-only Base Sepolia private staging review after human approval.
+- The findings remain blockers for production, public financial-product use, mainnet deployment, real funds, real USDT, real RMB/CNH, customer data, or any externally exposed service that is not explicitly approved by the owner.
