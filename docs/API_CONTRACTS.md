@@ -114,6 +114,23 @@ These endpoints are future-only and must remain disabled in hosted-demo mode unl
 | `POST` | `/api/admin/redemptions/:requestId/approve` | `admin_operator` | required header | Manually approve redemption for burn verification. |
 | `POST` | `/api/worker/redemptions/:requestId/burns` | `system_worker` | burn event key | Verify a supplied testnet burn event. |
 | `POST` | `/api/worker/redemptions/:requestId/payout-simulated` | `system_worker` | `redemptionId` | Mark simulated payout completion only. |
+
+## Implemented Private Staging Admin Routes
+
+The following routes are implemented for `ORMB_ENV_MODE=private-staging` only and are protected by the existing Basic Auth proxy for `/api/admin/**`.
+
+| Method | Path | Behavior |
+| --- | --- | --- |
+| `POST` | `/api/admin/manual-deposits` | Creates or reuses a simulated manual deposit and attempts risk-gated mint request creation. |
+| `POST` | `/api/admin/mint-requests/:mintRequestId/approve` | Manually approves a pending mint request in the database. |
+| `POST` | `/api/admin/redemptions` | Creates a demo redemption request for a company wallet. |
+| `POST` | `/api/admin/redemptions/:redemptionId/approve` | Moves a requested redemption to burn-pending after admin approval. |
+| `POST` | `/api/admin/redemptions/:redemptionId/burn-evidence` | Verifies supplied Base Sepolia burn evidence against the approved redemption. |
+| `POST` | `/api/admin/redemptions/:redemptionId/payout-simulated` | Marks simulated payout completion after burn verification only. |
+| `GET` | `/api/admin/reconciliation` | Returns a private staging reconciliation summary from local database records. |
+| `GET` | `/api/admin/audit-logs` | Returns recent local audit log entries. |
+
+These routes do not submit contract transactions, deploy contracts, grant roles, perform real payouts, custody assets, process customer data, or use mainnet.
 | `POST` | `/api/admin/risk-events/:riskEventId/transition` | `admin_operator` | required header | Acknowledge, resolve, or reopen a demo risk case. |
 
 ## State Transition Rules
