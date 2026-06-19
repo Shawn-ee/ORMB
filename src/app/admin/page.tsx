@@ -1,3 +1,5 @@
+import { PrivateStagingOperations } from "./PrivateStagingOperations";
+
 const metrics = [
   { label: "Active companies", value: "3", detail: "2 approved, 1 pending KYB" },
   { label: "Mint approvals", value: "2", detail: "Manual review required" },
@@ -353,6 +355,8 @@ export default function AdminPage() {
           ))}
         </div>
       </section>
+
+      <PrivateStagingOperations />
     </main>
   );
 }

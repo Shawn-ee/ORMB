@@ -16,11 +16,11 @@ Available today:
 - Base Sepolia burn evidence validation boundary.
 - Redemption state machine with manual approval, burn verification, duplicate burn protection, simulated payout, and audit interfaces.
 - Static admin/company/status pages and staging reconciliation summary.
+- Protected mutation API routes for manual deposits, mint approval, redemption approval, burn evidence verification, simulated payout, reconciliation, and audit-log reads.
+- Admin UI controls for the protected private staging routes.
 
 Not enabled yet:
 
-- Protected mutation API routes for manual deposits, mint approval, redemption approval, burn evidence verification, simulated payout, reconciliation, and audit-log reads.
-- Admin UI form actions that write to the database.
 - Runtime wallet client loading private keys.
 - Live worker runner that sends mint or burn transactions.
 - Dedicated script to execute ORMB burn on Base Sepolia.
@@ -184,19 +184,19 @@ Run this only after the preflight checks pass and the owner explicitly decides t
 1. Log in to the private staging admin surface.
 2. Confirm company KYB state is approved for demo/staging.
 3. Confirm source and receiving wallets are known, active, and whitelisted.
-4. Create or seed a manual simulated deposit using the supported local/staging path.
+4. Create or seed a manual simulated deposit using the admin Private Staging Operations panel.
 5. Confirm the deposit is marked simulated/testnet-only.
 6. Create a mint request from the confirmed manual deposit.
-7. Manually approve the mint request.
+7. Manually approve the mint request from the admin Private Staging Operations panel.
 8. Execute the Base Sepolia mint through the currently supported guarded path.
 9. Verify the recipient test wallet receives ORMB on Base Sepolia.
 10. Record the mint transaction hash in the local operator notes and AuditLog path when wired.
-11. Create a redemption/cashout request for the test wallet.
-12. Manually approve the redemption request.
+11. Create a redemption/cashout request for the test wallet from the admin Private Staging Operations panel.
+12. Manually approve the redemption request from the admin Private Staging Operations panel.
 13. Return ORMB or produce burn evidence according to the supported current flow.
-14. Validate burn evidence: chain `84532`, source wallet, amount, transaction hash, and log index.
-15. Mark simulated payout complete only after burn verification.
-16. Verify the staging reconciliation dashboard.
+14. Validate burn evidence in the admin panel: chain `84532`, source wallet, amount, transaction hash, and log index.
+15. Mark simulated payout complete in the admin panel only after burn verification.
+16. Verify the staging reconciliation read model in the admin panel.
 17. Verify AuditLog entries for deposit, risk/mint request, mint, redemption, burn verification, and simulated payout.
 
 Stop immediately if any step would require real funds, real USDT, real RMB/CNH, mainnet, customer data, disabled auth, or a production claim.

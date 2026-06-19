@@ -84,6 +84,12 @@ test.describe("UI release readiness", () => {
     await expect(page.getByText("Manual deposits")).toBeVisible();
     await expect(page.getByText("Expected supply")).toBeVisible();
     await expect(page.getByText("Simulated reserve only")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Private Staging Operations" })).toBeVisible();
+    await expect(page.getByText("Base Sepolia staging only")).toBeVisible();
+    await expect(page.getByText("These controls do not deploy contracts")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Record simulated deposit" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Approve mint request" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Verify burn evidence" })).toBeVisible();
   });
 
   test("company dashboard shows pilot participation boundaries", async ({ page }) => {
