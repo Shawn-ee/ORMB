@@ -18,12 +18,12 @@ Available today:
 - Static admin/company/status pages and staging reconciliation summary.
 - Protected mutation API routes for manual deposits, mint approval, redemption approval, burn evidence verification, simulated payout, reconciliation, and audit-log reads.
 - Admin UI controls for the protected private staging routes.
+- Guarded Base Sepolia burn script with signer/address/balance/paused checks.
 
 Not enabled yet:
 
 - Runtime wallet client loading private keys.
 - Live worker runner that sends mint or burn transactions.
-- Dedicated script to execute ORMB burn on Base Sepolia.
 
 If a step below requires behavior that is not enabled yet, stop and create a focused implementation branch instead of improvising live operations.
 
@@ -205,6 +205,24 @@ Run this only after the preflight checks pass and the owner explicitly decides t
 17. Verify AuditLog entries for deposit, risk/mint request, mint, redemption, burn verification, and simulated payout.
 
 Stop immediately if any step would require real funds, real USDT, real RMB/CNH, mainnet, customer data, disabled auth, or a production claim.
+
+For guarded burn execution by script, run only after the owner approves the live Base Sepolia test and the dry-run has passed:
+
+```bash
+npm run contracts:burn
+```
+
+Required local-only values:
+
+- `BASE_SEPOLIA_RPC_URL`
+- `BASE_SEPOLIA_CHAIN_ID=84532`
+- `BASE_SEPOLIA_BURNER_PRIVATE_KEY`
+- `ORMB_CONTRACT_ADDRESS`
+- `BURN_FROM_ADDRESS`
+- `BURN_AMOUNT_ORMB`
+- `ORMB_CONFIRM_TESTNET_DEPLOY=YES`
+
+The script stops before transaction submission if the connected burner signer does not match `BURN_FROM_ADDRESS`, the contract is paused, the burner balance is insufficient, or the chain is not Base Sepolia.
 
 ## 8. Post-Test Evidence
 
