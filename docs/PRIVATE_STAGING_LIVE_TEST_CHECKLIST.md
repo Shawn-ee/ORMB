@@ -100,6 +100,7 @@ Do not paste real values into docs, PRs, agent reports, tickets, screenshots, or
 If ORMB and MockUSDT are not already deployed to Base Sepolia, deploy with owner-approved testnet keys only:
 
 ```bash
+npm run deploy:preflight -- --env-file .env
 npm run deploy:contracts
 ```
 
@@ -108,6 +109,8 @@ This script requires:
 - `BASE_SEPOLIA_RPC_URL`
 - `BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY`
 - `ORMB_CONFIRM_TESTNET_DEPLOY=YES`
+
+See `docs/BASE_SEPOLIA_DEPLOYMENT_READINESS.md` before running deployment.
 
 After deployment:
 

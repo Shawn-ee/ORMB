@@ -51,6 +51,14 @@ ORMB_CONFIRM_TESTNET_DEPLOY=YES
 BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY=0x...
 ```
 
+Run the local-only deployment preflight before any deploy attempt:
+
+```bash
+npm run deploy:preflight -- --env-file .env
+```
+
+See `docs/BASE_SEPOLIA_DEPLOYMENT_READINESS.md` for the full deployment readiness checklist.
+
 Deployment:
 
 ```env
