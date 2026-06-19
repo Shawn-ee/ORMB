@@ -36,6 +36,7 @@ git pull --ff-only origin dev
 npm ci
 npx prisma generate
 npx prisma validate
+npm run staging:preflight
 npm run test:ci
 npm run test:e2e
 npm run build
@@ -69,7 +70,7 @@ Confirm:
 
 ## 3. Environment Readiness
 
-Create a local/server-only `.env` from `.env.example`. Required private staging values are listed in `docs/PRIVATE_STAGING_ENVIRONMENT.md`.
+Create a local/server-only `.env` from `.env.private-staging.example`. Required private staging values are listed in `docs/PRIVATE_STAGING_ENVIRONMENT.md`.
 
 Confirm:
 
@@ -83,6 +84,14 @@ Confirm:
 - `BASE_SEPOLIA_BURNER_PRIVATE_KEY` is testnet-only.
 - `STAGING_BASIC_AUTH_USERNAME` and `STAGING_BASIC_AUTH_PASSWORD` are non-placeholder values.
 - `.env` is not tracked by git.
+
+Run:
+
+```bash
+npm run staging:preflight -- --env-file .env
+```
+
+Expected result: PASS, with no private key, password, database URL, or full RPC secret printed. If contracts are not deployed yet, `STAGING_CONTRACTS_NOT_YET_DEPLOYED=true` may produce a warning; do not proceed to mint/burn until real Base Sepolia contract addresses are configured locally.
 
 Do not paste real values into docs, PRs, agent reports, tickets, screenshots, or chat.
 
