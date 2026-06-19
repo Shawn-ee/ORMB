@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the intended ORMB API contract surface for future implementation branches. It is documentation only; no API routes are implemented in this branch.
+This document defines the intended ORMB API contract surface and the currently implemented private staging admin routes.
 
 ORMB remains testnet-only, mock-asset-only, no-real-funds, no-mainnet, and non-production. These contracts are for demo architecture review and must not be used for real payment processing, custody, redemption, or public stablecoin issuance.
 
@@ -29,7 +29,7 @@ Future API branches must define authentication before exposing live endpoints. U
 
 No production authentication, authorization, SSO, RBAC service, or compliance provider integration exists today.
 
-Private staging currently includes a Basic Auth proxy guard for `/admin`, `/api/admin/**`, and `/api/staging/**` when `ORMB_ENV_MODE=private-staging`. This is an owner-only staging guard, not production authentication. Future mutation routes must still add role checks, same-origin checks, idempotency, state validation, and audit logging before any interactive staging action is exposed.
+Private staging currently includes a Basic Auth proxy guard for `/admin`, `/api/admin/**`, and `/api/staging/**` when `ORMB_ENV_MODE=private-staging`. This is an owner-only staging guard, not production authentication. Current private staging admin mutation routes still rely on deterministic state validation, idempotency keys, and audit logging; future production authorization, SSO, and RBAC are out of scope.
 
 ## Idempotency Model
 
@@ -131,7 +131,6 @@ The following routes are implemented for `ORMB_ENV_MODE=private-staging` only an
 | `GET` | `/api/admin/audit-logs` | Returns recent local audit log entries. |
 
 These routes do not submit contract transactions, deploy contracts, grant roles, perform real payouts, custody assets, process customer data, or use mainnet.
-| `POST` | `/api/admin/risk-events/:riskEventId/transition` | `admin_operator` | required header | Acknowledge, resolve, or reopen a demo risk case. |
 
 ## State Transition Rules
 
