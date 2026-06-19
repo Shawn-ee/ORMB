@@ -128,7 +128,21 @@ Before minting:
 3. Confirm the redemption/burn source test wallet is whitelisted when required by the token transfer rules.
 4. Confirm wallets have enough Base Sepolia ETH for gas.
 
-The current repo has a whitelist script:
+The current repo has a minter role script:
+
+```bash
+MINTER_ROLE_ACTION=verify npm run contracts:minter-role
+MINTER_ROLE_ACTION=grant ORMB_CONFIRM_TESTNET_DEPLOY=YES npm run contracts:minter-role
+```
+
+Required values:
+
+- `ORMB_CONTRACT_ADDRESS`
+- `MINTER_ROLE_ADDRESS`
+- `BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY`
+- `BASE_SEPOLIA_CHAIN_ID=84532`
+
+The current repo also has a whitelist script:
 
 ```bash
 npm run contracts:whitelist
@@ -141,7 +155,7 @@ Required values:
 - `WHITELIST_ENABLED=true`
 - `ORMB_CONFIRM_TESTNET_DEPLOY=YES`
 
-There is no dedicated `MINTER_ROLE` grant script yet. If role grant is needed, use an owner-reviewed contract console/tooling path and record the transaction hash locally, or create a focused branch for a guarded role-management script.
+Grant `MINTER_ROLE` only to a dedicated testnet minter wallet after verify mode confirms it is missing.
 
 ## 6. Start Private Staging
 
