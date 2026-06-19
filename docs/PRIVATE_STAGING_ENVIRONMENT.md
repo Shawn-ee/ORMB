@@ -99,6 +99,18 @@ BURN_EVIDENCE_TX_HASH=0x...
 BURN_EVIDENCE_LOG_INDEX=0
 ```
 
+Guarded burn script:
+
+```env
+BASE_SEPOLIA_RPC_URL=https://...
+BASE_SEPOLIA_CHAIN_ID=84532
+BASE_SEPOLIA_BURNER_PRIVATE_KEY=0x...
+ORMB_CONTRACT_ADDRESS=0x...
+BURN_FROM_ADDRESS=0x...
+BURN_AMOUNT_ORMB=1
+ORMB_CONFIRM_TESTNET_DEPLOY=YES
+```
+
 ## Safety Preflight
 
 Before any Base Sepolia action:
@@ -133,6 +145,8 @@ npm run staging:tx-dry-run -- --env-file .env
 The preflight is local-only. It does not deploy contracts, grant roles, call RPC methods, mint, burn, write to the database, or send transactions. It fails closed for missing database/RPC/admin guard values, mainnet-like chain IDs, hosted-demo mode conflicts, and mutation-disabled interactive staging.
 
 The transaction dry-run is also offline and local-only. It validates intended mint and burn inputs, Base Sepolia posture, dry-run-only confirmation, contract addresses, local-only testnet keys, and optional burn evidence format. It does not create wallet clients, call RPC, query contracts, submit transactions, mint, burn, or write database records.
+
+The guarded burn script is not a dry-run. It sends a Base Sepolia transaction if the owner runs it with `ORMB_CONFIRM_TESTNET_DEPLOY=YES`, a local-only testnet burner key, a matching `BURN_FROM_ADDRESS`, and enough testnet ORMB balance. Do not run it during validation or CI.
 
 The preflight supports `STAGING_CONTRACTS_NOT_YET_DEPLOYED=true` for planning. In that state it may pass with warnings, but the owner must not run live mint or burn until Base Sepolia contract addresses are configured.
 

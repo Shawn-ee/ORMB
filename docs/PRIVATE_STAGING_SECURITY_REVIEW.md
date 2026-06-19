@@ -22,7 +22,6 @@ Private staging is conditionally ready for owner-only preparation and database/U
 
 The repository has strong preflight, route-guard, documentation, and validation coverage for private staging. The remaining blockers are focused and testable:
 
-- No dedicated live burn execution script exists.
 - Runtime wallet-client loading is not implemented in the app or workers; live actions remain guarded script/manual paths.
 - No final private staging deploy-candidate package exists after the security review.
 - Dependency audit findings remain accepted only for local/testnet demo review and must be re-checked before any hosted/private-server exposure.
@@ -117,19 +116,21 @@ Acceptable near-term path:
 
 ### Burn Execution And Redemption
 
-Status: not ready for full live burn execution.
+Status: conditionally ready through guarded script/manual path.
 
 - Burn evidence validation exists.
 - Redemption state machine verifies burn evidence before simulated payout completion.
 - Offline dry-run validates intended burn source, amount, local-only burner key, and optional burn evidence format.
+- A guarded Base Sepolia burn script exists and checks chain ID, signer address, paused state, and balance before transaction submission.
 
-Blocker:
+Residual risk:
 
-- No dedicated live burn execution script exists.
+- Burn execution is not integrated into a worker or UI flow; it remains a guarded owner-run script.
+- The script sends a Base Sepolia transaction when run with explicit confirmation and real local testnet values.
 
 Required follow-up:
 
-- Add a guarded Base Sepolia burn execution script or document the exact external wallet burn procedure with evidence capture and validation.
+- Package a final deploy-candidate runbook that sequences dry-run, mint, burn, evidence validation, reconciliation, and audit capture.
 
 ### Secrets And Output Redaction
 
@@ -174,15 +175,12 @@ Stop the private staging process immediately if:
 
 ## Required Follow-Up Branches
 
-1. `agent/528-live-burn-script-readiness`
-   - Add a guarded Base Sepolia burn script or a strictly documented external wallet burn procedure with evidence capture.
-
-2. `agent/529-private-staging-evidence-bundle`
+1. `agent/529-private-staging-evidence-bundle`
    - Add a local-only evidence checklist or command output template for deploy address, role verification, whitelist verification, mint tx, burn tx, reconciliation, and audit IDs without secrets.
 
-3. `release/530-private-staging-deploy-candidate`
+2. `release/530-private-staging-deploy-candidate`
    - Package the final private staging runbook, re-run dependency audit, validate all commands, and declare ready/not ready for owner approval.
 
 ## Final Position
 
-Private staging is not ready for the owner’s full live Base Sepolia mint/burn test until the burn execution path and final deploy-candidate package are completed.
+Private staging is not ready for the owner’s full live Base Sepolia mint/burn test until the final evidence bundle and deploy-candidate package are completed.
