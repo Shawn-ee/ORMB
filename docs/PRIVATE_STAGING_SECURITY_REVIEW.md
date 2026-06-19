@@ -175,12 +175,9 @@ Stop the private staging process immediately if:
 
 ## Required Follow-Up Branches
 
-1. `agent/529-private-staging-evidence-bundle`
-   - Add a local-only evidence checklist or command output template for deploy address, role verification, whitelist verification, mint tx, burn tx, reconciliation, and audit IDs without secrets.
-
-2. `release/530-private-staging-deploy-candidate`
+1. `release/530-private-staging-deploy-candidate`
    - Package the final private staging runbook, re-run dependency audit, validate all commands, and declare ready/not ready for owner approval.
 
 ## Final Position
 
-Private staging is not ready for the owner’s full live Base Sepolia mint/burn test until the final evidence bundle and deploy-candidate package are completed.
+Private staging is not ready for the owner’s full live Base Sepolia mint/burn test until the final deploy-candidate package is completed.

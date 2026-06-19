@@ -226,7 +226,7 @@ The script stops before transaction submission if the connected burner signer do
 
 ## 8. Post-Test Evidence
 
-Record locally:
+Record locally using `docs/PRIVATE_STAGING_EVIDENCE_BUNDLE.md`:
 
 - Git commit SHA.
 - Base Sepolia chain ID.
