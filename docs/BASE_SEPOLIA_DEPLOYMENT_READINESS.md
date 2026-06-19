@@ -81,6 +81,30 @@ Run:
 npm run staging:preflight -- --env-file .env
 ```
 
+## Minter Role Handoff
+
+After deployment and before mint testing, verify whether the dedicated staging minter has `MINTER_ROLE`:
+
+```bash
+MINTER_ROLE_ACTION=verify npm run contracts:minter-role
+```
+
+If the minter does not have the role, grant it only after owner approval:
+
+```bash
+MINTER_ROLE_ACTION=grant ORMB_CONFIRM_TESTNET_DEPLOY=YES npm run contracts:minter-role
+```
+
+Required local-only values:
+
+- `BASE_SEPOLIA_RPC_URL`
+- `BASE_SEPOLIA_CHAIN_ID=84532`
+- `BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY`
+- `ORMB_CONTRACT_ADDRESS`
+- `MINTER_ROLE_ADDRESS`
+
+Do not grant roles to customer wallets, mainnet-funded wallets, or unknown addresses. Record the verify/grant transaction hash locally without secrets.
+
 ## Stop Conditions
 
 Stop before deployment if:
