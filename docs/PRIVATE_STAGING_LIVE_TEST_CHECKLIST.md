@@ -36,6 +36,7 @@ npm ci
 npx prisma generate
 npx prisma validate
 npm run staging:preflight
+npm run staging:tx-dry-run
 npm run test:ci
 npm run test:e2e
 npm run build
@@ -88,9 +89,12 @@ Run:
 
 ```bash
 npm run staging:preflight -- --env-file .env
+npm run staging:tx-dry-run -- --env-file .env
 ```
 
 Expected result: PASS, with no private key, password, database URL, or full RPC secret printed. If contracts are not deployed yet, `STAGING_CONTRACTS_NOT_YET_DEPLOYED=true` may produce a warning; do not proceed to mint/burn until real Base Sepolia contract addresses are configured locally.
+
+`npm run staging:tx-dry-run` is offline and does not call RPC, mint, burn, deploy, grant roles, or write database records. It validates only the intended live staging mint/burn inputs and must pass before using any guarded transaction script.
 
 Do not paste real values into docs, PRs, agent reports, tickets, screenshots, or chat.
 
@@ -126,6 +130,7 @@ Before minting:
 2. Confirm recipient test wallet is whitelisted.
 3. Confirm the redemption/burn source test wallet is whitelisted when required by the token transfer rules.
 4. Confirm wallets have enough Base Sepolia ETH for gas.
+5. Confirm `npm run staging:tx-dry-run -- --env-file .env` passes for the intended mint and burn inputs.
 
 The current repo has a minter role script:
 
