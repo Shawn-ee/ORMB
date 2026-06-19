@@ -86,6 +86,19 @@ MINT_AMOUNT_ORMB=1
 ORMB_CONFIRM_TESTNET_DEPLOY=YES
 ```
 
+Offline mint/burn dry-run:
+
+```env
+STAGING_DRY_RUN_ONLY=true
+STAGING_DRY_RUN_FLOW=mint-and-burn
+MINT_TO_ADDRESS=0x...
+MINT_AMOUNT_ORMB=1
+BURN_FROM_ADDRESS=0x...
+BURN_AMOUNT_ORMB=1
+BURN_EVIDENCE_TX_HASH=0x...
+BURN_EVIDENCE_LOG_INDEX=0
+```
+
 ## Safety Preflight
 
 Before any Base Sepolia action:
@@ -107,15 +120,19 @@ Before any owner live test, run:
 
 ```bash
 npm run staging:preflight
+npm run staging:tx-dry-run
 ```
 
 To check a specific local file without printing secrets:
 
 ```bash
 npm run staging:preflight -- --env-file .env
+npm run staging:tx-dry-run -- --env-file .env
 ```
 
 The preflight is local-only. It does not deploy contracts, grant roles, call RPC methods, mint, burn, write to the database, or send transactions. It fails closed for missing database/RPC/admin guard values, mainnet-like chain IDs, hosted-demo mode conflicts, and mutation-disabled interactive staging.
+
+The transaction dry-run is also offline and local-only. It validates intended mint and burn inputs, Base Sepolia posture, dry-run-only confirmation, contract addresses, local-only testnet keys, and optional burn evidence format. It does not create wallet clients, call RPC, query contracts, submit transactions, mint, burn, or write database records.
 
 The preflight supports `STAGING_CONTRACTS_NOT_YET_DEPLOYED=true` for planning. In that state it may pass with warnings, but the owner must not run live mint or burn until Base Sepolia contract addresses are configured.
 
@@ -128,6 +145,7 @@ npm ci
 npx prisma generate
 npx prisma validate
 npm run staging:preflight
+npm run staging:tx-dry-run
 npm run test:ci
 npm run test:e2e
 npm run build
