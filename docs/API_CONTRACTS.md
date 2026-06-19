@@ -192,7 +192,6 @@ Retention and export assumptions for audit records are documented in `docs/AUDIT
 
 ## Non-Goals
 
-- No API route implementation is added here.
 - No authentication provider is selected.
 - No production authorization model is claimed.
 - No hosted mutation mode is approved.
