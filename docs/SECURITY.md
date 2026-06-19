@@ -69,7 +69,7 @@ Current listener baseline:
 - Risk checks require approved KYB, known active wallets, whitelisted receiving wallets, confirmed deposits, duplicate prevention, and configured mint limits before mint request creation.
 - Mint request flow requires manual approval before contract mint submission and skips duplicate mint submissions.
 - Redemption burn flow requires manual approval before burn verification, verifies burn chain/source/amount, and skips duplicate burn events.
-- Admin dashboard data is static demo data and does not trigger lifecycle mutations, contract calls, payouts, or database writes.
+- Admin dashboard data is mostly static demo data, with a private-staging-only operations panel for protected database mutation routes. The panel does not trigger contract calls, deployments, role grants, live burns, real payouts, custody, mainnet activity, or real funds.
 - Company dashboard data is static demo data and does not trigger deposits, transfers, redemptions, contract calls, payouts, or database writes.
 - Demo flow page content is static and does not trigger APIs, worker jobs, contract calls, deployments, payouts, or database writes.
 - Monitoring and security status data is static demo data and does not read live logs, poll services, run workers, expose secrets, or execute monitoring actions.
@@ -91,3 +91,5 @@ Full demo verification status is documented in `docs/DEMO_VERIFICATION.md`.
 Browser UI release review is documented in `docs/UI_REVIEW.md`.
 
 Current release readiness and remaining approval gates are documented in `docs/RELEASE_READINESS.md` and `docs/RELEASE_CHECKLIST.md`.
+
+Private interactive staging security status is documented in `docs/PRIVATE_STAGING_SECURITY_REVIEW.md`.
