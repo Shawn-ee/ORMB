@@ -10,6 +10,9 @@ Use the guarded role script:
 
 ```bash
 npm run contracts:minter-role
+npm run contracts:check-minter-role
+npm run contracts:grant-minter-role
+npm run contracts:revoke-minter-role
 ```
 
 Required local-only values:
@@ -19,15 +22,24 @@ BASE_SEPOLIA_RPC_URL=
 BASE_SEPOLIA_CHAIN_ID=84532
 BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY=
 ORMB_CONTRACT_ADDRESS=
+BASE_SEPOLIA_MINTER_ADDRESS=
 MINTER_ROLE_ADDRESS=
 MINTER_ROLE_ACTION=verify
 ```
 
-`MINTER_ROLE_ACTION` must be one of:
+`MINTER_ROLE_ADDRESS` remains a compatibility alias. New private staging setup should use `BASE_SEPOLIA_MINTER_ADDRESS`.
+
+`npm run contracts:minter-role` reads `MINTER_ROLE_ACTION`, which must be one of:
 
 - `verify`
 - `grant`
 - `revoke`
+
+The dedicated wrapper commands set that action internally:
+
+- `npm run contracts:check-minter-role`
+- `npm run contracts:grant-minter-role`
+- `npm run contracts:revoke-minter-role`
 
 `grant` and `revoke` require:
 
@@ -40,7 +52,7 @@ ORMB_CONFIRM_TESTNET_DEPLOY=YES
 1. Run `verify` before `grant` or `revoke`.
 2. Confirm chain ID is Base Sepolia `84532`.
 3. Confirm `ORMB_CONTRACT_ADDRESS` is the owner-approved Base Sepolia deployment.
-4. Confirm `MINTER_ROLE_ADDRESS` is the dedicated testnet minter wallet.
+4. Confirm `BASE_SEPOLIA_MINTER_ADDRESS` is the dedicated testnet minter wallet.
 5. Do not grant roles to customer wallets, mainnet-funded wallets, shared wallets, or unknown addresses.
 6. Do not paste private keys, RPC secrets, or `.env` values into chat, PRs, reports, or docs.
 7. Record only safe output: action, chain ID, ORMB address, minter address, role status, and transaction hash.

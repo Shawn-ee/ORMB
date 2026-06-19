@@ -25,7 +25,7 @@ try {
   await requireBaseSepolia(chainId);
 
   const ormbAddress = process.env.ORMB_CONTRACT_ADDRESS as `0x${string}`;
-  const minterAddress = process.env.MINTER_ROLE_ADDRESS as `0x${string}`;
+  const minterAddress = firstConfiguredAddress(process.env.BASE_SEPOLIA_MINTER_ADDRESS, process.env.MINTER_ROLE_ADDRESS) as `0x${string}`;
   const ormb = await viem.getContractAt("ORMBToken", ormbAddress);
   const alreadyHasRole = await ormb.read.hasRole([ORMB_MINTER_ROLE, minterAddress]);
 
@@ -50,4 +50,13 @@ try {
 
 function printResult(result: Record<string, unknown>) {
   console.log(JSON.stringify({ network: "baseSepolia", ...result }, null, 2));
+}
+
+function firstConfiguredAddress(...values: Array<string | undefined>): string | undefined {
+  return values.find(
+    (value) =>
+      value !== undefined &&
+      value.trim() !== "" &&
+      value !== "0x0000000000000000000000000000000000000000",
+  );
 }

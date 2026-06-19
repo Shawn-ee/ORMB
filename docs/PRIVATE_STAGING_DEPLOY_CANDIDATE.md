@@ -25,7 +25,7 @@ The repository is ready for the owner to review the private staging package and 
 - Offline mint/burn transaction dry-run checks.
 - Base Sepolia deployment preflight.
 - Guarded deploy script.
-- Guarded minter role verify/grant/revoke script.
+- Guarded dedicated minter role verify/grant/revoke scripts.
 - Guarded whitelist script.
 - Guarded manual mint script.
 - Guarded burn script.
@@ -83,8 +83,8 @@ Contract preparation:
 ```bash
 npm run deploy:preflight -- --env-file .env
 npm run deploy:contracts
-MINTER_ROLE_ACTION=verify npm run contracts:minter-role
-MINTER_ROLE_ACTION=grant ORMB_CONFIRM_TESTNET_DEPLOY=YES npm run contracts:minter-role
+npm run contracts:check-minter-role
+ORMB_CONFIRM_TESTNET_DEPLOY=YES npm run contracts:grant-minter-role
 npm run contracts:whitelist
 ```
 
@@ -92,6 +92,7 @@ Live staging transaction scripts, only with explicit owner approval and local te
 
 ```bash
 npm run contracts:manual-mint
+npm run contracts:manual-mint:minter
 npm run contracts:burn
 ```
 

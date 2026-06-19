@@ -33,6 +33,7 @@ The agent must not run the commands marked `OWNER-RUN ONLY`. Those commands may 
 - `scripts/preflight-private-staging.ts`
 - `scripts/dry-run-live-mint-burn.ts`
 - `scripts/preflight-base-sepolia-deploy.ts`
+- `docs/DEDICATED_MINTER_RUNBOOK.md`
 
 ## Prerequisites
 
@@ -56,9 +57,9 @@ Required owner decisions:
 - Whether the first test deploys fresh ORMB/MockUSDT contracts or uses existing Base Sepolia deployments.
 - Whether residual dependency audit findings are accepted for owner-only private staging review.
 
-Current implementation note:
+Route B implementation note:
 
-`npm run contracts:manual-mint` uses the `baseSepolia` Hardhat network account, which is configured by `BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY`. For the first live test, either grant `MINTER_ROLE` to the signer behind `BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY`, or stop and create a focused branch for a dedicated `baseSepoliaMinter` Hardhat network before minting.
+`npm run contracts:manual-mint` and `npm run contracts:manual-mint:minter` use the `baseSepoliaMinter` Hardhat network account, which is configured by `BASE_SEPOLIA_MINTER_PRIVATE_KEY`. The deployer/admin key is used for deploy, role, and whitelist administration only. See `docs/DEDICATED_MINTER_RUNBOOK.md`.
 
 ## 1. Start From Reviewed Dev
 
@@ -110,6 +111,7 @@ STAGING_CONTRACTS_NOT_YET_DEPLOYED=true
 ORMB_CONTRACT_ADDRESS=0x0000000000000000000000000000000000000000
 MOCK_USDT_CONTRACT_ADDRESS=0x0000000000000000000000000000000000000000
 BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY=0x...
+BASE_SEPOLIA_MINTER_ADDRESS=0x...
 BASE_SEPOLIA_MINTER_PRIVATE_KEY=0x...
 MINTER_PRIVATE_KEY=0x...
 BASE_SEPOLIA_BURNER_PRIVATE_KEY=0x...
@@ -233,9 +235,7 @@ npm run deploy:preflight -- --env-file .env
 OWNER-RUN ONLY. Verify mode performs an RPC read:
 
 ```powershell
-$env:MINTER_ROLE_ACTION='verify'
-npm run contracts:minter-role
-Remove-Item Env:\MINTER_ROLE_ACTION
+npm run contracts:check-minter-role
 ```
 
 If verify reports the intended mint signer already has `MINTER_ROLE`, do not grant again.
@@ -245,10 +245,8 @@ If the role is missing and the owner approves the grant, run:
 OWNER-RUN ONLY. This sends a Base Sepolia role-grant transaction:
 
 ```powershell
-$env:MINTER_ROLE_ACTION='grant'
 $env:ORMB_CONFIRM_TESTNET_DEPLOY='YES'
-npm run contracts:minter-role
-Remove-Item Env:\MINTER_ROLE_ACTION
+npm run contracts:grant-minter-role
 Remove-Item Env:\ORMB_CONFIRM_TESTNET_DEPLOY
 ```
 
@@ -257,9 +255,7 @@ Then verify again:
 OWNER-RUN ONLY:
 
 ```powershell
-$env:MINTER_ROLE_ACTION='verify'
-npm run contracts:minter-role
-Remove-Item Env:\MINTER_ROLE_ACTION
+npm run contracts:check-minter-role
 ```
 
 Record the role-grant transaction hash locally in the evidence bundle. Do not commit it if the owner considers the staging addresses private.
@@ -374,7 +370,8 @@ Before minting, confirm:
 
 - `MINT_TO_ADDRESS` in `.env` is the intended whitelisted recipient wallet.
 - `MINT_AMOUNT_ORMB` matches the approved mint amount.
-- The signer behind `BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY` has `MINTER_ROLE`, because the current `contracts:manual-mint` script uses the `baseSepolia` Hardhat account.
+- The signer behind `BASE_SEPOLIA_MINTER_PRIVATE_KEY` matches `BASE_SEPOLIA_MINTER_ADDRESS`.
+- The dedicated minter address has `MINTER_ROLE`.
 - `npm run staging:tx-dry-run -- --env-file .env` passes.
 
 OWNER-RUN ONLY. This sends a Base Sepolia mint transaction:
@@ -382,7 +379,7 @@ OWNER-RUN ONLY. This sends a Base Sepolia mint transaction:
 ```powershell
 npm run staging:tx-dry-run -- --env-file .env
 $env:ORMB_CONFIRM_TESTNET_DEPLOY='YES'
-npm run contracts:manual-mint
+npm run contracts:manual-mint:minter
 Remove-Item Env:\ORMB_CONFIRM_TESTNET_DEPLOY
 ```
 
@@ -390,6 +387,7 @@ Expected result:
 
 - JSON containing `network: "baseSepolia"`.
 - `chainId` equal to `84532`.
+- `minter` equals `BASE_SEPOLIA_MINTER_ADDRESS`.
 - `recipient` equals `MINT_TO_ADDRESS`.
 - `txHash` is returned.
 
@@ -589,10 +587,8 @@ Revoke minter role from the staging signer:
 OWNER-RUN ONLY. This sends a Base Sepolia role-revoke transaction:
 
 ```powershell
-$env:MINTER_ROLE_ACTION='revoke'
 $env:ORMB_CONFIRM_TESTNET_DEPLOY='YES'
-npm run contracts:minter-role
-Remove-Item Env:\MINTER_ROLE_ACTION
+npm run contracts:revoke-minter-role
 Remove-Item Env:\ORMB_CONFIRM_TESTNET_DEPLOY
 ```
 

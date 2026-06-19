@@ -24,6 +24,7 @@ function safeEnv(overrides: Record<string, string | undefined> = {}) {
     BASE_SEPOLIA_CHAIN_ID: "84532",
     ORMB_CONTRACT_ADDRESS: VALID_ORMB_ADDRESS,
     MOCK_USDT_CONTRACT_ADDRESS: VALID_MOCK_USDT_ADDRESS,
+    BASE_SEPOLIA_MINTER_ADDRESS: "0x3333333333333333333333333333333333333333",
     BASE_SEPOLIA_MINTER_PRIVATE_KEY: VALID_MINTER_KEY,
     BASE_SEPOLIA_BURNER_PRIVATE_KEY: VALID_BURNER_KEY,
     STAGING_BASIC_AUTH_USERNAME: "owner",
@@ -39,6 +40,7 @@ describe("runPrivateStagingPreflight", () => {
     assert.equal(report.ok, true);
     assert.equal(report.mode, "interactive-private-staging");
     assert.equal(report.safeSummary.chainId, "84532");
+    assert.equal(report.safeSummary.baseSepoliaMinterAddress, "0x3333...3333");
     assert.equal(report.safeSummary.minterPrivateKey, "present-redacted");
   });
 
@@ -78,6 +80,15 @@ describe("runPrivateStagingPreflight", () => {
 
     assert.equal(report.ok, false);
     assert(report.checks.some((check) => check.code === "DATABASE_URL_MISSING"));
+  });
+
+  it("fails on missing dedicated minter address", () => {
+    const report = runPrivateStagingPreflight(
+      safeEnv({ BASE_SEPOLIA_MINTER_ADDRESS: undefined, MINTER_ROLE_ADDRESS: undefined }),
+    );
+
+    assert.equal(report.ok, false);
+    assert(report.checks.some((check) => check.code === "BASE_SEPOLIA_MINTER_ADDRESS_MISSING"));
   });
 
   it("fails on hosted demo mode combined with interactive staging", () => {

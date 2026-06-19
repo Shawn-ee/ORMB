@@ -80,6 +80,7 @@ Confirm:
 - `BASE_SEPOLIA_RPC_URL` points to Base Sepolia.
 - `ORMB_CONTRACT_ADDRESS` is a Base Sepolia ORMB deployment.
 - `MOCK_USDT_CONTRACT_ADDRESS` is a Base Sepolia MockUSDT deployment if deposit-listener or contract-address documentation needs it.
+- `BASE_SEPOLIA_MINTER_ADDRESS` is the dedicated testnet minter wallet.
 - `BASE_SEPOLIA_MINTER_PRIVATE_KEY` is testnet-only.
 - `BASE_SEPOLIA_BURNER_PRIVATE_KEY` is testnet-only.
 - `STAGING_BASIC_AUTH_USERNAME` and `STAGING_BASIC_AUTH_PASSWORD` are non-placeholder values.
@@ -132,17 +133,17 @@ Before minting:
 4. Confirm wallets have enough Base Sepolia ETH for gas.
 5. Confirm `npm run staging:tx-dry-run -- --env-file .env` passes for the intended mint and burn inputs.
 
-The current repo has a minter role script:
+The current repo has dedicated minter role scripts:
 
 ```bash
-MINTER_ROLE_ACTION=verify npm run contracts:minter-role
-MINTER_ROLE_ACTION=grant ORMB_CONFIRM_TESTNET_DEPLOY=YES npm run contracts:minter-role
+npm run contracts:check-minter-role
+ORMB_CONFIRM_TESTNET_DEPLOY=YES npm run contracts:grant-minter-role
 ```
 
 Required values:
 
 - `ORMB_CONTRACT_ADDRESS`
-- `MINTER_ROLE_ADDRESS`
+- `BASE_SEPOLIA_MINTER_ADDRESS`
 - `BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY`
 - `BASE_SEPOLIA_CHAIN_ID=84532`
 
@@ -223,6 +224,25 @@ Required local-only values:
 - `ORMB_CONFIRM_TESTNET_DEPLOY=YES`
 
 The script stops before transaction submission if the connected burner signer does not match `BURN_FROM_ADDRESS`, the contract is paused, the burner balance is insufficient, or the chain is not Base Sepolia.
+
+For guarded mint execution by dedicated minter script, run only after owner approval and dry-run pass:
+
+```bash
+npm run contracts:manual-mint:minter
+```
+
+Required local-only values:
+
+- `BASE_SEPOLIA_RPC_URL`
+- `BASE_SEPOLIA_CHAIN_ID=84532`
+- `BASE_SEPOLIA_MINTER_ADDRESS`
+- `BASE_SEPOLIA_MINTER_PRIVATE_KEY`
+- `ORMB_CONTRACT_ADDRESS`
+- `MINT_TO_ADDRESS`
+- `MINT_AMOUNT_ORMB`
+- `ORMB_CONFIRM_TESTNET_DEPLOY=YES`
+
+The script stops before transaction submission if the connected minter signer does not match `BASE_SEPOLIA_MINTER_ADDRESS`, the contract is paused, the minter lacks `MINTER_ROLE`, the recipient is not whitelisted, or the chain is not Base Sepolia.
 
 ## 8. Post-Test Evidence
 

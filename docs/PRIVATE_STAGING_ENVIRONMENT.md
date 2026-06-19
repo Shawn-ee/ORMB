@@ -17,6 +17,7 @@ Some planning docs use generic names such as `PRIVATE_STAGING_MODE`, `HOSTED_DEM
 | Chain ID | `BASE_SEPOLIA_CHAIN_ID=84532` |
 | RPC URL | `BASE_SEPOLIA_RPC_URL` |
 | Admin password / access guard secret | `STAGING_BASIC_AUTH_USERNAME` and `STAGING_BASIC_AUTH_PASSWORD` |
+| Dedicated minter address | `BASE_SEPOLIA_MINTER_ADDRESS`; `MINTER_ROLE_ADDRESS` remains a compatibility alias |
 | Minter private key | `BASE_SEPOLIA_MINTER_PRIVATE_KEY` |
 | Burner private key | `BASE_SEPOLIA_BURNER_PRIVATE_KEY` |
 | ORMB contract | `ORMB_CONTRACT_ADDRESS` |
@@ -36,6 +37,7 @@ BASE_SEPOLIA_RPC_URL=https://...
 BASE_SEPOLIA_CHAIN_ID=84532
 ORMB_CONTRACT_ADDRESS=0x...
 MOCK_USDT_CONTRACT_ADDRESS=0x...
+BASE_SEPOLIA_MINTER_ADDRESS=0x...
 BASE_SEPOLIA_MINTER_PRIVATE_KEY=0x...
 BASE_SEPOLIA_BURNER_PRIVATE_KEY=0x...
 STAGING_BASIC_AUTH_USERNAME=...
@@ -81,9 +83,29 @@ Manual mint script:
 
 ```env
 ORMB_CONTRACT_ADDRESS=0x...
+BASE_SEPOLIA_MINTER_ADDRESS=0x...
+BASE_SEPOLIA_MINTER_PRIVATE_KEY=0x...
 MINT_TO_ADDRESS=0x...
 MINT_AMOUNT_ORMB=1
 ORMB_CONFIRM_TESTNET_DEPLOY=YES
+```
+
+Dedicated minter role tooling:
+
+```env
+ORMB_CONTRACT_ADDRESS=0x...
+BASE_SEPOLIA_MINTER_ADDRESS=0x...
+BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY=0x...
+ORMB_CONFIRM_TESTNET_DEPLOY=YES
+```
+
+Preferred owner commands:
+
+```bash
+npm run contracts:check-minter-role
+npm run contracts:grant-minter-role
+npm run contracts:revoke-minter-role
+npm run contracts:manual-mint:minter
 ```
 
 Offline mint/burn dry-run:
@@ -119,12 +141,13 @@ Before any Base Sepolia action:
 2. The RPC endpoint is Base Sepolia, not Base mainnet, Ethereum mainnet, or another network.
 3. Contract addresses are Base Sepolia deployments created for ORMB private staging.
 4. Private keys are testnet-only and local/server-only.
-5. Test wallets contain only Base Sepolia ETH and testnet ORMB/MockUSDT.
-6. Basic Auth credentials are non-placeholder values and are not reused from any production system.
-7. No customer data, real deposit data, real USDT, real RMB/CNH, custody, or payout data is used.
-8. Public access is blocked; the app is owner-only.
-9. `.env` is ignored by git and must not appear in `git status`.
-10. `npm run test:ci`, `npm run test:e2e`, and `npm run build` pass before live testing.
+5. `BASE_SEPOLIA_MINTER_ADDRESS` matches the wallet derived from `BASE_SEPOLIA_MINTER_PRIVATE_KEY`.
+6. Test wallets contain only Base Sepolia ETH and testnet ORMB/MockUSDT.
+7. Basic Auth credentials are non-placeholder values and are not reused from any production system.
+8. No customer data, real deposit data, real USDT, real RMB/CNH, custody, or payout data is used.
+9. Public access is blocked; the app is owner-only.
+10. `.env` is ignored by git and must not appear in `git status`.
+11. `npm run test:ci`, `npm run test:e2e`, and `npm run build` pass before live testing.
 
 ## Preflight Command
 
@@ -147,6 +170,8 @@ The preflight is local-only. It does not deploy contracts, grant roles, call RPC
 The transaction dry-run is also offline and local-only. It validates intended mint and burn inputs, Base Sepolia posture, dry-run-only confirmation, contract addresses, local-only testnet keys, and optional burn evidence format. It does not create wallet clients, call RPC, query contracts, submit transactions, mint, burn, or write database records.
 
 The guarded burn script is not a dry-run. It sends a Base Sepolia transaction if the owner runs it with `ORMB_CONFIRM_TESTNET_DEPLOY=YES`, a local-only testnet burner key, a matching `BURN_FROM_ADDRESS`, and enough testnet ORMB balance. Do not run it during validation or CI.
+
+The guarded manual mint script is not a dry-run. It uses `BASE_SEPOLIA_MINTER_PRIVATE_KEY` through the `baseSepoliaMinter` Hardhat network and sends a Base Sepolia transaction only after confirming the signer matches `BASE_SEPOLIA_MINTER_ADDRESS`, the contract is not paused, the minter has `MINTER_ROLE`, and the recipient wallet is whitelisted.
 
 The preflight supports `STAGING_CONTRACTS_NOT_YET_DEPLOYED=true` for planning. In that state it may pass with warnings, but the owner must not run live mint or burn until Base Sepolia contract addresses are configured.
 

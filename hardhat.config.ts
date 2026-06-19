@@ -32,6 +32,12 @@ export default defineConfig({
       url: configVariable("BASE_SEPOLIA_RPC_URL"),
       accounts: [configVariable("BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY")],
     },
+    baseSepoliaMinter: {
+      type: "http",
+      chainType: "op",
+      url: configVariable("BASE_SEPOLIA_RPC_URL"),
+      accounts: [configVariable("BASE_SEPOLIA_MINTER_PRIVATE_KEY")],
+    },
     baseSepoliaBurner: {
       type: "http",
       chainType: "op",
