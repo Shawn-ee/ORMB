@@ -48,6 +48,7 @@ export function runPrivateStagingPreflight(env: EnvSource): PrivateStagingPrefli
   const mockUsdtAddress = firstNonEmpty(env.MOCK_USDT_CONTRACT_ADDRESS);
   const contractsNotYetDeployed = readBooleanAlias(env.STAGING_CONTRACTS_NOT_YET_DEPLOYED) === true;
   const minterPrivateKey = firstNonEmpty(env.MINTER_PRIVATE_KEY, env.BASE_SEPOLIA_MINTER_PRIVATE_KEY);
+  const minterAddress = firstConfiguredAddress(env.BASE_SEPOLIA_MINTER_ADDRESS, env.MINTER_ROLE_ADDRESS);
   const adminPassword = firstNonEmpty(env.ADMIN_PASSWORD, env.STAGING_BASIC_AUTH_PASSWORD);
   const adminUsername = firstNonEmpty(env.STAGING_BASIC_AUTH_USERNAME);
 
@@ -111,6 +112,7 @@ export function runPrivateStagingPreflight(env: EnvSource): PrivateStagingPrefli
   }
 
   requirePrivateKey(checks, "MINTER_PRIVATE_KEY", minterPrivateKey);
+  requireAddress(checks, "BASE_SEPOLIA_MINTER_ADDRESS", minterAddress, true);
 
   if (adminUsername === undefined) {
     checks.push(warning("ADMIN_USERNAME_MISSING", "STAGING_BASIC_AUTH_USERNAME is not set; password guard still must be configured."));
@@ -137,6 +139,7 @@ export function runPrivateStagingPreflight(env: EnvSource): PrivateStagingPrefli
       databaseUrl: summarizeSecret(databaseUrl),
       ormbContractAddress: summarizeAddress(ormbAddress, contractsNotYetDeployed),
       mockUsdtContractAddress: summarizeAddress(mockUsdtAddress, contractsNotYetDeployed),
+      baseSepoliaMinterAddress: summarizeAddress(minterAddress, false),
       minterPrivateKey: summarizeSecret(minterPrivateKey),
       adminGuardSecret: summarizeSecret(adminPassword),
     },
@@ -207,6 +210,10 @@ function readBooleanAlias(value: string | undefined): boolean | undefined {
 
 function firstNonEmpty(...values: Array<string | undefined>): string | undefined {
   return values.find((value) => value !== undefined && value.trim() !== "");
+}
+
+function firstConfiguredAddress(...values: Array<string | undefined>): string | undefined {
+  return values.find((value) => value !== undefined && value.trim() !== "" && value !== ZERO_ADDRESS && !isPlaceholder(value));
 }
 
 function looksLikeMainnetRpc(value: string): boolean {

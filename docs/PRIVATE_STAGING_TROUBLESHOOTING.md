@@ -87,9 +87,25 @@ Actions:
 
 1. Confirm the expected minter address.
 2. Confirm the ORMB contract address.
-3. Grant `MINTER_ROLE` only through an owner-reviewed Base Sepolia admin path.
-4. Record the role-grant transaction hash locally.
-5. Consider adding a guarded role-management script in a focused branch.
+3. Set `BASE_SEPOLIA_MINTER_ADDRESS` to the dedicated minter wallet.
+4. Run `npm run contracts:check-minter-role`.
+5. Grant `MINTER_ROLE` only through an owner-reviewed Base Sepolia admin path with `npm run contracts:grant-minter-role`.
+6. Record the role-grant transaction hash locally.
+
+## Minter Key Or Address Mismatch
+
+Symptoms:
+
+- `npm run contracts:manual-mint:minter` stops before transaction submission.
+- Error says the configured minter wallet does not match `BASE_SEPOLIA_MINTER_ADDRESS`.
+
+Actions:
+
+1. Stop before minting.
+2. Confirm the wallet derived from `BASE_SEPOLIA_MINTER_PRIVATE_KEY`.
+3. Confirm `BASE_SEPOLIA_MINTER_ADDRESS` is that same wallet address.
+4. Do not replace the minter address with the deployer address just to make minting work.
+5. Use the deployer/admin key only for deploy, role, and whitelist administration.
 
 ## Wallet Not Whitelisted
 

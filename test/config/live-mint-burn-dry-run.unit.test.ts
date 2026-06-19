@@ -19,7 +19,7 @@ function stagingEnv(overrides: Record<string, string | undefined> = {}) {
     BASE_SEPOLIA_RPC_URL: "https://base-sepolia.example.test/rpc",
     ORMB_CONTRACT_ADDRESS: "0x1000000000000000000000000000000000000001",
     MINT_TO_ADDRESS: "0x2000000000000000000000000000000000000002",
-    MINTER_ROLE_ADDRESS: "0x3000000000000000000000000000000000000003",
+    BASE_SEPOLIA_MINTER_ADDRESS: "0x3000000000000000000000000000000000000003",
     BASE_SEPOLIA_MINTER_PRIVATE_KEY: PRIVATE_KEY,
     MINT_AMOUNT_ORMB: "25.5",
     BURN_FROM_ADDRESS: "0x2000000000000000000000000000000000000002",
@@ -61,6 +61,15 @@ describe("runLiveMintBurnDryRun", () => {
 
     assert.equal(report.ok, false);
     assert(report.checks.some((check) => check.code === "MAINNET_CHAIN_ID"));
+  });
+
+  it("fails when the dedicated minter address is missing", () => {
+    const report = runLiveMintBurnDryRun(
+      stagingEnv({ BASE_SEPOLIA_MINTER_ADDRESS: undefined, MINTER_ROLE_ADDRESS: undefined }),
+    );
+
+    assert.equal(report.ok, false);
+    assert(report.checks.some((check) => check.code === "MINTER_ROLE_ADDRESS_MISSING"));
   });
 
   it("fails closed without explicit dry-run-only mode", () => {

@@ -28,7 +28,7 @@ export function runMinterRoleReadiness(env: EnvSource): MinterRoleReadinessRepor
   const rpcUrl = env.BASE_SEPOLIA_RPC_URL;
   const adminKey = env.BASE_SEPOLIA_DEPLOYER_PRIVATE_KEY;
   const ormbAddress = env.ORMB_CONTRACT_ADDRESS;
-  const minterAddress = env.MINTER_ROLE_ADDRESS;
+  const minterAddress = firstConfiguredAddress(env.BASE_SEPOLIA_MINTER_ADDRESS, env.MINTER_ROLE_ADDRESS);
   const confirmation = env.ORMB_CONFIRM_TESTNET_DEPLOY;
 
   if (chainId === undefined || chainId.trim() === "") {
@@ -80,6 +80,14 @@ export function runMinterRoleReadiness(env: EnvSource): MinterRoleReadinessRepor
       confirmation: confirmation === "YES" ? "YES" : "missing",
     },
   };
+}
+
+function firstNonEmpty(...values: Array<string | undefined>): string | undefined {
+  return values.find((value) => value !== undefined && value.trim() !== "");
+}
+
+function firstConfiguredAddress(...values: Array<string | undefined>): string | undefined {
+  return values.find((value) => value !== undefined && value.trim() !== "" && value !== ZERO_ADDRESS && !isPlaceholder(value));
 }
 
 export function formatMinterRoleReadinessReport(report: MinterRoleReadinessReport): string {

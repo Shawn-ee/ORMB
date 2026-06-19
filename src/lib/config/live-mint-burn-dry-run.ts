@@ -32,7 +32,7 @@ export function runLiveMintBurnDryRun(env: EnvSource): LiveMintBurnDryRunReport 
   const ormbAddress = env.ORMB_CONTRACT_ADDRESS;
   const mintToAddress = env.MINT_TO_ADDRESS;
   const mintAmount = env.MINT_AMOUNT_ORMB;
-  const minterAddress = firstNonEmpty(env.MINTER_ROLE_ADDRESS, env.MINT_TO_ADDRESS);
+  const minterAddress = firstConfiguredAddress(env.BASE_SEPOLIA_MINTER_ADDRESS, env.MINTER_ROLE_ADDRESS);
   const minterPrivateKey = firstNonEmpty(env.BASE_SEPOLIA_MINTER_PRIVATE_KEY, env.MINTER_PRIVATE_KEY);
   const burnFromAddress = firstNonEmpty(env.BURN_FROM_ADDRESS, env.BURN_WALLET_ADDRESS);
   const burnAmount = firstNonEmpty(env.BURN_AMOUNT_ORMB, env.REDEMPTION_AMOUNT_ORMB);
@@ -241,6 +241,10 @@ function readBoolean(value: string | undefined): boolean | undefined {
 
 function firstNonEmpty(...values: Array<string | undefined>): string | undefined {
   return values.find((value) => value !== undefined && value.trim() !== "");
+}
+
+function firstConfiguredAddress(...values: Array<string | undefined>): string | undefined {
+  return values.find((value) => value !== undefined && value.trim() !== "" && value !== ZERO_ADDRESS && !isPlaceholder(value));
 }
 
 function looksLikeMainnetRpc(value: string): boolean {
